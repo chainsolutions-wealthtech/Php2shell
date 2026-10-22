@@ -1,3 +1,16 @@
-# Governance and non-regression
+# Gouvernance et non-régression
 
-No code changes to third-party systems. No remote active tests in v0.1. Public assets are metadata-only. Ownership must be evidenced for source-level operations. Any future patch requires a reviewed diff, tests, explicit approval, rollback plan and audit trail. CI has read-only GitHub permissions. No secrets in repository. Treat remote headers as untrusted; do not infer vulnerability solely from a technology fingerprint.
+## Autorités
+Le dépôt `chainsolutions-wealthtech/Php2shell` est indépendant des dépôts MCP/GRT. Ne pas confondre leurs permissions ni leurs règles d'administration.
+
+## Cycle de changement
+1. Lire README, architecture, sécurité, tests et état GitHub.
+2. Créer une branche dédiée à partir du HEAD vérifié.
+3. Limiter le diff au mandat; ne pas modifier de sites tiers.
+4. Exécuter les tests, vérifier la CI et analyser le diff.
+5. Publier une PR avec justification, risques et plan de rollback.
+6. Faire approuver avant fusion si les règles du dépôt le requièrent.
+7. Enregistrer les résultats et prochaines actions dans la PR.
+
+## Limites
+Pas de tests actifs sur sites tiers, pas de collecte de code distant, pas d'exploitation ni de patch distant en V0.1. Les avis CVE de démonstration ne sont pas des renseignements de sécurité validés. La CI utilise des permissions GitHub minimales. Aucun secret dans Git.

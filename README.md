@@ -68,6 +68,10 @@ Dockerfile              Image CLI
 docker-compose.yml      Fixture facultative isolée
 ```
 
+## Accès futur au serveur MCP
+
+L'architecture prévue distingue GitHub App, OIDC GitHub Actions, OAuth/OIDC MCP HTTPS et SSH de secours. Aucun accès serveur n'est configuré en V0.1. Voir [le plan d'accès MCP gouverné](docs/MCP_ACCESS.md).
+
 ## Sécurité, gouvernance et contributions
 
 Toute analyse de code ou correction future exige une autorisation vérifiable du propriétaire, une portée explicite, des tests, une validation humaine et un plan de retour arrière. Ne jamais soumettre de secrets ni de données sensibles. Consulter [Sécurité](docs/SECURITY.md), [Gouvernance](docs/GOVERNANCE.md) et [Architecture](docs/ARCHITECTURE.md).

@@ -1,0 +1,4 @@
+[
+  {"hostname": "portail-demo.example", "scope": "owned_source", "evidence": "fictional-local-lab"},
+  {"hostname": "public-demo.example", "scope": "public_metadata"}
+]

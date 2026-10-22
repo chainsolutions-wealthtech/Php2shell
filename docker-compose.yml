@@ -1,0 +1,8 @@
+services:
+  lab:
+    build: ./lab
+    network_mode: none
+    profiles: ["lab"]
+    read_only: true
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]

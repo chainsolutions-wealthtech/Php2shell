@@ -80,6 +80,14 @@ Cette table est une **traçabilité des deux découpages complémentaires** : le
 
 Actif fictif `portail-demo.example`, version locale déclarée **PHP 8.3.34** ; demande de vérification de CVE-2026-109618/109619. **Le cas illustratif historique utilise une version en-dessous de l'upstream PHP 8.3.36, mais un diagnostic réel exige la confirmation du runtime et des correctifs rétroportés.** Remédiation candidate : mise à jour vers 8.3.36 ou version maintenue plus récente, révision extensions/SAPI et compatibilité, redémarrage contrôlé des workers, tests applicatifs. Rapport proposé PDF/JSON; statut `SCENARIO_DEFINED_NOT_EXECUTED` tant qu'aucune exécution n'est prouvée.
 
+## Extension additive : parcours URL → pages autorisées → diagnostic → rapport → correctif proposé
+
+Mandat utilisateur du 27/10/2026 : le **frontend PHP2SHELL** doit proposer un champ d'URL déclenchant un audit de bout en bout avec navigation bornée, inventaire des pages et vulnérabilités apparentes, rapport et document de remédiation. Le **frontend PHPPATCH** reçoit ensuite les corrections **proposées** (moteur PHP, dépendances, configuration, code Git) accompagnées de diffs, tests, approbation et rollback.
+
+Le **mode URL/P1**, limité aux métadonnées publiquement accessibles et aux requêtes Web explicitement admises, **n'expose pas la source PHP interne** : le serveur retourne habituellement le rendu HTML/JS public. Le **mode approfondi P2** exige en complément un accès autorisé au code Git/fichiers et aux informations du runtime PHP installé (y compris correctifs fournisseur) avant de prétendre confirmer une exposition CVE. Les résultats distinguent **indices**, **exposition potentielle**, **preuves insuffisantes** et **applicabilité effectivement attestée** ; les zones non parcourues restent signalées.
+
+Conserver cette fonctionnalité dans les dix capacités existantes **CAP-01, CAP-02, CAP-03, CAP-04, CAP-05, CAP-06, CAP-07, CAP-10** sans créer un onzième agent/gateway concurrent, et dans les six lots L2–L6. **Contrat fonctionnel détaillé :** [`URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md`](URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md) ; **exigences : REQ-023→REQ-032**. Aucun crawler ni UI produit à ce stade.
+
 ## 8. Préservation de l'existant
 
 PR #1 (V0.1) → PR #2 (V0.2) → PR #3 (S1) ; issue #4 (S1) ; PR #6 (continuité), issue #5 (ancre).

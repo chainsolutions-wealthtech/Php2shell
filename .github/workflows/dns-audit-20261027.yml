@@ -38,7 +38,10 @@ jobs:
           for NS in $(dig +time=3 +tries=1 +short NS "$ZONE" | head -n 5); do
             echo "--- authoritative $NS ---"
             for HOST in php2shell.wealthtechinnovations.com phppatch.wealthtechinnovations.com; do
-              dig +time=3 +tries=1 +norecurse +noall +comments +answer +authority "@$NS" "$HOST" A
+              for TYPE in A AAAA MX; do
+                echo "authoritative $NS $HOST $TYPE"
+                dig +time=3 +tries=1 +norecurse +noall +comments +answer +authority "@$NS" "$HOST" "$TYPE"
+              done
             done
           done
           echo "========== BYPASS DNS: CONNECT DIRECTLY TO S1 =========="

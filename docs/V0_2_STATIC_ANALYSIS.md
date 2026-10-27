@@ -62,3 +62,16 @@ Tests : `python -m unittest discover -s tests -v`.
 Les nouveaux champs sont `composer_lock_present` et `locked_dependencies` (objets `name`, `locked_version`, `dependency_group`). Les fichiers symboliques, manifestes mal formés, plus de 2 Mo ou plus de 5 000 paquets sont refusés ou ignorés avec indication dans `skipped`. Les règles lexicales PHP et la lecture antérieure de `composer.json` sont conservées.
 
 **Une version verrouillée dans `composer.lock` n'atteste ni une installation effective en production, ni l'applicabilité d'une CVE.** Un diagnostic de vulnérabilité sur l'environnement réel exigera la preuve des versions réellement installées, des backports fournisseurs et des configurations d'exécution sous mandat P2.
+
+## Analyse locale des configurations PHP / PHP-FPM (ajout V0.2)
+
+La commande existante \`scan-local\` examine maintenant des fichiers de configuration locaux, **sans requête réseau ni lecture de paramètres de production** :
+
+- \`php.ini\`, \`.user.ini\`, \`php-fpm.conf\` ainsi que les \`*.conf\` des répertoires \`pool.d\` et \`php-fpm.d\` sous la racine autorisée.
+- Règles heuristiques sur des valeurs booléennes **explicites** pour \`expose_php\`, \`display_errors\`, \`allow_url_include\`, \`session.cookie_httponly\`, \`session.cookie_secure\` et \`session.use_strict_mode\`. Les syntaxes inconnues et valeurs variables ne sont **pas** interprétées.
+- Le nouveau champ \`php_configuration\` regroupe \`config_files_examined\`, \`config_indicators\`, \`config_skipped\`, \`limitations\`. Chaque indicateur fournit **le chemin relatif, la ligne, l'identifiant de règle, un niveau de gravité indicatif et \`review_required\`**, jamais une valeur brute de configuration.
+- Refus des symlinks, exclusion des dossiers de dépendances, plafond 100 fichiers de configuration et 1 Mo par fichier. Les fichiers invalides ou illisibles sont mentionnés comme ignorés.
+- Les **configurations présentes sur disque ne prouvent pas leur chargement par la SAPI PHP active**, et leurs éventuelles surcharges via \`php_admin_value\`, Plesk ou pool FPM ne sont pas résolues automatiquement. Aucun finding ne doit être promu en vulnérabilité confirmée sur ce seul indice.
+- Les secrets, mots de passe, URLs d'accès, autres paramètres et commentaires des configurations restent exclus du JSON. Aucun correctif n'est appliqué automatiquement.
+
+**Préparation de REQ-008 uniquement :** le scanner ne remplace pas une attestation de \`php -i\`/\`php-fpm -tt\`, de la configuration effective d'une instance autorisée, ni une revue des règles de sécurité contextuelles.

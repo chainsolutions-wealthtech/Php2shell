@@ -7,7 +7,7 @@
 
 ## Action prioritaire au checkpoint initial
 
-**P2S-NEXT-001 — Finaliser la PR documentaire de continuité, puis préparer la revue/validation de PR #1 (V0.1).**
+**P2S-NEXT-001 — Finaliser la [PR #6](https://github.com/chainsolutions-wealthtech/Php2shell/pull/6) documentaire de continuité, puis préparer la revue/validation de PR #1 (V0.1).**
 
 ### Pourquoi cette action ?
 Les phases V0.2 et S1 ont été implémentées sur des PR empilées mais les fondations V0.1 ne sont pas encore fusionnées. La mémoire ne doit pas dépendre d'une discussion ChatGPT : il faut rendre le point d'entrée et le checkpoint durables.

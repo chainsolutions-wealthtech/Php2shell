@@ -1,5 +1,8 @@
 # DECISIONS_LOG — décisions structurantes immuables
 
+**Continuity ID:** `PHP2SHELL-CONT-20261027-ROOT-01`  
+**Ancre durable:** https://github.com/chainsolutions-wealthtech/Php2shell/issues/5
+
 **Ancre :** https://github.com/chainsolutions-wealthtech/Php2shell/issues/5  
 **Politique :** journal **append-only logique** : ne pas réécrire silencieusement ni supprimer une décision ; ajouter une décision supersédante explicitement référencée si l'utilisateur modifie un choix. Conserver date, autorité, raison, impact et lien de preuve. Ne jamais publier de secrets ou de verbatim privé.
 

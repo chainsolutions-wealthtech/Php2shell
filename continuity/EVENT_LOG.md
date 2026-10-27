@@ -16,6 +16,8 @@
 | 2026-10-27 | P2S-EVT-008 | Plan directeur 5 versions consolidé dans `docs/ROADMAP.md` de PR #2 sans supprimer les anciennes phases | https://github.com/chainsolutions-wealthtech/Php2shell/pull/2 |
 | 2026-10-27 | P2S-EVT-009 | Demande explicite de mémoire/traces/transmission d'une conversation à une autre ; création de l'issue #5 et de la branche documentaire indépendante | https://github.com/chainsolutions-wealthtech/Php2shell/issues/5 |
 
+| 2026-10-27 | P2S-EVT-010 | Documents canoniques et tests de continuité publiés sur branche indépendante de `main`; PR #6 ouverte | https://github.com/chainsolutions-wealthtech/Php2shell/pull/6 ; CI exactes dans GitHub Actions |
+
 ## Règles de qualification
 - **Observé** : objet GitHub/CI/S1 vérifié avec date/HEAD ; **déclaré** : demande utilisateur ; **prévu** : architecture non livrée.
 - Indiquer lorsque des observations anciennes peuvent avoir changé, y compris les DNS/TLS et statuts de PR.

@@ -26,6 +26,12 @@ Ces besoins et les **six lots historiques** sont conservés dans [`FOUNDING_SPEC
 
 **CVE prioritaires** : CVE-2026-109618 et CVE-2026-109619 sont officiellement décrites par PHP/CERT-FR depuis le 21/10/2026 ; référence et seuils amont documentés dans [`CVE_SOURCE_REGISTER.md`](CVE_SOURCE_REGISTER.md). L'ancien texte de prototype qualifiant ses seuils de « démonstration/non vérifiés » décrit **l'absence de source automatisée et de qualification par actif dans le logiciel**, et non l'inexistence des CVE. Un statut réel d'exposition nécessite version runtime, paquet/distribution, SAPI, config et backports.
 
+## Parcours utilisateur supplémentaire : saisie URL → audit Web → dossier → PHPPATCH
+
+À conserver intégralement en complément : depuis la console PHP2SHELL, saisir une URL, choisir un projet/mandat, explorer les pages **autorisées** selon des budgets et suivre la couverture réelle ; analyser les observations Web (HTML, JS public, headers, cookies, redirections, indices PHP) et la correspondance avec les CVE officiellement documentées, **sans annoncer de vulnérabilité confirmée d'après une URL seule**. Lorsque le propriétaire a autorisé la lecture du dépôt ou du serveur, enrichir avec les sources PHP, Composer, configs, version runtime réelle et backports. Produire un rapport PDF/JSON/CSV et passer dans **PHPPATCH** pour un patch candidat et ses tests/approbations sans installation automatique.
+
+**Spécification :** [`URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md`](URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md), **REQ-023→REQ-032**. Il n'existe pas encore d'interface ni de crawler opérationnel.
+
 ## Deux interfaces, une plateforme
 
 - **php2shell.wealthtechinnovations.com** : analyse, inventaire, projet, risque, preuves, rapports et supervision.

@@ -50,4 +50,9 @@ jobs:
             echo "--- Direct S1 HTTP : $HOST ---"
             curl -sS -I --connect-timeout 5 --max-time 12 --resolve "$HOST:80:212.227.212.33" -w 'remote_ip=%{remote_ip} http_code=%{http_code}\\n' "http://$HOST/" || true
           done
+          echo "========== S1 TLS CERTIFICATE METADATA =========="
+          for HOST in php2shell.wealthtechinnovations.com phppatch.wealthtechinnovations.com; do
+            echo "--- direct S1 certificate for $HOST ---"
+            timeout 12 openssl s_client -connect 212.227.212.33:443 -servername "$HOST" -showcerts </dev/null 2>/dev/null | openssl x509 -noout -subject -issuer -dates -ext subjectAltName 2>&1 || true
+          done
           echo "DNS diagnostic finished (absence of DNS data is a diagnostic result, not a test pass)."

@@ -5,6 +5,8 @@ import json
 import os
 import re
 
+from .php_config import inspect_php_configs
+
 MAX_FILE_BYTES = 2_000_000
 MAX_FILES = 5000
 EXCLUDED = {".git", "vendor", "node_modules", ".venv", "__pycache__"}
@@ -179,12 +181,15 @@ def scan_project(root):
             except (ValueError, UnicodeError, OSError):
                 locked_dependencies = []
                 skipped.append({"path": "composer.lock", "reason": "invalid_lockfile"})
+    php_config = inspect_php_configs(root)
     return {"schema_version": "0.2", "root": str(root), "scanned_php_files": scanned,
             "findings": [asdict(item) for item in findings],
             "composer_requirements": dependencies,
             "composer_lock_present": lock_present,
             "locked_dependencies": locked_dependencies,
+            "php_configuration": php_config,
             "skipped": skipped,
-            "limitations": ("Lexical PHP indicators and offline declared/locked Composer data only; "
-                            "not installed package attestation, vulnerability confirmation, "
+            "limitations": ("Lexical PHP indicators, local PHP config indicators, and offline "
+                            "declared/locked Composer data only; not effective PHP runtime, "
+                            "installed package attestation, vulnerability confirmation, "
                             "PHP AST, data-flow, or reachability analysis.")}

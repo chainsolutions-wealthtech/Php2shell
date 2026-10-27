@@ -32,6 +32,10 @@ Ces besoins et les **six lots historiques** sont conservés dans [`FOUNDING_SPEC
 
 **Spécification :** [`URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md`](URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md), **REQ-023→REQ-032**. Il n'existe pas encore d'interface ni de crawler opérationnel.
 
+## Objectif permanent : workflow intelligent, continu, multidirectionnel mais autorisé
+
+Le cycle métier doit être orchestrable à terme par **événements** : nouveaux avis PHP, nouvelle URL autorisée, nouvelle PR/CI, nouvelles preuves, approbations, erreurs/régressions et déploiements gouvernés. Huit axes et **61 work packages candidats** sont détaillés dans [`INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md`](INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md) et [`WORK_PACKAGES.json`](WORK_PACKAGES.json). Plusieurs diagnostics/études indépendants peuvent avancer en parallèle, mais il n'existe **aucun moteur d'orchestration activé** ni d'autorisation d'auditer n'importe quelle cible à ce jour ; le MCP conserve son rôle unique sur claims/permissions lorsque ses capacités seront validées.
+
 ## Deux interfaces, une plateforme
 
 - **php2shell.wealthtechinnovations.com** : analyse, inventaire, projet, risque, preuves, rapports et supervision.

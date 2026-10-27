@@ -47,7 +47,7 @@ class FoundingScopeTests(unittest.TestCase):
     def test_requirements_matrix_contains_every_id_once(self):
         doc = self._read("continuity/REQUIREMENTS_TRACEABILITY.md")
         entries = re.findall(r"(?m)^\| \*\*(REQ-\d{3})\*\*\s", doc)
-        expected = [f"REQ-{i:03d}" for i in range(1, 23)]
+        expected = [f"REQ-{i:03d}" for i in range(1, 33)]
         self.assertEqual(entries, expected)
         self.assertEqual(len(entries), len(set(entries)))
         for key in ("Non implémenté", "Partiel", "V0.2", "V0.3", "V0.4", "V1.0"):
@@ -76,13 +76,13 @@ class FoundingScopeTests(unittest.TestCase):
     def test_canonical_entry_links_to_all_added_contracts(self):
         start = self._read("00_START_HERE.md")
         for name in ("FOUNDING_SPECIFICATION.md", "REQUIREMENTS_TRACEABILITY.md",
-                     "CVE_SOURCE_REGISTER.md"):
+                     "CVE_SOURCE_REGISTER.md", "URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md"):
             self.assertIn(name, start)
 
     def test_foundational_decisions_are_append_only_unique(self):
         decisions = self._read("continuity/DECISIONS_LOG.md")
         ids = re.findall(r"(?m)^\| (P2S-DEC-\d{3}) \|", decisions)
-        self.assertEqual(ids, [f"P2S-DEC-{i:03d}" for i in range(1, 12)])
+        self.assertEqual(ids, [f"P2S-DEC-{i:03d}" for i in range(1, 13)])
 
 if __name__ == "__main__":
     unittest.main()

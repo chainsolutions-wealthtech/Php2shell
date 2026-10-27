@@ -6,7 +6,7 @@ Utiliser ce texte au début d'une nouvelle conversation ChatGPT ou avec tout age
 
 > Reprends intégralement le programme **PHP2SHELL / PHPPATCH** à partir du point d'ancrage GitHub canonique : **https://github.com/chainsolutions-wealthtech/Php2shell/issues/5**, continuity ID `PHP2SHELL-CONT-20261027-ROOT-01`.
 >
-> **Lis d'abord l'issue #5 et ses derniers checkpoints**, puis les fichiers `00_START_HERE.md`, `continuity/CURRENT_STATE.md`, `continuity/NEXT_ACTION.md`, `continuity/DECISIONS_LOG.md`, `continuity/EVENT_LOG.md`, `continuity/PROTOCOL.md` sur la branche de la **PR de continuité** si elle n'est pas encore fusionnée dans `main`.
+> **Lis d'abord l'issue #5 et ses derniers checkpoints**, puis les fichiers `00_START_HERE.md`, `continuity/CURRENT_STATE.md`, `continuity/NEXT_ACTION.md`, `continuity/DECISIONS_LOG.md`, `continuity/EVENT_LOG.md`, `continuity/PROTOCOL.md` sur la branche de la **[PR de continuité #6](https://github.com/chainsolutions-wealthtech/Php2shell/pull/6)** si elle n'est pas encore fusionnée dans `main`.
 >
 > Vérifie l'état **réel** des branches, PR #1 (V0.1), PR #2 (V0.2), PR #3 (préflight S1), des tests/CI, de l'issue #4 (S1) et de l'issue #5, à HEAD exact. Pour toute opération S1, reconnecte le MCP existant, force sa réconciliation puis consulte les sondes autorisées ; ne réutilise pas des caches conversationnels comme preuves.
 >
@@ -31,3 +31,4 @@ Si GitHub n'est pas connecté, demander ou rétablir la connexion du dépôt ; *
 - PR #3 https://github.com/chainsolutions-wealthtech/Php2shell/pull/3
 - Issue #4 https://github.com/chainsolutions-wealthtech/Php2shell/issues/4
 - Issue #5 https://github.com/chainsolutions-wealthtech/Php2shell/issues/5
+- PR #6 https://github.com/chainsolutions-wealthtech/Php2shell/pull/6

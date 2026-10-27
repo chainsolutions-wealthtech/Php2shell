@@ -16,12 +16,16 @@
 | PR #3 / S1 | `84fc090e08ca6e31e965c6bfab90f3556161e2d2` | ouverte, DRAFT, base branche PR #2 | https://github.com/chainsolutions-wealthtech/Php2shell/pull/3 |
 | Issue #4 | — | ouverte, admission S1 | https://github.com/chainsolutions-wealthtech/Php2shell/issues/4 |
 | Issue #5 | — | ancre de continuité ouverte | https://github.com/chainsolutions-wealthtech/Php2shell/issues/5 |
-| Branche continuité | `docs/canonical-continuity-20261027` | créée sur `main` vérifié ; **pas fusionnée à la création** | PR de continuité à ouvrir |
+| Branche continuité | `docs/canonical-continuity-20261027` | créée sur `main` vérifié ; **PR #6 ouverte, non fusionnée** | https://github.com/chainsolutions-wealthtech/Php2shell/pull/6 |
 
 **CI vérifiées** au HEAD des branches lors de la reprise :
 - PR #2 `d7f2b1d...` : runs [40594022774](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40594022774) et [40594015822](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40594015822), `success`.
 - PR #3 `84fc090...` : runs [40594201282](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40594201282) (réseau) et [40594201214](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40594201214) (tests), `success`.
 - PR #1 : vérifier CI, revue et HEAD **à nouveau avant fusion** ; aucun succès récent certifié ici.
+
+## Branche documentaire indépendante
+
+- **PR #6** https://github.com/chainsolutions-wealthtech/Php2shell/pull/6 : ancre et dossiers de continuité, base `main`, ne touche ni PR #1-3 ni S1. La CI exacte doit être revalidée au **dernier HEAD de cette branche**, car les références internes peuvent évoluer pendant la préparation de la PR.
 
 ## Infrastructure S1 — constat daté
 

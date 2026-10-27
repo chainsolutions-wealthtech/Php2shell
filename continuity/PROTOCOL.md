@@ -11,6 +11,12 @@ Les conversations ChatGPT ne sont **pas** une base de données canonique de proj
 
 Le dépôt est **public** : ne jamais publier mots de passe, clés, jetons, secrets, identifiants privés, extraits de code client, pièces sensibles ni transcriptions privées. Les preuves sensibles doivent rester dans des autorités sécurisées séparées avec seulement des références non sensibles dans les checkpoints publics.
 
+## Traçabilité du périmètre fondateur et prévention des oublis
+
+Le **contrat produit** comprend `FOUNDING_SPECIFICATION.md` (les six lots historiques et toutes les capacités), `REQUIREMENTS_TRACEABILITY.md` (REQ-001 à REQ-022 avec critères de sortie) et `CVE_SOURCE_REGISTER.md` (sources de sécurité datées). Les agents doivent consulter ces fichiers avec le plan des cinq versions avant de décider d'une suppression, fusion ou requalification de scope.
+
+Une fonctionnalité est dite **programmée** si un besoin est écrit, **développée** si du code existe, **validée** si tests/CI au HEAD + revue réussis, **déployée** si constat runtime/HTTPS E2E existe. L'absence de champ prouvé interdit la promotion de statut.
+
 ## 2. Cycle obligatoire pour chaque nouvelle conversation / session
 
 **REPRISE LECTURE SEULE d'abord :**

@@ -5,6 +5,14 @@
 **Continuity ID :** `PHP2SHELL-CONT-20261027-ROOT-01`  
 **Dernière décision matérialisée :** ancrer l'objectif, les décisions et la reprise dans GitHub (issue #5 et PR documentaire indépendante).
 
+## Point opérationnel vérifié — 28 octobre 2026
+
+- PR #6 : tests verts, revue demandée à `Patricked-code`; **approbation encore à constater** avant fusion gouvernée.
+- PR #1 : les trois correctifs sont déjà **codés et testés** (HEAD `c17f0931db2cae659e4301585b0bf3db9078ca09`). Ne **pas** les refaire. La prochaine opération est la revue au HEAD et la décision de fusion.
+- PR #2 : premiers imports multi-formats CSV/JSON/TXT + tests, HEAD `8c70d5f5af828588d87fd9c70a8a1b39d555de86` ; PR #3 S1 HEAD `5ce8f4ed91068fa6cad3dbd8d7ad8d16116090fa` ; deux branches resynchronisées sans rebase forcé.
+- Le compte `Patricked-code` est **sollicité** pour les PR #1 et #6. Une automatisation horaire (id `6ae13640aa9c8191b20d3d120bf71ace`) a été créée pour contrôler et reprendre les travaux admissibles, sans contourner les permissions.
+- **NEXT_ACTION unique** : contrôler les revues et conditions de fusion de PR #6 et PR #1, répondre aux observations éventuelles ; en parallèle, poursuivre les fonctionnalités sur les **branches existantes** si absence de collision et CI au HEAD. Aucun déploiement S1 tant qu'un outil MCP réellement autorisé et les prérequis applicatifs ne sont pas prêts.
+
 ## Action prioritaire au checkpoint initial
 
 **P2S-NEXT-001 — Finaliser la [PR #6](https://github.com/chainsolutions-wealthtech/Php2shell/pull/6) documentaire de continuité, puis préparer la revue/validation de PR #1 (V0.1).**

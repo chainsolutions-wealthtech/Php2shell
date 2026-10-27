@@ -1,0 +1,987 @@
+{
+  "schema_version": "1.0",
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "canonical_issue": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5",
+  "snapshot_date": "2026-10-28",
+  "authority": "PLANNING_ONLY_NOT_A_RUNTIME_SCHEDULER",
+  "single_active_next_action": "P2S-NEXT-001",
+  "status_policy": "No planned task is automatically claimed, running, deployed or approved. GitHub/MCP current state takes precedence.",
+  "execution_policy": "Multi-lane DAG; no two tasks may write to same resource/branch/server without authorized existing MCP claim/lock. Independent READ_ONLY tasks may run in parallel. All code via PR and production via separate human approval.",
+  "gate_types": [
+    "READ_ONLY",
+    "GOVERNED_PR",
+    "MANDATED_TEST_ONLY",
+    "HUMAN_PRODUCTION_APPROVAL"
+  ],
+  "work_packages": [
+    {
+      "id": "P2S-WF-G01",
+      "lane": "GOVERNANCE",
+      "phase": "V0.1",
+      "title": "Faire relire et admettre la PR #6 de continuité",
+      "depends_on": [],
+      "requirements": [
+        "REQ-020"
+      ],
+      "gate": "READ_ONLY",
+      "status": "AWAITING_INDEPENDENT_REVIEW",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-G02",
+      "lane": "GOVERNANCE",
+      "phase": "V0.1",
+      "title": "Corriger les trois observations PR #1 (DNS labels/test non vide/Docker)",
+      "depends_on": [
+        "P2S-WF-G01"
+      ],
+      "requirements": [
+        "REQ-001"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-G03",
+      "lane": "GOVERNANCE",
+      "phase": "V0.1",
+      "title": "Revue sécurité et finalisation gouvernée de PR #1",
+      "depends_on": [
+        "P2S-WF-G02"
+      ],
+      "requirements": [
+        "REQ-020"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-G04",
+      "lane": "GOVERNANCE",
+      "phase": "V0.2",
+      "title": "Réconcilier PR #2 avec HEAD et tests V0.1",
+      "depends_on": [
+        "P2S-WF-G03"
+      ],
+      "requirements": [
+        "REQ-007",
+        "REQ-008"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-G05",
+      "lane": "GOVERNANCE",
+      "phase": "V0.2",
+      "title": "Revue et finalisation gouvernée de PR #2",
+      "depends_on": [
+        "P2S-WF-G04"
+      ],
+      "requirements": [
+        "REQ-007"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-G06",
+      "lane": "GOVERNANCE",
+      "phase": "V0.4",
+      "title": "Réconcilier PR #3 S1 avec V0.2",
+      "depends_on": [
+        "P2S-WF-G05"
+      ],
+      "requirements": [
+        "REQ-017"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-G07",
+      "lane": "GOVERNANCE",
+      "phase": "V0.4",
+      "title": "Revue/finalisation de PR #3 sans déployer",
+      "depends_on": [
+        "P2S-WF-G06"
+      ],
+      "requirements": [
+        "REQ-017"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-G08",
+      "lane": "GOVERNANCE",
+      "phase": "Toutes",
+      "title": "Réconcilier à chaque jalon HEAD PR CI checkpoints et NEXT_ACTION",
+      "depends_on": [
+        "P2S-WF-G01"
+      ],
+      "requirements": [
+        "REQ-020"
+      ],
+      "gate": "READ_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-G09",
+      "lane": "GOVERNANCE",
+      "phase": "Toutes",
+      "title": "Mapper identités mandats claims locks et BUS MCP existants",
+      "depends_on": [
+        "P2S-WF-G01"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-015",
+        "REQ-020"
+      ],
+      "gate": "READ_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-S01",
+      "lane": "SECURITY",
+      "phase": "V0.2",
+      "title": "Définir modèle P1/P2 autorisations preuves périmètres expirations",
+      "depends_on": [
+        "P2S-WF-G09"
+      ],
+      "requirements": [
+        "REQ-003"
+      ],
+      "gate": "READ_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-S02",
+      "lane": "SECURITY",
+      "phase": "V0.2",
+      "title": "Concevoir garde-fous URL anti-SSRF DNS redirects robots quotas",
+      "depends_on": [
+        "P2S-WF-S01"
+      ],
+      "requirements": [
+        "REQ-022",
+        "REQ-031"
+      ],
+      "gate": "READ_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-S03",
+      "lane": "SECURITY",
+      "phase": "V0.2",
+      "title": "Implémenter contrôles SSRF quotas annulation et tests négatifs",
+      "depends_on": [
+        "P2S-WF-S02",
+        "P2S-WF-G05"
+      ],
+      "requirements": [
+        "REQ-031"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-S04",
+      "lane": "SECURITY",
+      "phase": "V0.4",
+      "title": "Implémenter authentification RBAC et sessions sécurisées",
+      "depends_on": [
+        "P2S-WF-I02",
+        "P2S-WF-S01"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-018"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-S05",
+      "lane": "SECURITY",
+      "phase": "V0.4",
+      "title": "Secrets hors Git preuves privées audit append-only et rétention",
+      "depends_on": [
+        "P2S-WF-G09"
+      ],
+      "requirements": [
+        "REQ-014",
+        "REQ-020"
+      ],
+      "gate": "READ_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-S06",
+      "lane": "SECURITY",
+      "phase": "V0.3",
+      "title": "Politique de tests sandbox et approbation avant patch",
+      "depends_on": [
+        "P2S-WF-S01",
+        "P2S-WF-S05"
+      ],
+      "requirements": [
+        "REQ-010",
+        "REQ-011"
+      ],
+      "gate": "READ_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-S07",
+      "lane": "SECURITY",
+      "phase": "V1.0",
+      "title": "Modèle de menaces Web/API/workers/Docker/Plesk",
+      "depends_on": [
+        "P2S-WF-S03",
+        "P2S-WF-S04",
+        "P2S-WF-I04"
+      ],
+      "requirements": [
+        "REQ-031",
+        "REQ-032"
+      ],
+      "gate": "READ_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-S08",
+      "lane": "SECURITY",
+      "phase": "V1.0",
+      "title": "Revue sécurité indépendante et acceptation des risques",
+      "depends_on": [
+        "P2S-WF-S07",
+        "P2S-WF-Q05"
+      ],
+      "requirements": [
+        "REQ-032"
+      ],
+      "gate": "HUMAN_PRODUCTION_APPROVAL",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-E01",
+      "lane": "ANALYSIS",
+      "phase": "V0.2",
+      "title": "Imports CSV JSON TXT normalisation validation DNS et dedup",
+      "depends_on": [
+        "P2S-WF-G05"
+      ],
+      "requirements": [
+        "REQ-001"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-E02",
+      "lane": "ANALYSIS",
+      "phase": "V0.2",
+      "title": "Gestion des campagnes et inventaire à grande échelle",
+      "depends_on": [
+        "P2S-WF-E01",
+        "P2S-WF-I03"
+      ],
+      "requirements": [
+        "REQ-002"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-E03",
+      "lane": "ANALYSIS",
+      "phase": "V0.2",
+      "title": "Détection PHP passive sur réponses publiques autorisées",
+      "depends_on": [
+        "P2S-WF-S03"
+      ],
+      "requirements": [
+        "REQ-004",
+        "REQ-025"
+      ],
+      "gate": "MANDATED_TEST_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-E04",
+      "lane": "ANALYSIS",
+      "phase": "V0.2",
+      "title": "Crawler sitemap liens profondeur limites et reprise",
+      "depends_on": [
+        "P2S-WF-E03"
+      ],
+      "requirements": [
+        "REQ-024",
+        "REQ-027"
+      ],
+      "gate": "MANDATED_TEST_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-E05",
+      "lane": "ANALYSIS",
+      "phase": "V0.2",
+      "title": "Analyse HTML JS public headers cookies redirections",
+      "depends_on": [
+        "P2S-WF-E04"
+      ],
+      "requirements": [
+        "REQ-025"
+      ],
+      "gate": "MANDATED_TEST_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-E06",
+      "lane": "ANALYSIS",
+      "phase": "V0.2",
+      "title": "Parser PHP AST et corpus faux positifs/négatifs",
+      "depends_on": [
+        "P2S-WF-G05"
+      ],
+      "requirements": [
+        "REQ-007"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-E07",
+      "lane": "ANALYSIS",
+      "phase": "V0.2",
+      "title": "Analyse composer.lock dépendances configuration PHP/FPM",
+      "depends_on": [
+        "P2S-WF-E06"
+      ],
+      "requirements": [
+        "REQ-008"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-E08",
+      "lane": "ANALYSIS",
+      "phase": "V0.2",
+      "title": "Catalogue GHSA PHP CERT fournisseurs et backports",
+      "depends_on": [
+        "P2S-WF-G05"
+      ],
+      "requirements": [
+        "REQ-005"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-E09",
+      "lane": "ANALYSIS",
+      "phase": "V0.2",
+      "title": "Attestation runtime PHP SAPI et paquets sous mandat P2",
+      "depends_on": [
+        "P2S-WF-E08",
+        "P2S-WF-S01"
+      ],
+      "requirements": [
+        "REQ-006"
+      ],
+      "gate": "MANDATED_TEST_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-E10",
+      "lane": "ANALYSIS",
+      "phase": "V0.2",
+      "title": "Moteur CVE pertinence et confiance par actif",
+      "depends_on": [
+        "P2S-WF-E08",
+        "P2S-WF-E09"
+      ],
+      "requirements": [
+        "REQ-028"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-E11",
+      "lane": "ANALYSIS",
+      "phase": "V0.2",
+      "title": "Corrélation des constats Web code runtime et preuves",
+      "depends_on": [
+        "P2S-WF-E05",
+        "P2S-WF-E07",
+        "P2S-WF-E10"
+      ],
+      "requirements": [
+        "REQ-009",
+        "REQ-027"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-E12",
+      "lane": "ANALYSIS",
+      "phase": "V0.2",
+      "title": "Dossier de remédiation PDF CSV JSON sans secrets",
+      "depends_on": [
+        "P2S-WF-E11"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-029"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-R01",
+      "lane": "REMEDIATION",
+      "phase": "V0.3",
+      "title": "Stratégies de correction runtime PHP extensions backports",
+      "depends_on": [
+        "P2S-WF-E10"
+      ],
+      "requirements": [
+        "REQ-010"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-R02",
+      "lane": "REMEDIATION",
+      "phase": "V0.3",
+      "title": "Générer diffs candidats code config et dépendances",
+      "depends_on": [
+        "P2S-WF-E07",
+        "P2S-WF-S06"
+      ],
+      "requirements": [
+        "REQ-010"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-R03",
+      "lane": "REMEDIATION",
+      "phase": "V0.3",
+      "title": "Exécuter laboratoire Docker isolé non-root sans secrets",
+      "depends_on": [
+        "P2S-WF-S06",
+        "P2S-WF-I04"
+      ],
+      "requirements": [
+        "REQ-016"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-R04",
+      "lane": "REMEDIATION",
+      "phase": "V0.3",
+      "title": "Tests lint compatibilité intégration avant/après patch",
+      "depends_on": [
+        "P2S-WF-R02",
+        "P2S-WF-R03"
+      ],
+      "requirements": [
+        "REQ-011"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-R05",
+      "lane": "REMEDIATION",
+      "phase": "V0.3",
+      "title": "Sauvegarde et simulation prouvée du rollback",
+      "depends_on": [
+        "P2S-WF-R03"
+      ],
+      "requirements": [
+        "REQ-012"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-R06",
+      "lane": "REMEDIATION",
+      "phase": "V0.3",
+      "title": "Transfert des constats PHPPATCH approbation et PR candidate",
+      "depends_on": [
+        "P2S-WF-R04",
+        "P2S-WF-S04"
+      ],
+      "requirements": [
+        "REQ-030"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-R07",
+      "lane": "REMEDIATION",
+      "phase": "V0.3",
+      "title": "Fixture portail-demo.example PHP 8.3.34 vérifiée",
+      "depends_on": [
+        "P2S-WF-R01",
+        "P2S-WF-R03"
+      ],
+      "requirements": [
+        "REQ-021"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-I01",
+      "lane": "INFRASTRUCTURE",
+      "phase": "V0.4",
+      "title": "Diagnostiquer DNS local et config Plesk S1 en lecture seule",
+      "depends_on": [
+        "P2S-WF-G01"
+      ],
+      "requirements": [
+        "REQ-017"
+      ],
+      "gate": "READ_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-I02",
+      "lane": "INFRASTRUCTURE",
+      "phase": "V0.4",
+      "title": "Construire contrat API FastAPI commun sécurisé",
+      "depends_on": [
+        "P2S-WF-G05",
+        "P2S-WF-S01"
+      ],
+      "requirements": [
+        "REQ-013"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-I03",
+      "lane": "INFRASTRUCTURE",
+      "phase": "V0.4",
+      "title": "Modèle PostgreSQL migrations sécurité sauvegardes",
+      "depends_on": [
+        "P2S-WF-I02",
+        "P2S-WF-S05"
+      ],
+      "requirements": [
+        "REQ-014"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-I04",
+      "lane": "INFRASTRUCTURE",
+      "phase": "V0.4",
+      "title": "Images et réseau Docker isolés compatibles Plesk",
+      "depends_on": [
+        "P2S-WF-I02",
+        "P2S-WF-S05"
+      ],
+      "requirements": [
+        "REQ-016"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-I05",
+      "lane": "INFRASTRUCTURE",
+      "phase": "V0.4",
+      "title": "Cartographier adaptateur de déploiement MCP existant",
+      "depends_on": [
+        "P2S-WF-G07",
+        "P2S-WF-G09"
+      ],
+      "requirements": [
+        "REQ-017"
+      ],
+      "gate": "READ_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-I06",
+      "lane": "INFRASTRUCTURE",
+      "phase": "V0.4",
+      "title": "Implémenter adaptateur MCP ciblé exact SHA et rollback",
+      "depends_on": [
+        "P2S-WF-I05",
+        "P2S-WF-I04",
+        "P2S-WF-R05"
+      ],
+      "requirements": [
+        "REQ-017"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-I07",
+      "lane": "INFRASTRUCTURE",
+      "phase": "V0.4",
+      "title": "Staging S1 authentifié préflight et contrôle de rollback",
+      "depends_on": [
+        "P2S-WF-I06",
+        "P2S-WF-S04"
+      ],
+      "requirements": [
+        "REQ-032"
+      ],
+      "gate": "MANDATED_TEST_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-I08",
+      "lane": "INFRASTRUCTURE",
+      "phase": "V0.4",
+      "title": "Workers idempotents anti-doublons et files bornées",
+      "depends_on": [
+        "P2S-WF-I03",
+        "P2S-WF-G09"
+      ],
+      "requirements": [
+        "REQ-015"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-U01",
+      "lane": "FRONTEND",
+      "phase": "V1.0",
+      "title": "Formulaire URL projets mandats et statut d'audit",
+      "depends_on": [
+        "P2S-WF-I02",
+        "P2S-WF-S04"
+      ],
+      "requirements": [
+        "REQ-023"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-U02",
+      "lane": "FRONTEND",
+      "phase": "V1.0",
+      "title": "Cartographie des pages et couverture réelle",
+      "depends_on": [
+        "P2S-WF-U01",
+        "P2S-WF-E04"
+      ],
+      "requirements": [
+        "REQ-024",
+        "REQ-027"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-U03",
+      "lane": "FRONTEND",
+      "phase": "V1.0",
+      "title": "Panneau PHP2Shell CVE preuves et incertitudes",
+      "depends_on": [
+        "P2S-WF-U01",
+        "P2S-WF-E10"
+      ],
+      "requirements": [
+        "REQ-028"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-U04",
+      "lane": "FRONTEND",
+      "phase": "V1.0",
+      "title": "Rapports téléchargeables et historique des preuves",
+      "depends_on": [
+        "P2S-WF-U02",
+        "P2S-WF-E12"
+      ],
+      "requirements": [
+        "REQ-029"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-U05",
+      "lane": "FRONTEND",
+      "phase": "V1.0",
+      "title": "PHPPATCH diff tests approbations rollback",
+      "depends_on": [
+        "P2S-WF-R06",
+        "P2S-WF-S04"
+      ],
+      "requirements": [
+        "REQ-030"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-U06",
+      "lane": "FRONTEND",
+      "phase": "V1.0",
+      "title": "Supervision multi-projets et tâches",
+      "depends_on": [
+        "P2S-WF-U01",
+        "P2S-WF-I03"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-020"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-Q01",
+      "lane": "QUALITY",
+      "phase": "Toutes",
+      "title": "Vérifier non-régression des 32 exigences avec CI",
+      "depends_on": [
+        "P2S-WF-G01"
+      ],
+      "requirements": [
+        "REQ-020",
+        "REQ-032"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-Q02",
+      "lane": "QUALITY",
+      "phase": "V0.2",
+      "title": "Simulations 1 100 1000 domaines fictifs",
+      "depends_on": [
+        "P2S-WF-E02",
+        "P2S-WF-S03"
+      ],
+      "requirements": [
+        "REQ-002",
+        "REQ-031"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-Q03",
+      "lane": "QUALITY",
+      "phase": "V0.3",
+      "title": "Corpus PHP versions patchées et backports",
+      "depends_on": [
+        "P2S-WF-E10",
+        "P2S-WF-R04"
+      ],
+      "requirements": [
+        "REQ-011"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-Q04",
+      "lane": "QUALITY",
+      "phase": "V1.0",
+      "title": "Tests bout-en-bout URL rapport PHPPATCH PR fictive",
+      "depends_on": [
+        "P2S-WF-U04",
+        "P2S-WF-U05",
+        "P2S-WF-I07"
+      ],
+      "requirements": [
+        "REQ-032"
+      ],
+      "gate": "MANDATED_TEST_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-Q05",
+      "lane": "QUALITY",
+      "phase": "V1.0",
+      "title": "Recette staging négative auth performance et rollback",
+      "depends_on": [
+        "P2S-WF-Q04",
+        "P2S-WF-S07"
+      ],
+      "requirements": [
+        "REQ-032"
+      ],
+      "gate": "MANDATED_TEST_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-O01",
+      "lane": "OPERATIONS",
+      "phase": "Toutes",
+      "title": "Observer PR CI checkpoints via événement BUS existant",
+      "depends_on": [
+        "P2S-WF-G09"
+      ],
+      "requirements": [
+        "REQ-020"
+      ],
+      "gate": "READ_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-O02",
+      "lane": "OPERATIONS",
+      "phase": "Toutes",
+      "title": "Politique de supervision périodique sans doublon ni spam",
+      "depends_on": [
+        "P2S-WF-O01"
+      ],
+      "requirements": [
+        "REQ-020"
+      ],
+      "gate": "READ_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-O03",
+      "lane": "OPERATIONS",
+      "phase": "V1.0",
+      "title": "Observabilité métriques logs backups alertes",
+      "depends_on": [
+        "P2S-WF-I08",
+        "P2S-WF-I07"
+      ],
+      "requirements": [
+        "REQ-015"
+      ],
+      "gate": "GOVERNED_PR",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-O04",
+      "lane": "OPERATIONS",
+      "phase": "V1.0",
+      "title": "Préparer go/no-go et release production approuvée",
+      "depends_on": [
+        "P2S-WF-S08",
+        "P2S-WF-G07",
+        "P2S-WF-O03"
+      ],
+      "requirements": [
+        "REQ-017"
+      ],
+      "gate": "HUMAN_PRODUCTION_APPROVAL",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-O05",
+      "lane": "OPERATIONS",
+      "phase": "V1.0",
+      "title": "Déployer sur les deux hôtes S1 en chaîne gouvernée",
+      "depends_on": [
+        "P2S-WF-O04"
+      ],
+      "requirements": [
+        "REQ-017",
+        "REQ-018"
+      ],
+      "gate": "HUMAN_PRODUCTION_APPROVAL",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    },
+    {
+      "id": "P2S-WF-O06",
+      "lane": "OPERATIONS",
+      "phase": "V1.0",
+      "title": "Maintenance récurrente avis CVE certificats sauvegardes",
+      "depends_on": [
+        "P2S-WF-O05"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-017"
+      ],
+      "gate": "READ_ONLY",
+      "status": "PLANNED_NOT_ADMITTED",
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # CURRENT_STATE — Snapshot contrôlé, non temps réel
 
 **Continuity ID:** `PHP2SHELL-CONT-20261027-ROOT-01`  
-**Capture datée:** 2026-10-27, lecture GitHub de la présente intervention  
+**Capture datée:** 2026-10-28, nouvelle réconciliation GitHub/MCP, état documentaire figé après l'observation  
 **Source de vérité actuelle :** GitHub API et sondes S1 observées au moment de la reprise, **pas** ce tableau statique ; vérifier avant toute action.  
 **Ancre :** https://github.com/chainsolutions-wealthtech/Php2shell/issues/5
 
@@ -11,9 +11,9 @@
 |---|---|---|---|
 | Dépôt source | `chainsolutions-wealthtech/Php2shell` | public | dépôt GitHub |
 | `main` | `a9d799b008fc65ed5745745bc4ef09e8b889aabe` | inchangé, CLI expérimentale | ref GitHub |
-| PR #1 / V0.1 | `26287b66ccd6087955ac587d08ff3ca49d340fd8` | ouverte, base `main` | https://github.com/chainsolutions-wealthtech/Php2shell/pull/1 |
-| PR #2 / V0.2 | `d7f2b1d21c6e7c8269eab23c5547d738118bae2f` | ouverte, DRAFT, base branche PR #1 | https://github.com/chainsolutions-wealthtech/Php2shell/pull/2 |
-| PR #3 / S1 | `84fc090e08ca6e31e965c6bfab90f3556161e2d2` | ouverte, DRAFT, base branche PR #2 | https://github.com/chainsolutions-wealthtech/Php2shell/pull/3 |
+| PR #1 / V0.1 | `c17f0931db2cae659e4301585b0bf3db9078ca09` | ouverte, base `main` | https://github.com/chainsolutions-wealthtech/Php2shell/pull/1 |
+| PR #2 / V0.2 | `8c70d5f5af828588d87fd9c70a8a1b39d555de86` | ouverte, DRAFT, base branche PR #1 | https://github.com/chainsolutions-wealthtech/Php2shell/pull/2 |
+| PR #3 / S1 | `5ce8f4ed91068fa6cad3dbd8d7ad8d16116090fa` | ouverte, DRAFT, base branche PR #2 | https://github.com/chainsolutions-wealthtech/Php2shell/pull/3 |
 | Issue #4 | — | ouverte, admission S1 | https://github.com/chainsolutions-wealthtech/Php2shell/issues/4 |
 | Issue #5 | — | ancre de continuité ouverte | https://github.com/chainsolutions-wealthtech/Php2shell/issues/5 |
 | Branche continuité | `docs/canonical-continuity-20261027` | créée sur `main` vérifié ; **PR #6 ouverte, non fusionnée** | https://github.com/chainsolutions-wealthtech/Php2shell/pull/6 |
@@ -61,6 +61,16 @@ La **priorité active reste P2S-NEXT-001** : revue PR #6, puis correction/finali
 ## Work packages et orchestration — extension documentaire au 28/10/2026
 
 Deux nouveaux fichiers sont ajoutés sur la branche **PR #6 non fusionnée** : [`WORK_PACKAGES.json`](WORK_PACKAGES.json) (61 unités de travail candidates, 8 axes, liens aux REQ-001→032, dépendances et permissions) et [`INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md`](INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md) (proposition de fonctionnement event-driven, déduplication, admission via gouvernance existante, priorités et tests). Ces documents **ne sont pas un scheduler actif**, aucune tâche runtime n'a été créée ni aucun agent nouveau provisionné. Les références GitHub/CI doivent être actualisées avant tout statut `VERIFIED_DONE`. **Priorité active inchangée : P2S-NEXT-001**.
+
+## Réconciliation de construction — 28 octobre 2026 (ajout après mise à jour)
+
+- **PR #1** : trois observations corrigées sur sa branche existante (DNS par label, assertion d'avis non vide, documentation Docker), HEAD `c17f0931db2cae659e4301585b0bf3db9078ca09` ; CI [40602856210](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40602856210) et [40602863436](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40602863436) **SUCCESS**.
+- **PR #2** : commande hors ligne `import-targets` pour CSV/JSON/TXT (normalisation, déduplication, P1/P2 sans élévation implicite), tests ; **merge commit à deux parents** intégrant les dernières corrections PR #1 sans rebase ni force ; HEAD `8c70d5f5af828588d87fd9c70a8a1b39d555de86` ; CI [40603426908](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40603426908) et [40603432495](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40603432495) **SUCCESS (31 tests)**.
+- **PR #3** : branche S1 resynchronisée par merge commit à deux parents avec PR #2, HEAD `5ce8f4ed91068fa6cad3dbd8d7ad8d16116090fa` ; CI S1/DNS/TLS et suite de tests **SUCCESS** (runs [40603599603](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40603599603), [40603599615](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40603599615), [40603607636](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40603607636), [40603607747](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40603607747)).
+- **PR #6** : HEAD `1285c8d9a385c0e13a79ecb872b100f88540eea3` au dernier contrôle **avant le présent document** ; tests append-only inclus, 33 tests et CI réussies. Revue demandée au compte **Patricked-code** sur PR #1 et #6 ; **aucune approbation reçue à l'instant d'observation**.
+- **S1** : MCP ping/réconciliation réussis, deux sous-domaines reconfirmés, mais **aucun outil borné d'écriture/déploiement PHP2SHELL/PHPPATCH n'est exposé**. Ne pas détourner les outils `legacy_vhost` ou SadiaAF, ne pas toucher aux vhosts hors autorisation.
+- **Automatisation de continuité** : tâche `6ae13640aa9c8191b20d3d120bf71ace`, récurrence **horaire**, activée. Cette tâche déclenche un nouveau contrôle/éventuelle exécution admissible et checkpoint ; **ce n'est pas le runtime multi-agents final ni une promesse de déploiement automatique**. Ne pas dupliquer les missions Regulatory/MCP existantes.
+- La NEXT_ACTION demeure la validation/revue gouvernée des branches existantes ; les développements additionnels indépendants ne valent pas autorisation de fusion ou de mise en production.
 
 ## Points bloquants
 

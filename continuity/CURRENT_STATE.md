@@ -45,6 +45,13 @@
 - **V0.4** : infrastructure DNS/TLS/Plesk prête et runbooks/CI préflight ; aucune application Docker Web/API déployée, pas d'adaptateur MCP pour PHP2SHELL.
 - **V1.0** : pas encore de consoles Web ni de gestion de projets ou workflow d'approbations opérationnels.
 
+## Réconciliation des exigences fondatrices — addendum documentaire 27/10/2026
+
+- Le texte intégral du **cahier des charges reconstitué** est conservé sous `continuity/FOUNDING_SPECIFICATION.md`, avec 10 capacités produit et les six lots historiques.
+- Le tableau `continuity/REQUIREMENTS_TRACEABILITY.md` couvre `REQ-001` à `REQ-022` : les campagnes CSV/TXT, la détection PHP passive à grande échelle, les autorisations vérifiées, FastAPI/PostgreSQL/Redis/workers, les tests de patches et les deux interfaces **ne sont pas déclarés livrés** sans tests.
+- `continuity/CVE_SOURCE_REGISTER.md` répertorie les **deux CVE officiellement confirmées** et les seuils de correction PHP amont. Le code V0.1 reste un comparateur de versions sans attestation par actif et l'ingestion sourcée n'est pas encore implantée.
+- Les documents de continuité restent sur **PR #6** tant qu'ils ne sont pas fusionnés ; toujours interroger GitHub pour le HEAD et la CI exacts après ces ajouts.
+
 ## Points bloquants
 
 1. PR #1 non revue/fusionnée ; ne pas contourner les dépendances des PR empilées.

@@ -22,6 +22,8 @@
 
 | 2026-10-27 | P2S-EVT-012 | Décision de couvrir la **saisie URL depuis le frontend**, la navigation limitée aux pages autorisées, l'analyse Web publique et l'analyse des sources/runtime si mandat P2, le diagnostic PHP/CVE, le document de remédiation et l'enchaînement vers PHPPATCH | Contrat `continuity/URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md`, matrice REQ-023→032 et tests documentaires sur PR #6 ; aucune cible réelle auditée ni UI déployée |
 
+| 2026-10-28 | P2S-EVT-013 | Catalogue de 61 unités de travail en huit axes et contrat de workflow intelligent continu définis, sans code de moteur d'orchestration ni tâche runtime déclenchée | PR #6 ; `continuity/WORK_PACKAGES.json` / `INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md` / `tests/test_workflow_backlog_contract.py` ; CI à attester au HEAD |
+
 ## Règles de qualification
 - **Observé** : objet GitHub/CI/S1 vérifié avec date/HEAD ; **déclaré** : demande utilisateur ; **prévu** : architecture non livrée.
 - Indiquer lorsque des observations anciennes peuvent avoir changé, y compris les DNS/TLS et statuts de PR.

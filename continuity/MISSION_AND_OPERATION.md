@@ -1,5 +1,8 @@
 # Mission métier et fonctionnement visé de PHP2SHELL / PHPPATCH
 
+**Continuity ID:** `PHP2SHELL-CONT-20261027-ROOT-01`  
+**Ancre durable:** https://github.com/chainsolutions-wealthtech/Php2shell/issues/5
+
 **Mandat permanent :** protéger des applications PHP sur lesquelles l'opérateur dispose d'une autorisation explicite. La plateforme doit produire des analyses reproductibles, expliquer ses constats, préparer des propositions de correction et aider à valider leur sécurité **sans appliquer de correctif en production de façon autonome**.
 
 ## Cycle métier fonctionnel attendu

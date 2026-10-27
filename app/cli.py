@@ -1,6 +1,7 @@
 import argparse
 import json
 from .core import evaluate, inventory, load_targets
+from .static_analysis import scan_project
 
 def main():
     parser = argparse.ArgumentParser(description='PHP2SHELL offline defensive prototype')
@@ -9,8 +10,15 @@ def main():
     check.add_argument('--php', required=True)
     inv = sub.add_parser('inventory')
     inv.add_argument('--file', required=True)
+    scan = sub.add_parser('scan-local', help='Read-only PHP and Composer source inventory')
+    scan.add_argument('--path', required=True, help='Authorized local project directory')
     args = parser.parse_args()
-    result = evaluate(args.php) if args.command == 'check-version' else inventory(load_targets(args.file))
+    if args.command == 'check-version':
+        result = evaluate(args.php)
+    elif args.command == 'inventory':
+        result = inventory(load_targets(args.file))
+    else:
+        result = scan_project(args.path)
     print(json.dumps(result, indent=2, ensure_ascii=False))
 
 if __name__ == '__main__':

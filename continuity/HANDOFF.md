@@ -28,6 +28,10 @@ Le programme initial **comprenait dès l'origine davantage qu'un scanner local d
 
 Lire [`URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md`](URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md) avant tout redesign du frontend ou des agents Web. **Obligation de ne pas perdre** : champ URL/campagne, navigation de pages autorisées/quotas/SSRF, observations HTML/JS/headers, analyse code PHP serveur seulement avec connecteur autorisé P2, diagnostic et panneau CVE avec preuves/confiance, dossier PDF/JSON/CSV et passage indépendant à PHPPATCH avec propositions de patch, tests Docker isolés et approbation. **REQ-023→REQ-032** dans la matrice. Conserver les 22 exigences d'origine, les six lots et les cinq versions ; ne pas annoncer le code comme livré.
 
+## Reprise du workflow intelligent et backlog (NE PAS IGNORER)
+
+Lire [`INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md`](INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md) **et** [`WORK_PACKAGES.json`](WORK_PACKAGES.json) : **61 work packages de conception**, huit axes, dépendances acycliques, 32 exigences et gates. **Ne jamais confondre backlog avec tâches runtime admises**, ni créer de second bus/dispatcher, ni lancer une deuxième tâche/PR sur une ressource déjà réclamée. Revalider GitHub et le MCP avant tout claim ; une seule NEXT_ACTION métier active (`P2S-NEXT-001`) jusqu'au prochain checkpoint gouverné. Les agents peuvent élaborer des propositions en lecture seule sur des axes indépendants, jamais s'auto-autoriser des écritures ou le déploiement S1.
+
 ## Reprise après absence de connexion
 
 Si GitHub n'est pas connecté, demander ou rétablir la connexion du dépôt ; **ne pas reconstituer une mission comme exécutée** depuis des souvenirs partiels. Si le MCP est bloqué, continuer en lecture seule/GitHub uniquement quand cela relève du mandat, puis signaler la limite. L'issue #5 est l'adresse durable à fournir pour la reprise.

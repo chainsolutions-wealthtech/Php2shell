@@ -23,10 +23,12 @@
 
 | P2S-DEC-012 | 2026-10-27 | Ajouter à PHP2SHELL un **audit de site déclenché par URL dans le frontend**, parcours et analyse des pages autorisées, diagnostic PHP/CVE et document de remédiation ; permettre dans PHPPATCH le correctif proposé, les tests et la validation séparée | Ne pas confondre HTTP/HTML/JS public et code PHP serveur ; P2 source/runtime mandaté requis pour l'analyse en profondeur ; crawl borné, anti-SSRF, sans exploit ni patch automatique de tiers ; exigences REQ-023 à REQ-032 | `continuity/URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md` / issue #5 / PR #6 |
 
+| P2S-DEC-013 | 2026-10-28 | Organiser **toutes les prochaines actions identifiables** dans un workflow continu, **multidirectionnel et intelligent**, en préservant la priorité actuelle et la reprise inter-conversations | **61 work packages planifiés / 8 axes / DAG sans cycle / gates** ; détection de dépendances, proposition d'actions, parallélisme lecture seule et anti-doublon par les autorités MCP existantes ; aucun moteur runtime ou autorisation implicite créé | `continuity/WORK_PACKAGES.json` et `continuity/INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md` ; PR #6 / issue #5 |
+
 ## Modèle pour prochaine décision
 
 ```text
-ID: P2S-DEC-013 (ou suivant, après contrôle du journal)
+ID: P2S-DEC-014 (ou suivant, après contrôle du journal)
 Date UTC:
 Source de décision: mandat explicite de l'utilisateur / décision technique argumentée
 Texte:

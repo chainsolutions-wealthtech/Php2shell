@@ -34,3 +34,23 @@ La V0.2 ajoute des tests de masquage lexical, d'exclusion des dépendances, de l
 3. Preuves d'autorisation et registres de mandats (distincts de la simple mention `--path`).
 4. Exports de rapports et revues indépendantes avant toute remédiation.
 5. API sécurisée et déploiement gouverné après autorisation de production.
+
+## Import de campagnes local V0.2 (ajout non intrusif)
+
+Le prototype expose maintenant **une prévisualisation hors ligne** de listes de domaines, sans DNS, HTTP ni audit de site :
+
+```bash
+python -m app.cli import-targets --file ./targets.json
+python -m app.cli import-targets --file ./targets.csv
+python -m app.cli import-targets --file ./targets.txt
+```
+
+- JSON : tableau d'objets `{"hostname":"demo.example","scope":"public_metadata"}` ou `{"hostname":"owned.example","scope":"owned_source","evidence":"declaration"}`.
+- CSV : en-têtes obligatoires `hostname,scope` ; colonne `evidence` optionnelle, requise avec une valeur non vide pour `owned_source`.
+- TXT : **un domaine par ligne**, lignes vides et commentaires `#` ignorés ; attribue uniquement `public_metadata`, jamais de promotion implicite P2.
+- Normalisation DNS cohérente avec `Target` ; doublons exacts fusionnés ; doublons avec scopes ou preuves divergents rejetés ; entrée non valide rejetée.
+- Maximum 10 000 lignes et 5 Mo ; refus des fichiers de saisie symboliques. La commande `inventory --file` originale reste inchangée (JSON).
+- Retour JSON : `rows_received`, `unique_targets`, `duplicates_removed`, `targets`, limites et origine du format. **Les `scope` et `evidence` sont déclaratifs, PAS une preuve d'autorisation vérifiée.**
+- Les imports constituent une préparation de **REQ-001** : ni stockage durable de campagnes, ni crawler, ni scanner distant, ni ordonnanceur ne sont encore construits. Toute collecte Web future requiert admission réelle de mandat/portée avant une requête.
+
+Tests : `python -m unittest discover -s tests -v`.

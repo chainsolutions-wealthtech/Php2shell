@@ -41,4 +41,13 @@ jobs:
               dig +time=3 +tries=1 +norecurse +noall +comments +answer +authority "@$NS" "$HOST" A
             done
           done
+          echo "========== BYPASS DNS: CONNECT DIRECTLY TO S1 =========="
+          for HOST in php2shell.wealthtechinnovations.com phppatch.wealthtechinnovations.com; do
+            echo "--- Public DNS route for $HOST ---"
+            curl -sS -I --connect-timeout 5 --max-time 12 -w 'remote_ip=%{remote_ip} http_code=%{http_code} ssl_verify_result=%{ssl_verify_result}\\n' "https://$HOST/" || true
+            echo "--- Direct S1 212.227.212.33 with hostname/SNI: $HOST ---"
+            curl -sS -I --connect-timeout 5 --max-time 12 --resolve "$HOST:443:212.227.212.33" -w 'remote_ip=%{remote_ip} http_code=%{http_code} ssl_verify_result=%{ssl_verify_result}\\n' "https://$HOST/" || true
+            echo "--- Direct S1 HTTP : $HOST ---"
+            curl -sS -I --connect-timeout 5 --max-time 12 --resolve "$HOST:80:212.227.212.33" -w 'remote_ip=%{remote_ip} http_code=%{http_code}\\n' "http://$HOST/" || true
+          done
           echo "DNS diagnostic finished (absence of DNS data is a diagnostic result, not a test pass)."

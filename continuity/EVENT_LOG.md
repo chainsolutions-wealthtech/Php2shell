@@ -26,6 +26,8 @@
 
 | 2026-10-28 | P2S-EVT-014 | Correctifs PR #1 des trois observations, imports CSV/JSON/TXT V0.2 et tests, fusions non forcées des HEAD V0.1→V0.2→préparation S1 PR #3 ; demandes de revue à Patricked-code ; automatisation horaire de continuité créée | PR #1/#2/#3/#6, CI au HEAD et checkpoint de l'issue #5 à confirmer ; aucun service applicatif déployé sur S1 |
 
+| 2026-10-28 | P2S-EVT-015 | Ajout à V0.2 de la lecture bornée et non intrusive de `composer.lock`, tests de sécurité/confidentialité, et nouvelle synchronisation de PR #3 avec PR #2 sans forcer l'historique | PR #2 HEAD `664cf5cde8743713053f4799c24b7d05a074441f` ; PR #3 HEAD `2d599f48958d54ceefa1454e01a37eb56d86c06d` ; CI et checkpoint issue #5 |
+
 ## Règles de qualification
 - **Observé** : objet GitHub/CI/S1 vérifié avec date/HEAD ; **déclaré** : demande utilisateur ; **prévu** : architecture non livrée.
 - Indiquer lorsque des observations anciennes peuvent avoir changé, y compris les DNS/TLS et statuts de PR.

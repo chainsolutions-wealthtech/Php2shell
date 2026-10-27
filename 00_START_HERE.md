@@ -3,7 +3,7 @@
 > **Point d'entrée officiel pour reprendre le programme dans toute nouvelle conversation ou avec tout agent autorisé.**
 > **Continuity ID stable :** `PHP2SHELL-CONT-20261027-ROOT-01`
 > **Ancre durable de suivi :** https://github.com/chainsolutions-wealthtech/Php2shell/issues/5
-> **Attention :** ce document est ajouté sur une branche de travail ; tant que la PR de continuité n'est pas fusionnée, **ne pas rechercher ce fichier sur `main` par défaut**. Utiliser le lien de la branche ou l'issue #5.
+> **Attention :** ce document est ajouté sur [PR #6](https://github.com/chainsolutions-wealthtech/Php2shell/pull/6) ; tant que la PR de continuité n'est pas fusionnée, **ne pas rechercher ce fichier sur `main` par défaut**. Utiliser le lien de la branche ou l'issue #5.
 
 ## Objectif fondamental (non négociable)
 
@@ -47,6 +47,7 @@ Concevoir puis livrer une **plateforme défensive de gestion des risques PHP, de
 - **PR #3** https://github.com/chainsolutions-wealthtech/Php2shell/pull/3 — préparation S1, base branche PR #2
 - **Issue #4** https://github.com/chainsolutions-wealthtech/Php2shell/issues/4 — admission et déploiement S1
 - **Issue #5** https://github.com/chainsolutions-wealthtech/Php2shell/issues/5 — ancrage unique de continuité et checkpoints
+- **PR #6** https://github.com/chainsolutions-wealthtech/Php2shell/pull/6 — fichiers canoniques et tests, **non fusionnée**
 - **MCP existant** https://github.com/Patricked-code/MCP/issues/349 — travail de provisionnement sous **autorité MCP séparée**
 
 ## Reprise opérationnelle (résumé)

@@ -24,6 +24,8 @@
 
 | 2026-10-28 | P2S-EVT-013 | Catalogue de 61 unités de travail en huit axes et contrat de workflow intelligent continu définis, sans code de moteur d'orchestration ni tâche runtime déclenchée | PR #6 ; `continuity/WORK_PACKAGES.json` / `INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md` / `tests/test_workflow_backlog_contract.py` ; CI à attester au HEAD |
 
+| 2026-10-28 | P2S-EVT-014 | Correctifs PR #1 des trois observations, imports CSV/JSON/TXT V0.2 et tests, fusions non forcées des HEAD V0.1→V0.2→préparation S1 PR #3 ; demandes de revue à Patricked-code ; automatisation horaire de continuité créée | PR #1/#2/#3/#6, CI au HEAD et checkpoint de l'issue #5 à confirmer ; aucun service applicatif déployé sur S1 |
+
 ## Règles de qualification
 - **Observé** : objet GitHub/CI/S1 vérifié avec date/HEAD ; **déclaré** : demande utilisateur ; **prévu** : architecture non livrée.
 - Indiquer lorsque des observations anciennes peuvent avoir changé, y compris les DNS/TLS et statuts de PR.

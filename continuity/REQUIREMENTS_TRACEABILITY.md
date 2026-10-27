@@ -58,6 +58,10 @@ Le mandat **saisie URL frontend, crawl Web borné, analyse approfondie P2, diagn
 
 **Aucune disparition de L1 (FastAPI/PostgreSQL/Redis/workers) sous prétexte que V0.1 actuelle est une CLI** : le livrable L1 reste à compléter dans V0.4/V1.0. L'ordre peut être planifié par dépendances techniques, sans renommer les exigences ni prétendre qu'elles sont déjà implémentées.
 
+## Liens vers les travaux candidats — pas de déclaration d'exécution
+
+Les **32 exigences** ont été reliées au backlog [`WORK_PACKAGES.json`](WORK_PACKAGES.json) (61 work packages, 8 lanes, dépendances et portes de contrôle) et au contrat [`INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md`](INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md). La couverture est **une planification**, pas une preuve d'implémentation : les statuts des exigences dans la matrice restent inchangés tant qu'une PR, une CI au SHA exact et les preuves d'acceptation n'attestent pas le livrable.
+
 ## Dépendances et evidence anchoring
 
 - Références initiales : PR #1 `https://github.com/chainsolutions-wealthtech/Php2shell/pull/1`

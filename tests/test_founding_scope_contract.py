@@ -79,10 +79,28 @@ class FoundingScopeTests(unittest.TestCase):
                      "CVE_SOURCE_REGISTER.md", "URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md"):
             self.assertIn(name, start)
 
+    def _assert_append_only_decision_sequence(self, ids):
+        # Preserve all foundational decisions but accept legitimate additions.
+        baseline = [f"P2S-DEC-{i:03d}" for i in range(1, 14)]
+        self.assertGreaterEqual(len(ids), len(baseline))
+        self.assertEqual(ids[:len(baseline)], baseline)
+        self.assertEqual(len(ids), len(set(ids)))
+        self.assertEqual(
+            ids,
+            [f"P2S-DEC-{i:03d}" for i in range(1, len(ids) + 1)],
+        )
+
     def test_foundational_decisions_are_append_only_unique(self):
         decisions = self._read("continuity/DECISIONS_LOG.md")
         ids = re.findall(r"(?m)^\| (P2S-DEC-\d{3}) \|", decisions)
-        self.assertEqual(ids, [f"P2S-DEC-{i:03d}" for i in range(1, 14)])
+        self._assert_append_only_decision_sequence(ids)
+
+    def test_new_decisions_can_be_appended_without_regression(self):
+        decisions = self._read("continuity/DECISIONS_LOG.md")
+        ids = re.findall(r"(?m)^\| (P2S-DEC-\d{3}) \|", decisions)
+        next_id = f"P2S-DEC-{len(ids) + 1:03d}"
+        self._assert_append_only_decision_sequence(ids + [next_id])
+
 
 if __name__ == "__main__":
     unittest.main()

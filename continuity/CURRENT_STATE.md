@@ -52,6 +52,12 @@
 - `continuity/CVE_SOURCE_REGISTER.md` répertorie les **deux CVE officiellement confirmées** et les seuils de correction PHP amont. Le code V0.1 reste un comparateur de versions sans attestation par actif et l'ingestion sourcée n'est pas encore implantée.
 - Les documents de continuité restent sur **PR #6** tant qu'ils ne sont pas fusionnés ; toujours interroger GitHub pour le HEAD et la CI exacts après ces ajouts.
 
+## Extension UX « audit d'URL et remédiation » — ajout au backlog du 27/10/2026
+
+Spécification additive [`URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md`](URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md), exigences **REQ-023→REQ-032** de `REQUIREMENTS_TRACEABILITY.md` : champ URL frontend, crawl Web borné sous autorisation, cartographie et analyse des pages publiques, diagnostic par preuve, panneau CVE PHP2Shell, connecteur source/runtime P2 pour analyse profonde, rapport PDF/JSON/CSV, transfert vers PHPPATCH pour correctifs proposés et validations. **État = planifié/non implémenté.** Aucun audit de cible réelle effectué ni modification S1 par cet ajout. Une URL Web ne livre pas les sources PHP privées.
+
+La **priorité active reste P2S-NEXT-001** : revue PR #6, puis correction/finalisation gouvernée de PR #1 ; aucun changement de l'ordre V0.1→V1.0.
+
 ## Points bloquants
 
 1. PR #1 non revue/fusionnée ; ne pas contourner les dépendances des PR empilées.

@@ -48,7 +48,7 @@ class StaticAnalysisTests(unittest.TestCase):
                 '/* system($comment); */\n'
                 '$a = "shell_exec($quoted)";\n'
                 '$b = \'unserialize($quoted)\';\n'
-                "$c = <<<'DATA'\\n"
+                "$c = <<<'DATA'\n"
                 'eval($heredoc);\n'
                 'DATA;\n'
                 'eval($real);\n'

@@ -383,7 +383,8 @@
         "P2S-WF-E06"
       ],
       "requirements": [
-        "REQ-008"
+        "REQ-008",
+        "REQ-026"
       ],
       "gate": "GOVERNED_PR",
       "status": "PLANNED_NOT_ADMITTED",
@@ -414,7 +415,8 @@
         "P2S-WF-S01"
       ],
       "requirements": [
-        "REQ-006"
+        "REQ-006",
+        "REQ-026"
       ],
       "gate": "MANDATED_TEST_ONLY",
       "status": "PLANNED_NOT_ADMITTED",

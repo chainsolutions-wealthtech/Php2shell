@@ -25,10 +25,12 @@
 
 | P2S-DEC-013 | 2026-10-28 | Organiser **toutes les prochaines actions identifiables** dans un workflow continu, **multidirectionnel et intelligent**, en préservant la priorité actuelle et la reprise inter-conversations | **61 work packages planifiés / 8 axes / DAG sans cycle / gates** ; détection de dépendances, proposition d'actions, parallélisme lecture seule et anti-doublon par les autorités MCP existantes ; aucun moteur runtime ou autorisation implicite créé | `continuity/WORK_PACKAGES.json` et `continuity/INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md` ; PR #6 / issue #5 |
 
+| P2S-DEC-014 | 2026-10-28 | Autoriser la poursuite technique continue sans nouvelle confirmation pour les opérations admissibles ; utiliser `Patricked-code` pour les revues GitHub si nécessaire | Une automatisation horaire PHP2SHELL distincte peut examiner l'état, agir sur branches autorisées et publier les checkpoints ; **ne jamais contourner** les revues exigées, protections `main`, permissions P1/P2, déploiements sensibles ni le MCP existant | Automatisation `6ae13640aa9c8191b20d3d120bf71ace` / PR #1/#6 / issue #5 |
+
 ## Modèle pour prochaine décision
 
 ```text
-ID: P2S-DEC-014 (ou suivant, après contrôle du journal)
+ID: P2S-DEC-015 (ou suivant, après contrôle du journal)
 Date UTC:
 Source de décision: mandat explicite de l'utilisateur / décision technique argumentée
 Texte:

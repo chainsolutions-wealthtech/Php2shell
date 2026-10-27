@@ -43,6 +43,14 @@ Lire [`continuity/URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md`](continuity/URL_SITE_AUD
 
 Cette capacité ajoute **REQ-023 à REQ-032** dans [`REQUIREMENTS_TRACEABILITY.md`](continuity/REQUIREMENTS_TRACEABILITY.md) sans supprimer REQ-001 à REQ-022, les 6 lots ni les 5 versions ; aucune reprise ne doit la perdre.
 
+## Workflow multidirectionnel intelligent : capacité retenue (pas encore exécutée)
+
+**Le programme possède un backlog de 61 work packages**, chacun avec ID, dépendances, lane, version, exigences et gate. Sources obligatoires avant toute nouvelle orchestration :
+- [`continuity/INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md`](continuity/INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md) : huit axes de travail, événements déclencheurs, admission/claims, exécution gouvernée, tests et checkpoints.
+- [`continuity/WORK_PACKAGES.json`](continuity/WORK_PACKAGES.json) : **DAG de planification lisible par machine** ; **aucun moteur de workflow/agent automatique actif n'est créé par ce fichier**.
+
+L'agent peut **proposer** de nouvelles tâches selon les observations et la CI, mais seule l'autorité MCP/GitHub existante peut admettre une opération d'écriture avec mandat valide ; les agents de lecture indépendants peuvent progresser parallèlement. **NEXT_ACTION unique inchangée : P2S-NEXT-001**, revue PR #6 puis PR #1 V0.1. Aucun second BUS/Task Queue/gateway.
+
 ## Programme permanent : versions immuables par objectif, évolutives par ajouts
 
 | Version | Mandat | État au 27/10/2026 |

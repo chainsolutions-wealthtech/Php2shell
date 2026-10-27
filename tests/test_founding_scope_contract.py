@@ -72,7 +72,6 @@ class FoundingScopeTests(unittest.TestCase):
                      "phppatch.wealthtechinnovations.com"):
             self.assertIn(host, doc)
         self.assertIn("non implément", self._read("continuity/REQUIREMENTS_TRACEABILITY.md"))
-        self.assertIn("Pas de modification", self._read("continuity/PROTOCOL.md")) if False else None
 
     def test_canonical_entry_links_to_all_added_contracts(self):
         start = self._read("00_START_HERE.md")

@@ -21,6 +21,10 @@ Une fonctionnalité est dite **programmée** si un besoin est écrit, **dévelop
 
 Avant toute décision de concevoir ou mettre en ligne un scanner, lire `URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md` et **REQ-023→REQ-032** dans la matrice. Ne jamais qualifier un résultat de « vulnérabilité PHP confirmée » sur la seule base d'un crawl de pages publiques : accès aux sources/runtime P2 et preuves de backport requis pour l'applicabilité. Refuser tout crawl hors scope, toute tentative d'exploit RCE de tiers, et toute proposition de correction appliquée sans admission/approbation. Le frontend PHPPATCH reste un service distinct avec moteur partagé, sans gateway parallèle.
 
+## Workflow multi-axes sans seconde autorité
+
+Les fichiers [`INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md`](INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md) et [`WORK_PACKAGES.json`](WORK_PACKAGES.json) constituent un **backlog de planification** et un modèle d'orchestration, pas une nouvelle Task Queue ni un second agent autonome actif. Chaque nouveau work package doit associer `REQ-xxx`, dépendances, ressource, mandat, gate, preuves et checkpoint. La complétude d'un DAG documentaire ne garantit ni la disponibilité d'exécuteurs, ni l'autorisation, ni la création d'une automatisation récurrente. Réutiliser les identités stables, claims, locks et événements gouvernés réellement disponibles dans MCP, après confirmation de leur interface, ou rester bloqué et l'attester. Les lectures peuvent être concurrentes ; les écritures sur une même ressource ne le sont pas.
+
 ## 2. Cycle obligatoire pour chaque nouvelle conversation / session
 
 **REPRISE LECTURE SEULE d'abord :**

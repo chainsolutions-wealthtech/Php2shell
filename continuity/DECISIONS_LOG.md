@@ -17,10 +17,14 @@
 | P2S-DEC-007 | 2026-10-27 | Exiger une **traçabilité durable** des conversations de travail, décisions, travaux, preuves, objectifs, blocages et reprise depuis toute nouvelle conversation | Issue #5 ancre unique + fichiers canoniques + checkpoint obligatoire par jalon ; pas de garantie de transcription automatique intégrale | issue #5 / PR de continuité |
 | P2S-DEC-008 | 2026-10-27 | Éviter Codex/Copilot, les régressions, la fusion des autorités MCP/GRT, les écritures directes sur `main` et les opérations non autorisées | Préserver tests, protections, revues, historique, fonctionnement existant | règles du programme / `docs/GOVERNANCE.md` sur PR #1 |
 
+| P2S-DEC-009 | 2026-10-27 | Confirmer **l'intégralité de la mission fondatrice** : campagnes de centaines/milliers de domaines, CSV/JSON/TXT, identification PHP passive, code autorisé, CVE/intelligence, patch/validation, supervision et rapports | Conserver le scope global au-delà du seul comparateur de versions ; ne jamais convertir un domaine public en autorisation d'audit actif | `continuity/FOUNDING_SPECIFICATION.md` / issue #5 |
+| P2S-DEC-010 | 2026-10-27 | Les **six lots historiques** et les cinq versions V0.1→V1.0 sont **deux vues complémentaires** d'un même programme | Conserver FastAPI, PostgreSQL, Redis/workers, Docker isolé, PDF/CSV/JSON et campagnes passives même si ces éléments n'existent pas encore dans le code | `continuity/REQUIREMENTS_TRACEABILITY.md` / PR #6 |
+| P2S-DEC-011 | 2026-10-27 | Les CVE-2026-109618 et CVE-2026-109619 ainsi que les correctifs amont sont **documentés par le projet PHP et le CERT-FR** ; leur applicabilité à chaque actif n'est pas attestée par la CLI actuelle | Distinguer sources officielles vérifiées et catalogue/diagnostic effectif à implémenter ; priorité aux correctifs du moteur PHP, en tenant compte des backports | `continuity/CVE_SOURCE_REGISTER.md` / GHSA PHP / CERTFR-2026-ALE-014 |
+
 ## Modèle pour prochaine décision
 
 ```text
-ID: P2S-DEC-009 (ou suivant, après contrôle du journal)
+ID: P2S-DEC-012 (ou suivant, après contrôle du journal)
 Date UTC:
 Source de décision: mandat explicite de l'utilisateur / décision technique argumentée
 Texte:

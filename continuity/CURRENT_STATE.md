@@ -58,6 +58,10 @@ Spécification additive [`URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md`](URL_SITE_AUDIT_
 
 La **priorité active reste P2S-NEXT-001** : revue PR #6, puis correction/finalisation gouvernée de PR #1 ; aucun changement de l'ordre V0.1→V1.0.
 
+## Work packages et orchestration — extension documentaire au 28/10/2026
+
+Deux nouveaux fichiers sont ajoutés sur la branche **PR #6 non fusionnée** : [`WORK_PACKAGES.json`](WORK_PACKAGES.json) (61 unités de travail candidates, 8 axes, liens aux REQ-001→032, dépendances et permissions) et [`INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md`](INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md) (proposition de fonctionnement event-driven, déduplication, admission via gouvernance existante, priorités et tests). Ces documents **ne sont pas un scheduler actif**, aucune tâche runtime n'a été créée ni aucun agent nouveau provisionné. Les références GitHub/CI doivent être actualisées avant tout statut `VERIFIED_DONE`. **Priorité active inchangée : P2S-NEXT-001**.
+
 ## Points bloquants
 
 1. PR #1 non revue/fusionnée ; ne pas contourner les dépendances des PR empilées.

@@ -16,7 +16,13 @@ class Target:
 
     def __post_init__(self):
         host = self.hostname.strip().lower()
-        if not re.fullmatch(r'[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?', host) or '..' in host:
+        # Validate each DNS label independently, not merely the whole name.
+        # Total length <= 253, each ASCII label 1..63 chars, no leading or
+        # trailing hyphen. This intentionally rejects URLs and IDN Unicode:
+        # callers must first convert authorized IDNs to ASCII/Punycode.
+        if (not host or len(host) > 253 or
+                any(not re.fullmatch(r'[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?', label)
+                    for label in host.split('.'))):
             raise ValueError('Invalid hostname')
         object.__setattr__(self, 'hostname', host)
         if self.scope == Scope.OWNED and not self.evidence.strip():

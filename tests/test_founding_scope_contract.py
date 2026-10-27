@@ -82,7 +82,7 @@ class FoundingScopeTests(unittest.TestCase):
     def test_foundational_decisions_are_append_only_unique(self):
         decisions = self._read("continuity/DECISIONS_LOG.md")
         ids = re.findall(r"(?m)^\| (P2S-DEC-\d{3}) \|", decisions)
-        self.assertEqual(ids, [f"P2S-DEC-{i:03d}" for i in range(1, 13)])
+        self.assertEqual(ids, [f"P2S-DEC-{i:03d}" for i in range(1, 14)])
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,7 @@
 # NEXT_ACTION — une priorité à la fois
 
+**Ancre durable :** https://github.com/chainsolutions-wealthtech/Php2shell/issues/5
+
 **Continuity ID :** `PHP2SHELL-CONT-20261027-ROOT-01`  
 **Dernière décision matérialisée :** ancrer l'objectif, les décisions et la reprise dans GitHub (issue #5 et PR documentaire indépendante).
 

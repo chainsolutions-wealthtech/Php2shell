@@ -55,7 +55,7 @@ class ContinuityContractTests(unittest.TestCase):
         ):
             with self.subTest(path=path):
                 text = (ROOT / path).read_text(encoding="utf-8")
-                ids = re.findall(r"^\| (P2S-(?:DEC|EVT)-\d{3}) \|", text, flags=re.M)
+                ids = re.findall(r"^\|[^\n]*?\b(P2S-(?:DEC|EVT)-\d{3})\b[^\n]*\|", text, flags=re.M)
                 self.assertGreaterEqual(len(ids), 7, path)
                 self.assertEqual(len(ids), len(set(ids)), path)
 

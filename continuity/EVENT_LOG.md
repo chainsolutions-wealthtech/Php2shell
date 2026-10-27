@@ -18,7 +18,7 @@
 
 | 2026-10-27 | P2S-EVT-010 | Documents canoniques et tests de continuité publiés sur branche indépendante de `main`; PR #6 ouverte | https://github.com/chainsolutions-wealthtech/Php2shell/pull/6 ; CI exactes dans GitHub Actions |
 
-## Règles de qualification
+| 2026-10-27 | P2S-EVT-011 | Réconciliation additive du cahier des charges fondateur : double scope, import/campagnes, audit passif, runtime, API/DB/workers, six lots; vérification des avis PHP/CERT-FR; matrice REQ-001 à REQ-022 | PR #6 ; `continuity/FOUNDING_SPECIFICATION.md` / `CVE_SOURCE_REGISTER.md` / `REQUIREMENTS_TRACEABILITY.md` ; CI à confirmer au HEAD |\n\n## Règles de qualification
 - **Observé** : objet GitHub/CI/S1 vérifié avec date/HEAD ; **déclaré** : demande utilisateur ; **prévu** : architecture non livrée.
 - Indiquer lorsque des observations anciennes peuvent avoir changé, y compris les DNS/TLS et statuts de PR.
 - Un nouvel événement ne doit pas masquer un incident ou une régression antérieure ; conserver les liens des contrôles rouges et verts.

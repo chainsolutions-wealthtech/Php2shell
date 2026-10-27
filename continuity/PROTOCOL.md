@@ -17,6 +17,10 @@ Le **contrat produit** comprend `FOUNDING_SPECIFICATION.md` (les six lots histor
 
 Une fonctionnalité est dite **programmée** si un besoin est écrit, **développée** si du code existe, **validée** si tests/CI au HEAD + revue réussis, **déployée** si constat runtime/HTTPS E2E existe. L'absence de champ prouvé interdit la promotion de statut.
 
+## Garantie de conservation du parcours URL
+
+Avant toute décision de concevoir ou mettre en ligne un scanner, lire `URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md` et **REQ-023→REQ-032** dans la matrice. Ne jamais qualifier un résultat de « vulnérabilité PHP confirmée » sur la seule base d'un crawl de pages publiques : accès aux sources/runtime P2 et preuves de backport requis pour l'applicabilité. Refuser tout crawl hors scope, toute tentative d'exploit RCE de tiers, et toute proposition de correction appliquée sans admission/approbation. Le frontend PHPPATCH reste un service distinct avec moteur partagé, sans gateway parallèle.
+
 ## 2. Cycle obligatoire pour chaque nouvelle conversation / session
 
 **REPRISE LECTURE SEULE d'abord :**

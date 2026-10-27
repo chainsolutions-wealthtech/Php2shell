@@ -18,6 +18,14 @@
 9. **Déployer seulement si autorisé** : GitHub → MCP *existant* (session/claim/lock/permission/trace) → S1 ; sauvegarde, test de santé, observation et rollback. Pas de second gateway ni reprise d'autorité GRT.
 10. **Superviser et archiver** : tableau de bord, historique des décisions, rapports JSON/PDF, preuves, interventions, alertes et suivi jusqu'à résolution.
 
+## Contrat fondateur conservé dans son intégralité
+
+Ce cycle à dix étapes **n'abolit pas** les besoins initiaux plus détaillés : campagnes de **centaines à milliers de domaines**, imports `CSV/JSON/TXT`, normalisation/déduplication, **identification PHP passive** et détection de frameworks avec preuves/confiance, niveaux séparés `public_metadata` et `owned_source`/mandats, CVE Intelligence, analyse locale approfondie `composer.lock`/configs, attestation du runtime et SAPI, propositions de mises à jour de PHP et correctifs Git, validation Docker isolée, **Python/FastAPI/PostgreSQL/Redis/workers**, rapports PDF/CSV/JSON, historique et supervision.
+
+Ces besoins et les **six lots historiques** sont conservés dans [`FOUNDING_SPECIFICATION.md`](FOUNDING_SPECIFICATION.md), chacun relié aux cinq versions et à une preuve de livraison par [`REQUIREMENTS_TRACEABILITY.md`](REQUIREMENTS_TRACEABILITY.md). Le code existant ne prétend pas encore réaliser les composants non implémentés.
+
+**CVE prioritaires** : CVE-2026-109618 et CVE-2026-109619 sont officiellement décrites par PHP/CERT-FR depuis le 21/10/2026 ; référence et seuils amont documentés dans [`CVE_SOURCE_REGISTER.md`](CVE_SOURCE_REGISTER.md). L'ancien texte de prototype qualifiant ses seuils de « démonstration/non vérifiés » décrit **l'absence de source automatisée et de qualification par actif dans le logiciel**, et non l'inexistence des CVE. Un statut réel d'exposition nécessite version runtime, paquet/distribution, SAPI, config et backports.
+
 ## Deux interfaces, une plateforme
 
 - **php2shell.wealthtechinnovations.com** : analyse, inventaire, projet, risque, preuves, rapports et supervision.

@@ -28,6 +28,15 @@ Concevoir puis livrer une **plateforme défensive de gestion des risques PHP, de
 6. Documents techniques de référence (sur leurs **branches actuelles tant que non fusionnés**) : `docs/ROADMAP.md` et `docs/V0_2_STATIC_ANALYSIS.md` sur PR #2 ; `deploy/S1_DEPLOYMENT_RUNBOOK.md` et `deploy/S1_DOCKER_ARCHITECTURE.md` sur PR #3.
 7. **Revalider l'état en direct** : branches/PR/CI/HEAD GitHub, inventaire MCP/S1 par ping + réconciliation gouvernée, état des vhosts/DNS/TLS si la tâche dépend du serveur. Le GitHub courant prime sur un snapshot, qui prime sur la mémoire conversationnelle non sourcée.
 
+## Réconciliation explicite du mandat fondateur (ajout du 27/10/2026)
+
+**Les cinq versions ne résument pas à elles seules le périmètre fondateur.** Lire obligatoirement :
+- [Cahier des charges fondateur](continuity/FOUNDING_SPECIFICATION.md) : agent de cybersécurité PHP, **campagnes à grande échelle**, import CSV/JSON/TXT, identification passive, double niveau d'autorisation (`public_metadata` / `owned_source` avec preuve de mandat), moteur runtime PHP, patch et validation, plateforme Python/FastAPI/PostgreSQL/Redis/workers, Docker et les **six lots de construction historiques**.
+- [Matrice d'exhaustivité et de tests d'acceptation](continuity/REQUIREMENTS_TRACEABILITY.md) : exigences `REQ-001` à `REQ-022`, couverture et preuves ; **un lot initial n'est jamais annulé par une version de la roadmap**.
+- [Sources CVE vérifiées](continuity/CVE_SOURCE_REGISTER.md) : les CVE-2026-109618/109619 et les versions de correction sont confirmées officiellement en octobre 2026, **mais la fiabilité du catalogue codé, l'applicabilité à une installation et les éventuels backports restent à implémenter/attester**.
+
+**Séparation essentielle :** les besoins d'analyse passive des métadonnées de tiers, de campagnes CSV et de montée en charge restent à développer ; l'analyse approfondie du code/serveur exige une autorisation établie, pas seulement la présence d'un domaine dans une liste. Aucune sonde RCE ni exploitation de tiers n'est autorisée.
+
 ## Programme permanent : versions immuables par objectif, évolutives par ajouts
 
 | Version | Mandat | État au 27/10/2026 |

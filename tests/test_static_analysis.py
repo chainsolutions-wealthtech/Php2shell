@@ -27,6 +27,17 @@ class StaticAnalysisTests(unittest.TestCase):
             self.assertEqual(result["scanned_php_files"], 1)
             self.assertEqual(result["findings"], [])
 
+    def test_nested_vendor_directory_is_pruned(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            nested = root / "src" / "vendor"
+            nested.mkdir(parents=True)
+            (nested / "bad.php").write_text("<?php eval($x);")
+            (root / "src" / "ok.php").write_text("<?php echo 1;")
+            result = scan_project(root)
+            self.assertEqual(result["scanned_php_files"], 1)
+            self.assertEqual(result["findings"], [])
+
     def test_invalid_manifest_is_not_fatal(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)

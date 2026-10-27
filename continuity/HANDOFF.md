@@ -24,6 +24,10 @@ Utiliser ce texte au début d'une nouvelle conversation ChatGPT ou avec tout age
 
 Le programme initial **comprenait dès l'origine davantage qu'un scanner local de versions**. Après lecture des checkpoints, lire aussi **`continuity/FOUNDING_SPECIFICATION.md`**, **`continuity/REQUIREMENTS_TRACEABILITY.md`** et **`continuity/CVE_SOURCE_REGISTER.md`** depuis la PR de continuité #6 si elle n'est pas fusionnée. La reprise doit conserver : inventaire CSV/JSON/TXT à volume élevé, campagnes, détection passive PHP, deux niveaux d'autorisations stricts, runtime PHP/backports, parseur PHP, dépendances/config, CVE sourcées, génération de patchs Git, tests en laboratoire Docker isolé, PostgreSQL, FastAPI, Redis/workers, PDF/CSV/JSON, les six lots initiaux **et** les cinq jalons V0.1→V1.0. Aucun livrable ne doit être déclaré implémenté sur la seule base de ce cahier des charges.
 
+## Extension de reprise : audit d'URL depuis le frontend
+
+Lire [`URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md`](URL_SITE_AUDIT_AND_PATCH_WORKFLOW.md) avant tout redesign du frontend ou des agents Web. **Obligation de ne pas perdre** : champ URL/campagne, navigation de pages autorisées/quotas/SSRF, observations HTML/JS/headers, analyse code PHP serveur seulement avec connecteur autorisé P2, diagnostic et panneau CVE avec preuves/confiance, dossier PDF/JSON/CSV et passage indépendant à PHPPATCH avec propositions de patch, tests Docker isolés et approbation. **REQ-023→REQ-032** dans la matrice. Conserver les 22 exigences d'origine, les six lots et les cinq versions ; ne pas annoncer le code comme livré.
+
 ## Reprise après absence de connexion
 
 Si GitHub n'est pas connecté, demander ou rétablir la connexion du dépôt ; **ne pas reconstituer une mission comme exécutée** depuis des souvenirs partiels. Si le MCP est bloqué, continuer en lecture seule/GitHub uniquement quand cela relève du mandat, puis signaler la limite. L'issue #5 est l'adresse durable à fournir pour la reprise.

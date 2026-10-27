@@ -92,5 +92,54 @@ class StaticAnalysisTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 scan_project(file)
 
+    def test_composer_lock_offline_versions_and_groups(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "composer.lock").write_text(json.dumps({
+                "packages": [
+                    {"name": "vendor/library", "version": "1.2.3", "source": {"url": "https://secret.invalid/private"}},
+                ],
+                "packages-dev": [
+                    {"name": "vendor/dev-library", "version": "2.1.0"},
+                ],
+            }), encoding="utf-8")
+            result = scan_project(root)
+            self.assertTrue(result["composer_lock_present"])
+            self.assertEqual(result["locked_dependencies"], [
+                {"name": "vendor/library", "locked_version": "1.2.3", "dependency_group": "packages"},
+                {"name": "vendor/dev-library", "locked_version": "2.1.0", "dependency_group": "packages-dev"},
+            ])
+            self.assertNotIn("secret.invalid", json.dumps(result))
+            self.assertIn("not installed package attestation", result["limitations"])
+
+    def test_invalid_composer_lock_is_not_fatal(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "composer.lock").write_text('{"packages":"not-array"}', encoding="utf-8")
+            result = scan_project(root)
+            self.assertTrue(result["composer_lock_present"])
+            self.assertEqual(result["locked_dependencies"], [])
+            self.assertIn({"path": "composer.lock", "reason": "invalid_lockfile"}, result["skipped"])
+
+    def test_composer_lock_symlink_is_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            target = root / "real.lock"
+            target.write_text(json.dumps({"packages": [{"name": "x/y", "version": "1"}]}))
+            link = root / "composer.lock"
+            try:
+                link.symlink_to(target)
+            except (OSError, NotImplementedError):
+                self.skipTest("symlinks unavailable")
+            result = scan_project(root)
+            self.assertEqual(result["locked_dependencies"], [])
+            self.assertIn({"path": "composer.lock", "reason": "unsafe_manifest_path"}, result["skipped"])
+
+    def test_composer_lock_absent_is_explicit(self):
+        with tempfile.TemporaryDirectory() as d:
+            result = scan_project(Path(d))
+            self.assertFalse(result["composer_lock_present"])
+            self.assertEqual(result["locked_dependencies"], [])
+
 if __name__ == "__main__":
     unittest.main()

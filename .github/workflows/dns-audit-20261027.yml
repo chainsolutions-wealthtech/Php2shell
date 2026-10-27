@@ -1,0 +1,44 @@
+name: S1 PHP subdomains DNS diagnostic (read-only)
+on:
+  push:
+    branches:
+      - audit/s1-php-dns-20261027
+permissions:
+  contents: read
+jobs:
+  public-dns:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Compare public and authoritative DNS without credentials
+        shell: bash
+        run: |
+          set +e
+          echo "UTC: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          command -v dig || exit 2
+          ZONE=wealthtechinnovations.com
+          for HOST in php2shell.wealthtechinnovations.com phppatch.wealthtechinnovations.com; do
+            echo "========== $HOST =========="
+            for SERVER in 8.8.8.8 1.1.1.1; do
+              for TYPE in A AAAA CNAME; do
+                echo "--- @$SERVER $HOST $TYPE ---"
+                dig +time=3 +tries=1 +noall +comments +answer +authority "@$SERVER" "$HOST" "$TYPE"
+              done
+            done
+            echo "--- Google DNS-over-HTTPS $HOST A ---"
+            curl -fsS --connect-timeout 5 --max-time 12 "https://dns.google/resolve?name=$HOST&type=A" || true
+            echo
+            echo "--- External HTTPS HEAD $HOST ---"
+            curl -sS -I --connect-timeout 5 --max-time 12 "https://$HOST/" || true
+            echo
+          done
+          echo "========== AUTHORITATIVE ZONE =========="
+          dig +time=3 +tries=1 +noall +comments +answer "$ZONE" NS
+          dig +time=3 +tries=1 +noall +comments +answer "$ZONE" SOA
+          for NS in $(dig +time=3 +tries=1 +short NS "$ZONE" | head -n 5); do
+            echo "--- authoritative $NS ---"
+            for HOST in php2shell.wealthtechinnovations.com phppatch.wealthtechinnovations.com; do
+              dig +time=3 +tries=1 +norecurse +noall +comments +answer +authority "@$NS" "$HOST" A
+            done
+          done
+          echo "DNS diagnostic finished (absence of DNS data is a diagnostic result, not a test pass)."

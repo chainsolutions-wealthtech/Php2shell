@@ -191,5 +191,5 @@ def scan_project(root):
             "skipped": skipped,
             "limitations": ("Lexical PHP indicators, local PHP config indicators, and offline "
                             "declared/locked Composer data only; not effective PHP runtime, "
-                            "installed package attestation, vulnerability confirmation, "
+                            "not installed package attestation, vulnerability confirmation, "
                             "PHP AST, data-flow, or reachability analysis.")}

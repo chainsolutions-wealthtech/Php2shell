@@ -114,6 +114,14 @@ Deux nouveaux fichiers sont ajoutés sur la branche **PR #6 non fusionnée** : [
 - **REQ-005 reste PARTIELLE** : ni ingestion périodique validée sur API réelle, ni avis tiers/fournisseur backport, ni runtime/SAPI attesté, ni promotion automatique. Le test de transport n'est pas une preuve d'authenticité cryptographique. Prochaine étape technique : enrichissement du contrat de récupération sourcée, traitement des réponses live sous supervision/approbation et recoupement PHP/CERT-FR.
 - **NEXT_ACTION de gouvernance P2S-NEXT-001 inchangée** : revue indépendante puis décision de fusion des PR #6 et #1. Automatisation horaire existante reste le seul mécanisme de relance entre sessions, pas de daemon permanent construit.
 
+## V0.2 — enveloppe de déclaration runtime/SAPI et preuve non authentifiée (28/10/2026)
+
+- **PR #2 HEAD `424425116f54c353211aae554fc3866c242689b2`** : `app/runtime_evidence.py`, tests `tests/test_runtime_evidence.py`, manuel `docs/V0_2_RUNTIME_EVIDENCE.md`, CLI `review-runtime-evidence`. Le module inspecte un fichier JSON local `DECLARED_PHP_RUNTIME`, date UTC, mandat de laboratoire **déclaré**, SAPI, version PHP et `vendor_backport_status=not_verified`, avec limites de taille, symlinks et refus d'injection de champs `signature_verified`/`asset_applicability`.
+- Sorties explicitement `mandate_authorization_verified=false`, `signature_verified=false`, `effective_http_runtime_attested=false` et `asset_applicability=insufficient_evidence`. Les versions inférieures aux correctifs upstream restent **des indices non confirmés** ; aucune signature/autorisation réelle vérifiée.
+- GitHub Actions au SHA exact [40614036258](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40614036258) et [40614041127](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40614041127) : **SUCCESS / 89 tests OK**.
+- **PR #3 HEAD `199641477f9fbdb3cfdfcb6c98edcaa3f60b2020`** : branche downstream fusionnée avec la dernière PR #2 via un commit à deux parents et `force=false`. Quatre CI au SHA final [40614130584](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40614130584), [40614130764](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40614130764), [40614135727](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40614135727), [40614135746](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40614135746) **SUCCESS**.
+- Aucun scan tiers, émission de commande PHP, collecte réelle sur S1, changement DNS/Plesk, patch de code PHP ni déploiement. **REQ-006 reste PARTIELLE**, le backport et les permissions P2 réelles sont bloquants ; roadmap V0.1→V1.0, 6 lots, 32 exigences, 61 work packages intacts.
+
 ## Points bloquants
 
 1. PR #1 non revue/fusionnée ; ne pas contourner les dépendances des PR empilées.

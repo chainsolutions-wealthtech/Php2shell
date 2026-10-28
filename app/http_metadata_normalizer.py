@@ -41,7 +41,10 @@ def normalize_untrusted_http_metadata(http_status, header_pairs):
             raise ValueError("Invalid declared HTTP metadata")
         if any(ord(ch) < 32 or ord(ch) == 127 for ch in value):
             raise ValueError("Invalid declared HTTP metadata")
-        encoded = value.encode("utf-8")
+        try:
+            encoded = value.encode("utf-8")
+        except UnicodeEncodeError as exc:
+            raise ValueError("Invalid declared HTTP metadata") from exc
         if len(encoded) > _MAX_VALUE_BYTES:
             raise ValueError("Invalid declared HTTP metadata")
         total += len(name.encode("ascii")) + len(encoded)

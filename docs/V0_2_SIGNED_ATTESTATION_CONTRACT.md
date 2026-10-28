@@ -32,3 +32,17 @@ Le premier contrat signé lie explicitement l'identité, le projet, le hostname 
 - La liaison doit provenir de l'URL prévisualisée et de l'ACL de l'autorité backend ; un utilisateur ne doit pas pouvoir choisir lui-même la liaison attendue et la clé de confiance à l'exécution. La validation du chemin ne prouve aucune propriété du site ni une délégation effective, et ne constitue pas un contrôle SSRF.
 
 Cinq tests `auth_tests/test_signed_attestation.py` couvrent la nouvelle liaison et le maintien du mode historique. Aucun fournisseur d'identité live, session, claim ou API de scan n'est ajouté.
+
+
+## Budgets P1 obligatoires et signés — tranche complémentaire P2S-EVT-036
+
+Un crawler public peut multiplier les requêtes ; une attestation contenant uniquement un nom de site n'impose pas encore de budget. Le contrat `app/signed_attestation.py` accepte désormais un couple **facultatif pour les autres actions**, mais **obligatoire pour `public_crawl`**, de champs signés `max_pages` et `requests_per_minute` en plus du `base_path` exact signé. Le backend fournit séparément le budget demandé, dérivé de la demande initiale admise.
+
+- Le plafond signé de pages doit être un entier strict compris entre 1 et 100, le débit signé entre 1 et 30 requêtes par minute.
+- Le budget demandé par l'appelant doit lui-même être un entier strict, strictement positif, et **inférieur ou égal** au plafond signé, jamais plus élevé.
+- Un seul des deux champs présent dans le token, des champs présents uniquement dans la demande, des booléens substitués à des entiers, des valeurs nulles/négatives et les dépassements de budget sont refusés.
+- Pour l'opération `public_crawl` (P1), le sous-chemin signé et **les deux champs de budget signés** sont désormais obligatoires dans ce nouveau contrat. Les attestations P1 incomplètes sont refusées, même si leur signature Ed25519 est valable.
+- Les anciennes attestations hors ligne de type P2 `source_read` sans champs de budget restent vérifiables pour préserver la non-régression. **Aucune** attestation n'accorde le droit d'exécuter un crawler.
+- Ce contrôle ne crée ni quota persistant, ni ordonnanceur, ni vraie admission réseau. Le futur worker devra appliquer ses propres quotas et revalider les mandats et les IP au moment de chaque opération.
+
+Cinq tests de budget, en plus des cinq tests de sous-chemin, couvrent les cas nominaux et les refus. Les 171 tests CLI historiques et 12 tests API restent distincts. Le résultat du contrat signé demeure `authorized=false`, `execution_enabled=false` et `mcp_claim_verified=false`.

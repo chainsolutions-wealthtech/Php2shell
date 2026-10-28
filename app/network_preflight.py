@@ -8,7 +8,6 @@ import ipaddress
 from datetime import datetime
 import re
 
-from .core import Scope, Target
 from .url_intake import preview_url_scope
 
 _MAX_ANSWERS = 32
@@ -33,11 +32,13 @@ def check_public_address_answers(hostname, answers, observed_at_utc,
     globally routable the snapshot is rejected as a whole.
     """
     _timestamp(observed_at_utc)
-    if not isinstance(hostname, str):
+    if (not isinstance(hostname, str)
+            or not re.fullmatch(r"[A-Za-z0-9.-]{1,253}", hostname)):
         raise ValueError("Invalid DNS hostname")
-    host = Target(hostname, Scope.PUBLIC).hostname
-    if "." not in host:
-        raise ValueError("DNS hostname requires a suffix")
+    # A supplied DNS snapshot must not smuggle an IP literal, local suffix,
+    # URL path, credentials or an ambiguous numeric host into the preview.
+    # This is syntax validation only, never DNS or ownership attestation.
+    host = preview_url_scope("https://" + hostname)["hostname"]
     if type(ttl_seconds) is not int or not 1 <= ttl_seconds <= 300:
         raise ValueError("Invalid TTL policy bound")
     if not isinstance(answers, list) or not 1 <= len(answers) <= _MAX_ANSWERS:
@@ -59,9 +60,13 @@ def check_public_address_answers(hostname, answers, observed_at_utc,
         if rendered in seen:
             raise ValueError("Duplicate DNS address")
         seen.add(rendered)
-        if not ip.is_global or (
-                isinstance(ip, ipaddress.IPv6Address)
-                and ip.ipv4_mapped is not None):
+        transition_ipv6 = (
+            isinstance(ip, ipaddress.IPv6Address)
+            and (ip.ipv4_mapped is not None
+                 or ip.sixtofour is not None
+                 or ip.teredo is not None)
+        )
+        if not ip.is_global or transition_ipv6:
             blocked.append(rendered)
         else:
             accepted.append(rendered)
@@ -92,11 +97,34 @@ def check_public_address_answers(hostname, answers, observed_at_utc,
     }
 
 
-def check_same_origin_redirects(start_url, destinations, max_hops=5):
-    """Dry-run a supplied redirect chain; never fetch or follow URLs."""
+def _inside_base_path(path, base_path):
+    """Compare complete path segments, never string prefixes alone."""
+    return (base_path == "/" or path == base_path
+            or path.startswith(base_path.rstrip("/") + "/"))
+
+
+def check_same_origin_redirects(start_url, destinations, max_hops=5,
+                                allowed_base_path=None):
+    """Dry-run supplied redirects, optionally constrained to a path scope.
+
+    A path scope is an additional local restriction, not a crawler mandate.
+    Existing same-origin-only callers remain compatible when it is omitted.
+    """
     if type(max_hops) is not int or not 0 <= max_hops <= 10:
         raise ValueError("Invalid redirect hop limit")
     first = preview_url_scope(start_url)
+    if allowed_base_path is not None:
+        if not isinstance(allowed_base_path, str):
+            raise ValueError("Invalid declared base path")
+        # The URL parser enforces path canonicalization and rejects encoded
+        # traversal, queries, fragments, repeated slashes and unsafe bytes.
+        scoped = preview_url_scope(
+            "https://" + first["hostname"] + allowed_base_path
+        )
+        if scoped["base_path"] != allowed_base_path:
+            raise ValueError("Invalid declared base path")
+        if not _inside_base_path(first["base_path"], allowed_base_path):
+            raise ValueError("Start URL outside declared base path")
     if not isinstance(destinations, list) or len(destinations) > max_hops:
         raise ValueError("Redirect chain exceeds configured limit")
     validated = []
@@ -104,6 +132,10 @@ def check_same_origin_redirects(start_url, destinations, max_hops=5):
         next_page = preview_url_scope(location)
         if next_page["hostname"] != first["hostname"]:
             raise ValueError("Cross-origin redirect not admitted")
+        if (allowed_base_path is not None
+                and not _inside_base_path(
+                    next_page["base_path"], allowed_base_path)):
+            raise ValueError("Redirect outside declared base path")
         validated.append(next_page["normalized_url"])
     return {
         "schema_version": "0.2",
@@ -112,12 +144,15 @@ def check_same_origin_redirects(start_url, destinations, max_hops=5):
         "redirects_previewed": len(validated),
         "candidate_urls": validated,
         "same_origin_by_syntax": True,
+        "base_path_scope_enforced": allowed_base_path is not None,
+        "allowed_base_path": allowed_base_path,
         "each_peer_resolved_and_verified": False,
         "http_redirects_followed": False,
         "network_requests_made": False,
         "authorized_to_crawl": False,
         "limitations": (
             "Supplied URLs only; TLS, DNS, redirects, timing, consent, robots, "
-            "source ownership and real HTTP responses have not been checked."
+            "source ownership and real HTTP responses have not been checked. "
+            "An optional path boundary is only an offline syntactic preview."
         ),
     }

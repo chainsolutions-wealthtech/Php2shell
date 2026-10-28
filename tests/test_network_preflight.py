@@ -61,5 +61,66 @@ class NetworkPreflightTests(unittest.TestCase):
                 "https://example.com/", [], max_hops=True)
 
 
+    def test_dns_hostname_reuses_conservative_url_policy(self):
+        for hostname in (
+            "127.0.0.1", "localhost", "server.internal",
+            "metadata.google.internal", "example.com/path",
+            "example.com:443", "example.com@evil.com", "0x7f.0x01",
+        ):
+            with self.subTest(hostname=hostname), self.assertRaises(ValueError):
+                check_public_address_answers(
+                    hostname, ["8.8.8.8"], "2026-10-28T03:00:00Z")
+
+    def test_transition_ipv6_never_grants_peer_authorization(self):
+        for address in (
+            "::ffff:8.8.8.8", "2002:0808:0808::1",
+            "2001:0000:4136:e378:8000:63bf:3fff:fdd2",
+        ):
+            with self.subTest(address=address):
+                report = check_public_address_answers(
+                    "example.com", [address], "2026-10-28T03:00:00Z")
+                self.assertFalse(report["all_supplied_addresses_globally_routable"])
+                self.assertEqual(report["candidate_public_addresses"], [])
+                self.assertFalse(report["peer_connection_authorized"])
+
+    def test_optional_redirect_path_scope_is_segment_bounded(self):
+        report = check_same_origin_redirects(
+            "https://example.com/app/home",
+            ["https://example.com/app", "https://example.com/app/page"],
+            allowed_base_path="/app",
+        )
+        self.assertTrue(report["base_path_scope_enforced"])
+        self.assertEqual(report["allowed_base_path"], "/app")
+        self.assertFalse(report["authorized_to_crawl"])
+        self.assertFalse(report["network_requests_made"])
+        for destination in (
+            "https://example.com/application",
+            "https://example.com/",
+            "https://example.com/app2/page",
+        ):
+            with self.subTest(destination=destination), self.assertRaises(ValueError):
+                check_same_origin_redirects(
+                    "https://example.com/app/home", [destination],
+                    allowed_base_path="/app")
+
+    def test_invalid_redirect_path_scopes_fail_closed(self):
+        for scope in (
+            "app", "/app/../admin", "/app//admin", "/app?secret=x",
+            "//other.example.com/", 7, True,
+        ):
+            with self.subTest(scope=scope), self.assertRaises(ValueError):
+                check_same_origin_redirects(
+                    "https://example.com/app/home", [],
+                    allowed_base_path=scope)
+        with self.assertRaises(ValueError):
+            check_same_origin_redirects(
+                "https://example.com/other", [],
+                allowed_base_path="/app")
+        root = check_same_origin_redirects(
+            "https://example.com/app",
+            ["https://example.com/else"], allowed_base_path="/")
+        self.assertTrue(root["base_path_scope_enforced"])
+
+
 if __name__ == "__main__":
     unittest.main()

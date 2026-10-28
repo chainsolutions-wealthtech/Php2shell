@@ -25,10 +25,19 @@ _CLAIMS = frozenset({
 })
 # The path-scoped contract is additive; the original contract stays read-only.
 _SCOPED_PATH_CLAIMS = _CLAIMS | {"base_path"}
+_BUDGET = frozenset({"max_pages", "requests_per_minute"})
+_ALLOWED_CLAIM_SHAPES = (
+    _CLAIMS, _SCOPED_PATH_CLAIMS,
+    _CLAIMS | _BUDGET, _SCOPED_PATH_CLAIMS | _BUDGET,
+)
 _BINDING = frozenset({
     "subject", "project_id", "asset_hostname", "scope", "action",
 })
 _SCOPED_PATH_BINDING = _BINDING | {"base_path"}
+_ALLOWED_BINDING_SHAPES = (
+    _BINDING, _SCOPED_PATH_BINDING,
+    _BINDING | _BUDGET, _SCOPED_PATH_BINDING | _BUDGET,
+)
 _ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,79}\Z", re.ASCII)
 _B64 = re.compile(r"[A-Za-z0-9_-]+\Z", re.ASCII)
 _BASE_PATH = re.compile(r"/[A-Za-z0-9._~/-]*\Z", re.ASCII)
@@ -116,7 +125,7 @@ def verify_external_attestation(token, *, trusted_public_keys,
             or not isinstance(trusted_public_keys, dict)
             or not callable(revocation_checker)
             or not isinstance(request_binding, dict)
-            or set(request_binding) not in (_BINDING, _SCOPED_PATH_BINDING)):
+            or set(request_binding) not in _ALLOWED_BINDING_SHAPES):
         _deny()
 
     parts = token.split(".")
@@ -124,8 +133,11 @@ def verify_external_attestation(token, *, trusted_public_keys,
     if (set(header) != _HEADER or header.get("typ") != _ATT_TYPE
             or header.get("alg") != "EdDSA"
             or not _valid_id(header.get("kid"))
-            or set(claims) not in (_CLAIMS, _SCOPED_PATH_CLAIMS)
-            or (("base_path" in claims) != ("base_path" in request_binding))):
+            or set(claims) not in _ALLOWED_CLAIM_SHAPES
+            or (("base_path" in claims) != ("base_path" in request_binding))
+            or (("max_pages" in claims) != ("max_pages" in request_binding))
+            or (("requests_per_minute" in claims)
+                != ("requests_per_minute" in request_binding))):
         _deny()
 
     kid = header["kid"]
@@ -166,6 +178,17 @@ def verify_external_attestation(token, *, trusted_public_keys,
             or not _valid_base_path(claims["base_path"])
             or request_binding["base_path"] != claims["base_path"]):
         _deny()
+
+    if claims["action"] == "public_crawl" and (
+            "base_path" not in claims or not _BUDGET <= set(claims)):
+        _deny()
+    if _BUDGET <= set(claims):
+        for field, ceiling in (("max_pages", 100),
+                               ("requests_per_minute", 30)):
+            signed, requested = claims[field], request_binding[field]
+            if (type(signed) is not int or type(requested) is not int
+                    or not (1 <= requested <= signed <= ceiling)):
+                _deny()
 
     iat, nbf, exp = (claims["iat"], claims["nbf"], claims["exp"])
     if (any(type(x) is not int for x in (iat, nbf, exp))

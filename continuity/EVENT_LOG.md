@@ -34,6 +34,8 @@
 
 | 2026-10-28 | P2S-EVT-018 | Nouvelle tranche V0.2 hors ligne : empreinte SHA-256 du catalogue JSON canonique, âge de revue calculé à date UTC explicitement fournie, refus des dates futures/invalides, aucune inférence CVE ou flux live ; commande additive `audit-catalog`, tests et documentation ; PR #3 resynchronisée par commit à deux parents, sans force | PR #2 HEAD `2d2d7abee3b33edcc86bb17975cbe8fa5c1c4390` / CI #40610646884 SUCCESS ; PR #3 HEAD `58a15991d4218d756f84acbe1d8b1687d4af8bdd` / CI #40610704047, #40610704076, #40610712317, #40610712452 SUCCESS ; checkpoint issue #5 à publier |
 
+| 2026-10-28 | P2S-EVT-019 | Nouvelle tranche V0.2 : propositions gouvernées de mise à jour de catalogue CVE hors ligne, détection des suppressions/régressions de dates, comparaison des seuils PHP et sources, refus de promotion silencieuse ; 73 tests, raccordement PR #3 avec ses runbooks S1 conservés | PR #2 HEAD `bf8a8bad37cc370da15706ea5331cb927c666005`, CI #40611408263/#40611412973 SUCCESS ; PR #3 HEAD `4461048c244b60907a0b92a714dc7a59b8add38a`, 4 CI SUCCESS ; issue #5 checkpoint à publier |
+
 ## Règles de qualification
 - **Observé** : objet GitHub/CI/S1 vérifié avec date/HEAD ; **déclaré** : demande utilisateur ; **prévu** : architecture non livrée.
 - Indiquer lorsque des observations anciennes peuvent avoir changé, y compris les DNS/TLS et statuts de PR.

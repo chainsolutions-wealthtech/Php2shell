@@ -38,6 +38,8 @@
 
 | 2026-10-28 | P2S-EVT-020 | Client réseau GitHub GHSA à allowlist de CVE acquises, activation explicitement opt-in, redirections/proxy refusés, limites de lecture et validation de réponse, sans promotion ni exploitation ; tests mockés et synchro PR #3 sans force | PR #2 HEAD `e02ac06fe715ac643313e4d1a0110d56129fb8d6`, CI #40613045223/#40613051184 SUCCESS (81 tests) ; PR #3 HEAD `708d912ad19b54a4a9410084058d9114396d591c`, quatre CI #40613158933/#40613159138/#40613165750/#40613165764 SUCCESS ; issue #5 prochain checkpoint |
 
+| 2026-10-28 | P2S-EVT-021 | Tranche V0.2 : validation de déclaration locale PHP runtime/SAPI, preuve de mandat et de backport explicitement NON vérifiées ; lien aux seuils officiels sans CVE exploitable, 89 tests ; PR #3 resynchronisée par merge gouverné | PR #2 HEAD `424425116f54c353211aae554fc3866c242689b2`, CI #40614036258 / #40614041127 SUCCESS ; PR #3 HEAD `199641477f9fbdb3cfdfcb6c98edcaa3f60b2020`, CI #40614130584/#40614130764/#40614135727/#40614135746 SUCCESS ; issue #5 prochain checkpoint |
+
 ## Règles de qualification
 - **Observé** : objet GitHub/CI/S1 vérifié avec date/HEAD ; **déclaré** : demande utilisateur ; **prévu** : architecture non livrée.
 - Indiquer lorsque des observations anciennes peuvent avoir changé, y compris les DNS/TLS et statuts de PR.

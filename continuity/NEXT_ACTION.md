@@ -34,6 +34,13 @@
 - **NEXT_ACTION métier inchangée** : `P2S-NEXT-001`, revue indépendante de PR #6 puis PR #1, décision de fusion gouvernée. Pendant l'attente, sélectionner une autre tranche indépendante V0.2 (validation de provenance, tests de sécurité locale, AST, politique de cache et révision des avis) **uniquement après réconciliation des HEAD/CI/claims** ; ne pas refaire la tranche d'empreinte.
 - **Blocages conservés** : pas de preuve de revue indépendante `APPROVED` sur #1/#6 ; pas de mandat de scan distant ni de commande MCP scoped de déploiement S1 ; pas de backports/runtime attestés, pas d'interface URL→PHPPATCH déployée.
 
+## Prochaine tranche admise — proposition de mise à jour CVE (28/10/2026)
+
+- La branche V0.2 PR #2 possède maintenant le **comparateur gouverné** `propose-catalog-update --candidate ... --as-of YYYY-MM-DD` ; HEAD exact `bf8a8bad37cc370da15706ea5331cb927c666005` ; [CI #40611408263](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40611408263) et [#40611412973](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40611412973) **SUCCESS (73 tests)**. L'analyse ne modifie jamais le catalogue, aucune autorisation de promotion implicite.
+- Branche préparation S1 PR #3 mise à jour sans force : HEAD `4461048c244b60907a0b92a714dc7a59b8add38a` ; 4 CI tests/preflight **SUCCESS**. Le runbook a conservé l'historique des erreurs DNS mais précise les preuves ultérieures de résolution locale/HTTPS S1 et les pages d'attente Plesk.
+- **NEXT_ACTION métier inchangée : `P2S-NEXT-001`**, obtenir une revue indépendante des PR #6 puis #1, puis gestion de fusion dans les protections. **Travaux techniques V0.2 indépendants admissibles** : consommation bornée des avis officiels avec vérification des réponses et sources, attestations runtime et backports P2, enrichissement du diagnostic et rapports ; pas de collecte non mandatée, aucune modification S1.
+- La cadence horaire existante de continuité PHP2SHELL demeure la seule automatisation du projet ; ne pas ouvrir un nouvel orchestrateur ni réexécuter le comparateur déjà validé.
+
 ## Action prioritaire au checkpoint initial
 
 **P2S-NEXT-001 — Finaliser la [PR #6](https://github.com/chainsolutions-wealthtech/Php2shell/pull/6) documentaire de continuité, puis préparer la revue/validation de PR #1 (V0.1).**

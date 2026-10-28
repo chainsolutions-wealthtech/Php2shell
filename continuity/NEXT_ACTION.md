@@ -231,3 +231,10 @@ Le backlog [`WORK_PACKAGES.json`](WORK_PACKAGES.json) contient **61 work package
 - PR #3 `414863480a076cb22a314a570102135a2a2c128d` : synchronisée sans force, seulement trois fichiers S1 additionnels et inchangés, huit CI exact SHA SUCCESS ; readiness en lecture seule, pas de déploiement.
 - **NEXT_ACTION unique `P2S-NEXT-001` inchangée** : obtenir une vraie revue indépendante de PR #6 puis PR #1, contrôler les protections et décider des fusions selon gouvernance. Aucune auto-approbation via le second compte du même propriétaire.
 - Tranche technique suivante, uniquement après nouvelle réconciliation des HEAD, mandats et claims : tests isolés du transfert PHPPATCH et contrôle de provenance des données/rapports, ou préparation documentée d'une sandbox Docker non exécutante ; ne pas déclencher d'opération réseau, patch appliqué, PHP exécuté, compte utilisateur, vhost ou S1 sans autorité réelle. L'accès MCP a demandé une interaction non disponible ici.
+
+## Reprise après P2S-EVT-045 — PHPPATCH CLI (28/10/2026 UTC)
+
+- **Ne pas reconstruire** `verify-patch-review` : la commande de revalidation locale est implémentée sur PR #2 HEAD `26121997f175f88cb92f1907296ae2364222c95a`, 5 tests supplémentaires, **239 tests** et six CI SUCCESS au SHA exact. Elle ne confère aucune autorité.
+- **PR #3** synchronisée au HEAD `d2d501d78b42ccc579a72f0b7befdbfd90a1d894`, huit CI SUCCESS, trois blobs S1 préservés, aucun déploiement.
+- **Action prioritaire unique `P2S-NEXT-001` inchangée** : vraie revue indépendante PR #6 puis #1, ensuite décision de fusion gouvernée au HEAD courant. Aucune auto-approbation avec les deux comptes du même propriétaire.
+- **Prochaine tranche indépendante admissible** : renforcer les tests négatifs des preuves locales et préparer les contrats de sandbox Docker **sans exécution, scan, accès S1, changement de source ou promotion de statut** ; vérifier les claims et le HEAD juste avant toute écriture, garder les branches empilées convergentes. Le moteur PHPPATCH reste non opérationnel en production.

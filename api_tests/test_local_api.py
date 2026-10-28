@@ -124,5 +124,45 @@ class LocalApiContractTests(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
 
 
+    def test_chunked_actual_body_limit_without_content_length(self):
+        """A streaming caller must not bypass the 4 KiB cap by omitting Content-Length."""
+        with patch.dict(os.environ, {"P2S_ENABLE_LOCAL_API_PREVIEW": "1"}):
+            with client() as api:
+                response = api.post(
+                    "/api/v0.2/url/preview",
+                    content=iter([b" " * 2500, b" " * 1700]),
+                    headers={"Content-Type": "application/json"},
+                )
+        self.assertEqual(response.status_code, 413)
+        self.assertEqual(response.json(), {"error": "REQUEST_TOO_LARGE"})
+        self.assertEqual(response.headers["cache-control"], "no-store")
+
+    def test_actual_body_limit_defeats_forged_small_length(self):
+        """ASGI must enforce bytes received, not just an untrusted declared length."""
+        with patch.dict(os.environ, {"P2S_ENABLE_LOCAL_API_PREVIEW": "1"}):
+            with client() as api:
+                response = api.post(
+                    "/api/v0.2/url/preview",
+                    content=b" " * 4200,
+                    headers={"Content-Type": "application/json",
+                             "Content-Length": "8"},
+                )
+        self.assertEqual(response.status_code, 413)
+        self.assertEqual(response.json(), {"error": "REQUEST_TOO_LARGE"})
+        self.assertEqual(response.headers["x-content-type-options"], "nosniff")
+
+    def test_chunked_small_body_remains_functional(self):
+        """Within the cap, chunked JSON must still reach the existing preview contract."""
+        with patch.dict(os.environ, {"P2S_ENABLE_LOCAL_API_PREVIEW": "1"}):
+            with client() as api:
+                response = api.post(
+                    "/api/v0.2/url/preview",
+                    content=iter([b'{"url":', b'"https://example.com/"}']),
+                    headers={"Content-Type": "application/json"},
+                )
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.json()["allowed_to_crawl"])
+
+
 if __name__ == "__main__":
     unittest.main()

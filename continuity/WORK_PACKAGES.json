@@ -564,7 +564,17 @@
       ],
       "gate": "GOVERNED_PR",
       "status": "PLANNED_NOT_ADMITTED",
-      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE.",
+      "observed_partial_evidence": [
+        {
+          "observation_date": "2026-10-28",
+          "kind": "PARTIAL_CODE_EVIDENCE_NOT_WP_COMPLETION",
+          "source_pr": 2,
+          "source_head": "6a41ef5c15ef78af95afa0aeda3561fd5c33dd8c",
+          "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40636281308",
+          "limits": "Offline php.ini diff only; no P2 authority, sandbox, approval or remediation PR"
+        }
+      ]
     },
     {
       "id": "P2S-WF-R07",
@@ -611,7 +621,17 @@
       ],
       "gate": "GOVERNED_PR",
       "status": "PLANNED_NOT_ADMITTED",
-      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE.",
+      "observed_partial_evidence": [
+        {
+          "observation_date": "2026-10-28",
+          "kind": "PARTIAL_CODE_EVIDENCE_NOT_WP_COMPLETION",
+          "source_pr": 2,
+          "source_head": "6a41ef5c15ef78af95afa0aeda3561fd5c33dd8c",
+          "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40636281308",
+          "limits": "API contract-only; authentication/project gate not acquired"
+        }
+      ]
     },
     {
       "id": "P2S-WF-I03",
@@ -822,7 +842,17 @@
       ],
       "gate": "GOVERNED_PR",
       "status": "PLANNED_NOT_ADMITTED",
-      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE."
+      "acceptance": "Check exact authority, mandated scope, evidence and matching requirement; update checkpoint before marking DONE.",
+      "observed_partial_evidence": [
+        {
+          "observation_date": "2026-10-28",
+          "kind": "PARTIAL_CODE_EVIDENCE_NOT_WP_COMPLETION",
+          "source_pr": 2,
+          "source_head": "6a41ef5c15ef78af95afa0aeda3561fd5c33dd8c",
+          "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40636281308",
+          "limits": "166 historic + 12 API tests; no E2E production proof"
+        }
+      ]
     },
     {
       "id": "P2S-WF-Q02",

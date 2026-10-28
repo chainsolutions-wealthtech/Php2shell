@@ -11,6 +11,7 @@ from .advisory_fetch import fetch_curated_php_advisory
 from .runtime_evidence import review_declared_runtime_evidence
 from .runtime_reporting import export_runtime_review_csv
 from .audit_dossier import build_audit_dossier, render_audit_dossier_markdown
+from .url_intake import preview_url_scope
 
 def main():
     parser = argparse.ArgumentParser(description='PHP2SHELL offline defensive prototype')
@@ -52,6 +53,14 @@ def main():
     dossier.add_argument('--as-of', required=True, help='UTC calendar date YYYY-MM-DD')
     dossier.add_argument('--runtime-file', help='Optional unverified local PHP runtime JSON')
     dossier.add_argument('--format', choices=('json', 'markdown'), default='json')
+    url_preview = sub.add_parser('preview-url',
+                                 help='Offline URL scope preview, NOT an audit or mandate')
+    url_preview.add_argument('--url', required=True, help='Public HTTPS site URL')
+    url_preview.add_argument('--scope', choices=('public_metadata','owned_source'),
+                             default='public_metadata')
+    url_preview.add_argument('--mandate-ref', help='Unverified operator reference, not output')
+    url_preview.add_argument('--max-pages', type=int, default=20)
+    url_preview.add_argument('--requests-per-minute', type=int, default=6)
     args = parser.parse_args()
     if args.command == 'check-version':
         result = evaluate(args.php)
@@ -71,6 +80,9 @@ def main():
         result = review_declared_runtime_evidence(args.file, args.as_of)
     elif args.command == 'audit-dossier':
         result = build_audit_dossier(args.path, args.as_of, args.runtime_file)
+    elif args.command == 'preview-url':
+        result = preview_url_scope(args.url, args.scope, args.mandate_ref,
+                                   args.max_pages, args.requests_per_minute)
     elif args.command == 'scan-local':
         result = scan_project(args.path)
     else:

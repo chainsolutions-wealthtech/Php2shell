@@ -41,6 +41,13 @@
 - **NEXT_ACTION métier inchangée : `P2S-NEXT-001`**, obtenir une revue indépendante des PR #6 puis #1, puis gestion de fusion dans les protections. **Travaux techniques V0.2 indépendants admissibles** : consommation bornée des avis officiels avec vérification des réponses et sources, attestations runtime et backports P2, enrichissement du diagnostic et rapports ; pas de collecte non mandatée, aucune modification S1.
 - La cadence horaire existante de continuité PHP2SHELL demeure la seule automatisation du projet ; ne pas ouvrir un nouvel orchestrateur ni réexécuter le comparateur déjà validé.
 
+## Tranche la plus récente — client officiel GitHub limité et opt-in
+
+- PR #2 V0.2 : nouveau `app/advisory_fetch.py`, CLI `fetch-official-advisory` (réseau explicitement autorisé et uniquement pour GHSA déjà validés dans catalogue). **HEAD `e02ac06fe715ac643313e4d1a0110d56129fb8d6` ; 81 tests et deux CI SUCCESS**. Les tests utilisent des réponses GitHub simulées et ne prouvent pas un appel réel au endpoint.
+- PR #3 S1 : cette tranche raccordée sans rebase forcé au HEAD `708d912ad19b54a4a9410084058d9114396d591c` ; quatre CI de tests/préflight SUCCESS. Pas de connexion de l'application aux vhosts Plesk ; S1 inchangé.
+- La prochaine construction V0.2 peut étendre **sans collision** le recoupement des métadonnées GitHub et des avis PHP/CERT-FR, les contrats d'attestation runtime P2 et les schémas de preuve, sans scan distant arbitraire. Le collecteur ne met jamais à jour le catalogue local automatiquement. Les tâches d'une même ressource nécessitent le claim existant et le contrôle HEAD frais.
+- **P2S-NEXT-001 reste la porte de gouvernance** : vraies revues indépendantes PR #6 puis #1, CI exact SHA et décision de fusion gouvernée, sans inventer d'approbation. Récurrence horaire `6ae13640aa9c8191b20d3d120bf71ace` déjà active ; ne pas créer une seconde automation.
+
 ## Action prioritaire au checkpoint initial
 
 **P2S-NEXT-001 — Finaliser la [PR #6](https://github.com/chainsolutions-wealthtech/Php2shell/pull/6) documentaire de continuité, puis préparer la revue/validation de PR #1 (V0.1).**

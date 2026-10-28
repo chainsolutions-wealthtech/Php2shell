@@ -19,3 +19,16 @@ Le résultat du vérificateur, y compris pour une signature correcte, contient `
 **CI indépendante :** `.github/workflows/auth-contract.yml`, installation isolée de `cryptography==46.0.3` depuis `requirements-auth-contract.txt`, puis `auth_tests`. La CI historique sans dépendance et la CI FastAPI existante restent inchangées. La clé privée dans les tests est éphémère, créée uniquement pour valider les cas nominaux et négatifs ; aucune clé privée n'est ajoutée au dépôt.
 
 **Limite de sécurité majeure :** l'existence du vérificateur ne prouve pas que le MCP actuellement déployé émette de telles attestations ou dispose d'un mécanisme d'autorisation signé compatible. Il faut le vérifier et l'admettre auprès des autorités existantes avant tout raccordement de production. Aucune nouvelle autorité n'est créée.
+
+
+## Liaison facultative au sous-chemin : prévention des confusions de périmètre (P2S-EVT-035)
+
+Le premier contrat signé lie explicitement l'identité, le projet, le hostname et l'action, mais un domaine peut servir des applications différentes sur `/app1` et `/app2`. La tranche complémentaire ajoute le champ **facultatif signé `base_path`**, qui doit être présent simultanément dans l'attestation signée et dans la liaison attendue côté backend.
+
+- Si `base_path` est demandé, il doit correspondre **octet pour octet** au champ signé : un chemin père, un chemin fils, une variation de suffixe ou `/app` à la place de `/app/` sont refusés. Ce n'est pas une règle d'héritage de droits par préfixe.
+- La grammaire autorise uniquement les chemins absolus simples ; rejette les chemins relatifs, `//`, segments `.` et `..`, caractères de requête/fragment, encodages ambigus et valeurs trop longues.
+- Les attestations historiques **sans `base_path` continuent de passer leur vérification cryptographique historique**, mais elles ne peuvent pas répondre à un appel exigeant une liaison par sous-chemin. Ce contrat historique n'a jamais permis l'exécution ; il reste `authorized=false`.
+- Un JWT avec `base_path` ne peut pas être utilisé en omettant le champ `base_path` du binding serveur ; c'est une vérification symétrique non contournable par omission.
+- La liaison doit provenir de l'URL prévisualisée et de l'ACL de l'autorité backend ; un utilisateur ne doit pas pouvoir choisir lui-même la liaison attendue et la clé de confiance à l'exécution. La validation du chemin ne prouve aucune propriété du site ni une délégation effective, et ne constitue pas un contrôle SSRF.
+
+Cinq tests `auth_tests/test_signed_attestation.py` couvrent la nouvelle liaison et le maintien du mode historique. Aucun fournisseur d'identité live, session, claim ou API de scan n'est ajouté.

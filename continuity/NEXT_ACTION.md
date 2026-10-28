@@ -56,6 +56,14 @@
 - **Prochaine tranche technique** : modèle d'attestation **authentifiée** via mandats/identités MCP autorisés, vérification effective SAPI/packages PHP et backports fournisseur, puis rapprochement des avis officiels capturés ; aucune promotion depuis un fichier JSON auto-déclaré, aucune modification à distance.
 - Automatisation horaire existante `6ae13640aa9c8191b20d3d120bf71ace` conservée, relire le dernier checkpoint et le HEAD au début de chaque reprise pour éviter collisions.
 
+## Point de reprise #017 — prévisualisation URL et dossier de remédiation à valider (28/10/2026)
+
+- **PR #2 HEAD `4ded6646d57af4bb8f6ee11f4a7b73c828962d29`** : `audit-dossier --format json|markdown` offre un **brouillon local** d'audit combinant signaux PHP/config et runtime **déclaré**, sans divulguer secrets ni confirmer l'applicabilité CVE. `preview-url --url ...` réalise une **prévisualisation de l'entrée d'URL uniquement**, sans autorisation P1/P2 attestée, DNS/IP contrôlé ni requête HTTP. Cette étape n'est ni crawler, ni site Web, ni PHPPATCH appliqué. **113 tests / deux CI SUCCESS** [#40619000385](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40619000385) et [#40619006476](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40619006476).
+- **PR #3 S1 HEAD `3739323768ca9b59a87eabe3cd96730a238c0f86`** synchronisée sans force, 4 CI tests/préflight **SUCCESS**. Aucun serveur S1 modifié et pages Plesk à la dernière observation historique.
+- **P2S-NEXT-001 (unique priorité de gouvernance) inchangée :** approbation indépendante et fusion gouvernée de PR #6 puis PR #1, sans auto-approbation fictive. Les PR #2 et #3 restent draft/stacked tant que le socle n'est pas admis.
+- **Tranches techniques suivantes admissibles après nouvelle réconciliation des HEAD/claims** : (1) contrats réels d'autorisation P1/P2 et contrôle URL DNS/IP à chaque connexion, sans exécution intrusive ; (2) API et frontend de campagnes authentifiées utilisant `preview-url`, avec stockage privé des mandats ; (3) moteur de dossier de remédiation PDF/PHPPATCH par diff proposé, tests isolés et approbation ; (4) protocole d'attestation SAPI/backports fournisseur ; (5) intégration Docker/MCP scoped S1 uniquement après infrastructure et mandats approuvés.
+- **Reprise autonome horaire existante** `6ae13640aa9c8191b20d3d120bf71ace` conservée. Contrôler le dernier checkpoint issue #5, mandats/claims et tests au HEAD avant toute mutation ; ne créer ni tâche concurrente ni second gateway.
+
 ## Action prioritaire au checkpoint initial
 
 **P2S-NEXT-001 — Finaliser la [PR #6](https://github.com/chainsolutions-wealthtech/Php2shell/pull/6) documentaire de continuité, puis préparer la revue/validation de PR #1 (V0.1).**

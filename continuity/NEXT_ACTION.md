@@ -172,3 +172,10 @@ Le backlog [`WORK_PACKAGES.json`](WORK_PACKAGES.json) contient **61 work package
 - **P2S-NEXT-001 inchangée :** obtenir la vraie revue indépendante de PR #6, puis PR #1, avant décision de fusion. Aucune approbation simulée.
 - **Dépendance d'authentification réelle à résoudre :** trouver un émetteur d'identité et un mécanisme d'attestation signé déjà admis par le MCP/IdP, définir un trust-store de clés publiques **côté serveur** et rotation, liaison à la session utilisateur et à l'ACL projet, révocation live, claim MCP et contrôles de ressources. Le prototype ne fournit pas ces éléments et ne doit pas être exposé comme une permission d'opérer.
 - Toute application/scan/crawl S1 reste interdite sans mandat explicite et mécanisme réellement exécutable.
+
+
+## P2S-EVT-035 / P2S-EVT-036 — garde-fous avant admission live
+
+- Contrat signé hors ligne désormais compatible avec `base_path` exact ; P1 `public_crawl` exige une portée de chemin et des plafonds signés `max_pages` / `requests_per_minute`. **20 tests auth** cumulés, 171 CLI et 12 API (PR #2 `53e4378`). P1 sans budgets signés est refusé, aucune opération réseau activée.
+- Suivi : PR #3 `d48f880` synchronisée sans force, readiness S1 inchangée, ne signifie pas déploiement. **P2S-NEXT-001**, revue indépendante réelle PR #6 puis PR #1, reste la prochaine décision de gouvernance.
+- Prochain travail authentification réelle : vérifier l'existence d'une autorité d'identité et de mandats, un magasin de clés publiques et une révocation live réellement gouvernés, puis brancher les décisions sur une ACL projet/asset et claims MCP audités. Aucune de ces opérations ne peut être remplacée par le prototype Ed25519 local ni par un flag frontend.

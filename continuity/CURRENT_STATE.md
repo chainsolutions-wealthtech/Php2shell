@@ -236,3 +236,12 @@ Ce fichier doit être mis à jour **dans une PR dédiée ou la branche légitime
 - **Toute attestation correcte produit uniquement `VERIFIED_ATTESTATION_NOT_EXECUTION_ADMISSION`** et `authorized=false`, `execution_enabled=false`, `mcp_claim_verified=false`, `user_session_authenticated=false`. Ce module ne connaît aucun IdP/issuer MCP réel ; aucune prise en charge P1/P2 live, scan, patch, déploiement ni nouvelle autorité n'est démontrée.
 - PR #3 HEAD `c22ac964e1cbb71d880e8ef828cf7bd96d485960` : convergence de PR #2 avec trois fichiers S1 inchangés, merge à deux parents, force=false, expected SHA, comparaison derrière=0. Les CI au HEAD seront reportées séparément.
 - Toutes les données canoniques existantes, 32 REQ, 61 WP, 6 lots, cinq versions V0.1→V1.0 et P2S-NEXT-001 restent préservées.
+
+
+## P2S-EVT-035 / P2S-EVT-036 — bornage signé au sous-chemin et budgets P1 (2026-10-28 UTC)
+
+- **PR #2 `53e4378e6f95b28a1c93c2a6061a84fb3fe4ebaf`**, 2 tranches RED→GREEN sur `app/signed_attestation.py` / `auth_tests/test_signed_attestation.py`. Cinq tests `base_path` plus cinq tests budgets ; **20 tests auth** nouveaux cumulés, 171 historiques + 12 API inchangés. Six CI au HEAD PR #2 SUCCESS (tests / auth / API, push et PR).
+- Une attestation avec `base_path` doit être liée exactement au sous-chemin demandé ; la présence d'un seul côté ou les chemins non canoniques sont refusés. Les anciennes attestations hors ligne non liées au chemin sont conservées uniquement comme vérification cryptographique non exécutable.
+- Pour `public_crawl` (P1), `base_path` + plafond de pages + plafond de débit **signés** désormais obligatoires. Les valeurs proposées doivent rester ≤ aux plafonds signés et aux limites absolues (100 pages, 30 requêtes par minute). Aucun budget ne déclenche de crawl ; `authorized=false`, `execution_enabled=false`, `mcp_claim_verified=false`.
+- **PR #3 `d48f88039e1faeea1246847a982e59bda4e63e5a`** : synchronisation sans force et vérification des trois fichiers readiness S1 conservés. Aucun serveur modifié.
+- **Non acquis :** fournisseur d'identité ou d'attestations réel, clés approuvées et revocation live, session utilisateur, ACL projet, mandats/claims MCP scoped PHP2SHELL, protections DNS/worker runtime, approbations et service Web. Statuts de work packages non avancés artificiellement ; `P2S-NEXT-001` reste la revue indépendante PR #6 puis PR #1.

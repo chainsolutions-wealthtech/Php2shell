@@ -18,3 +18,11 @@
 4. Vérifier séparément la propriété du domaine puis, facultativement, connecter GitHub avec permissions minimales pour analyse P2. PHPPATCH et déploiement restent gouvernés distinctement.
 
 **Aucune autorisation sur un site tiers ne se déduit du statut d'invité ou de l'inscription.** Ne pas publier un bouton d'audit actif tant que le collecteur et les contrôles sont absents.
+
+## Contrat API local de validation (P2S-UX-003)
+
+- Route de développement : `POST /api/v0.2/guest/summary` sur `service/local_api.py`. **Désactivée par défaut** ; pour les tests seulement : `P2S_ENABLE_LOCAL_GUEST_SUMMARY=1`, et appel exclusivement depuis un pair loopback. La fonction existante `_is_loopback_peer` et les middlewares de protection FastAPI sont réutilisés, sans route d'audit réel.
+- Charge utile : `{"url":"https://example.com/"}` ; facultativement `public_response_evidence` fourni, strictement non vérifié. L'API refuse les champs de privilèges, ne renvoie pas d'URL contenant un secret, limite le corps HTTP à 4 Kio et désactive le cache.
+- Sans information collectée, retourne `NOT_ANALYZED` ; avec des en-têtes déclarés, retourne `UNVERIFIED_SUPPLIED_EVIDENCE`, et au plus trois constats **non authentifiés**, sans niveau CVE ni fausse affirmation de scan.
+- Tests `api_tests/test_guest_public_summary_api.py` : accès distant refusé, flag absent refusé, réponse courte en local, contrat des preuves fournies, champs malveillants refusés ; la CI API actuelle couvre ce nouveau parcours.
+- **Ne jamais publier la route comme un scan public réel**. La prévisualisation pure n'a aucun stockage, aucune session utilisateur et aucun collecteur HTTP admis ; un reverse proxy public ne doit pas activer cette route avant un contrôle de risques complet. Une identité d'utilisateur réel et la persistance d'un rapport détaillé restent des étapes séparées.

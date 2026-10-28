@@ -157,3 +157,10 @@ Le backlog [`WORK_PACKAGES.json`](WORK_PACKAGES.json) contient **61 work package
 - PR #2 `6a41ef5c15ef78af95afa0aeda3561fd5c33dd8c` : proposition ini refuse les paramètres `display_errors` dupliqués actifs, commentaires et tabulations préservés, **166 historiques + 12 API**, CI #40636281308/#40636281249 SUCCESS. PR #3 `3bccdf0b4d776ba399621debbdc48488685e5eb6` : fusion deux parents sans force, six CI SUCCESS, fichiers S1 préservés. CI RED du test préalable #40636184215 conservée.
 - **Priorité de gouvernance toujours `P2S-NEXT-001` : vraie revue indépendante PR #6 puis PR #1, suivi d'une décision de fusion gouvernée**. Les preuves de test sur PR #2/#3 ne remplacent ni la revue, ni les droits de production.
 - Prochain travail indépendant admissible : renforcer la cohérence du dossier local et des preuves des diffs PHPPATCH, contrats de permissions P1/P2 **non exécutants**, et recettes de non-divulgation ; réserver serveur, réseau, sandbox/PR corrective et S1 aux mandats MCP et revues réellement attestés. Ne pas déclencher de seconde automation ou agent concurrent.
+
+
+## Tranche P1/P2 — P2S-EVT-033 (28/10/2026)
+
+- Construits sur PR #2 : cinq contrôles d'intention distincts, refus par défaut des assertions forgées, cinq tests supplémentaires, 171 tests CLI + 12 API, CI vertes ; PR #3 synchronisée (6 CI vertes). Aucun `ALLOW`, aucune création de compte, aucune activation réseau.
+- **P2S-NEXT-001 reste unique** : faire examiner PR #6 puis PR #1 par une véritable identité indépendante, fusion seulement après revue et contrôles.
+- **Travail technique suivant** : identifier et raccorder un vrai vérificateur d'identité/mandat P1/P2 à l'autorité existante, contrôler signature/audience/issuer, l'appartenance projet-ressource, révocation/expiration, claims, quotas, et produire tests de refus et d'admission. Le MCP interrogé ne fournit pas encore de capacité PHP2SHELL attestée. Les workers, scans, patches actifs et S1 restent interdits jusqu'à admission effective.

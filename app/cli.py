@@ -7,6 +7,7 @@ from .reporting import export_findings_csv
 from .security_advisories import list_verified_advisories, review_declared_php_version
 from .catalog_audit import audit_catalog_snapshot
 from .catalog_update import propose_catalog_update
+from .advisory_fetch import fetch_curated_php_advisory
 
 def main():
     parser = argparse.ArgumentParser(description='PHP2SHELL offline defensive prototype')
@@ -30,6 +31,12 @@ def main():
                               help='Review a local candidate advisory JSON without applying it')
     proposal.add_argument('--candidate', required=True, help='Local JSON candidate, never fetched remotely')
     proposal.add_argument('--as-of', required=True, help='Explicit UTC date YYYY-MM-DD')
+    fetch = sub.add_parser('fetch-official-advisory',
+                           help='Explicit bounded GitHub API lookup of a known GHSA (network)')
+    fetch.add_argument('--ghsa', required=True, help='Must already be in curated catalog')
+    fetch.add_argument('--as-of', required=True, help='Explicit UTC observation date YYYY-MM-DD')
+    fetch.add_argument('--permit-official-network', required=True, action='store_true',
+                       help='Explicit opt-in: contacts only api.github.com over HTTPS')
     args = parser.parse_args()
     if args.command == 'check-version':
         result = evaluate(args.php)
@@ -43,6 +50,8 @@ def main():
         result = audit_catalog_snapshot(args.as_of)
     elif args.command == 'propose-catalog-update':
         result = propose_catalog_update(args.candidate, args.as_of)
+    elif args.command == 'fetch-official-advisory':
+        result = fetch_curated_php_advisory(args.ghsa, args.as_of)
     elif args.command == 'scan-local':
         result = scan_project(args.path)
     else:

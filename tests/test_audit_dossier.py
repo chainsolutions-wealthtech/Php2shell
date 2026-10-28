@@ -1,0 +1,180 @@
+"""Local PHP2SHELL dossier tests: privacy, trust boundaries and CLI."""
+import json
+import socket
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+
+from app.audit_dossier import build_audit_dossier, render_audit_dossier_markdown
+
+
+class AuditDossierTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        (self.root / "index.php").write_text(
+            "<?php\n eval($tainted);\n unserialize($raw);\n",
+            encoding="utf-8",
+        )
+        (self.root / "php.ini").write_text(
+            "display_errors=On\napi_key=DO_NOT_LEAK_PHP_CONFIG\n",
+            encoding="utf-8",
+        )
+        (self.root / "composer.json").write_text(
+            json.dumps({"require": {"vendor/pkg": "dev-main",
+                                     "repositories": "https://SECRET_PRIVATE_COMPOSER_URL"}}),
+            encoding="utf-8",
+        )
+        (self.root / "composer.lock").write_text(
+            json.dumps({"packages": [{"name": "secret/library", "version": "1.2.3",
+                                       "dist": {"url": "https://SECRET_PRIVATE_LOCK_URL"}}]}),
+            encoding="utf-8",
+        )
+        self.runtime = self.root / "runtime.json"
+        self.runtime.write_text(json.dumps({
+            "schema_version": "0.2",
+            "evidence_type": "DECLARED_PHP_RUNTIME",
+            "asset_hostname": "portail-demo.example",
+            "mandate_reference": "SECRET-MANDATE-001",
+            "source_channel": "laboratory_fixture",
+            "collected_at_utc": "2026-10-28T00:00:00Z",
+            "php_version": "8.3.34",
+            "sapi": "fpm-fcgi",
+            "vendor_backport_status": "not_verified",
+        }), encoding="utf-8")
+
+    def test_json_dossier_has_evidence_ids_and_review_only_actions(self):
+        result = build_audit_dossier(self.root, "2026-10-28")
+        self.assertEqual(result["document_type"], "PHP2SHELL_LOCAL_AUDIT_DOSSIER_DRAFT")
+        self.assertEqual(result["vulnerability_verdict"], "INSUFFICIENT_EVIDENCE")
+        self.assertIs(result["production_safe_to_patch"], False)
+        self.assertEqual(result["summary"]["php_files_scanned"], 1)
+        self.assertEqual(result["summary"]["observations_for_review"], 3)
+        self.assertEqual(result["summary"]["lexical_indicators"], 2)
+        self.assertEqual(result["summary"]["configuration_indicators"], 1)
+        self.assertEqual(result["summary"]["composer_locked_package_count"], 1)
+        self.assertTrue(all(
+            row["evidence_id"].startswith("P2S-EV-")
+            and row["asset_vulnerability_confirmed"] is False
+            and row["patch_status"] == "NOT_GENERATED"
+            for row in result["observations"]
+        ))
+        self.assertEqual(len(result["report_fingerprint_sha256"]), 64)
+        self.assertIs(result["report_fingerprint_is_signature"], False)
+        self.assertIsNone(result["declared_runtime"])
+
+    def test_private_content_never_exported_in_json_or_markdown(self):
+        dossier = build_audit_dossier(self.root, "2026-10-28", self.runtime)
+        exported = json.dumps(dossier) + render_audit_dossier_markdown(dossier)
+        for secret in (
+            str(self.root), "DO_NOT_LEAK_PHP_CONFIG", "$tainted", "$raw",
+            "SECRET_PRIVATE_COMPOSER_URL", "SECRET_PRIVATE_LOCK_URL",
+            "SECRET-MANDATE-001", "secret/library",
+        ):
+            with self.subTest(secret=secret):
+                self.assertNotIn(secret, exported)
+        self.assertIn("portail-demo.example", exported)
+        self.assertIn("PHP-CONFIG-DISPLAY-ERRORS", exported)
+
+    def test_runtime_stays_unverified_and_cve_applies_to_no_asset(self):
+        result = build_audit_dossier(self.root, "2026-10-28", self.runtime)
+        runtime = result["declared_runtime"]
+        self.assertEqual(runtime["php_version_declared"], "8.3.34")
+        self.assertEqual(runtime["sapi_declared"], "fpm-fcgi")
+        self.assertFalse(runtime["effective_http_runtime_attested"])
+        self.assertFalse(runtime["signature_verified"])
+        self.assertFalse(runtime["mandate_authorization_verified"])
+        self.assertEqual(runtime["asset_applicability"], "insufficient_evidence")
+        self.assertEqual(len(runtime["comparisons"]), 2)
+        self.assertTrue(all(
+            c["status"] == "below_reference_fix"
+            and c["asset_applicability"] == "insufficient_evidence"
+            and c["patch_status"] == "NOT_GENERATED"
+            for c in runtime["comparisons"]
+        ))
+        self.assertIn("applicabilité non déterminée",
+                      render_audit_dossier_markdown(result))
+
+    def test_empty_dossier_is_never_a_clearance(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = build_audit_dossier(tmp, "2026-10-28")
+        self.assertEqual(result["summary"]["observations_for_review"], 0)
+        self.assertEqual(result["vulnerability_verdict"], "INSUFFICIENT_EVIDENCE")
+        self.assertFalse(result["production_safe_to_patch"])
+        self.assertIn("ne prouve pas l'absence",
+                      render_audit_dossier_markdown(result))
+
+    def test_deterministic_fingerprint_and_no_absolute_project_root(self):
+        first = build_audit_dossier(self.root, "2026-10-28")
+        second = build_audit_dossier(self.root, "2026-10-28")
+        self.assertEqual(first, second)
+        self.assertNotIn(str(self.root), json.dumps(first))
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp)
+            (target / "index.php").write_text(
+                "<?php\n eval($tainted);\n unserialize($raw);\n")
+            (target / "php.ini").write_text(
+                "display_errors=On\napi_key=DIFFERENT_SECRET\n")
+            (target / "composer.json").write_text("{}")
+            (target / "composer.lock").write_text(json.dumps(
+                {"packages": [{"name": "another/pkg", "version": "2.0.0"}]}))
+            different = build_audit_dossier(target, "2026-10-28")
+            self.assertEqual(first["report_fingerprint_sha256"],
+                             different["report_fingerprint_sha256"])
+
+    def test_markdown_cannot_be_elevated_to_confirmed_or_patch_ready(self):
+        clean = build_audit_dossier(self.root, "2026-10-28", self.runtime)
+        for field, value in (
+            ("vulnerability_verdict", "CONFIRMED"),
+            ("production_safe_to_patch", True),
+        ):
+            with self.subTest(field=field):
+                altered = dict(clean)
+                altered[field] = value
+                with self.assertRaises(ValueError):
+                    render_audit_dossier_markdown(altered)
+        clean["observations"][0]["asset_vulnerability_confirmed"] = True
+        with self.assertRaises(ValueError):
+            render_audit_dossier_markdown(clean)
+
+    def test_markdown_escapes_injected_filename(self):
+        file = self.root / "bad_[click](https:evil.invalid)_=1.php"
+        file.write_text("<?php system($arg);")
+        report = build_audit_dossier(self.root, "2026-10-28")
+        markdown = render_audit_dossier_markdown(report)
+        self.assertNotIn("[click](https:evil.invalid)", markdown)
+        self.assertIn("PHP-SHELL-EXEC", markdown)
+
+    def test_bad_date_and_untrusted_runtime_json_refused(self):
+        for bad_date in ("2026-02-30", "invalid", "2026-10-28T00:00:00Z"):
+            with self.subTest(bad_date=bad_date), self.assertRaises(ValueError):
+                build_audit_dossier(self.root, bad_date)
+        self.runtime.write_text(json.dumps({
+            "schema_version": "0.2",
+            "effective_http_runtime_attested": True,
+        }))
+        with self.assertRaises(ValueError):
+            build_audit_dossier(self.root, "2026-10-28", self.runtime)
+
+    def test_no_network_and_cli_outputs_both_formats(self):
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("network")):
+            result = build_audit_dossier(self.root, "2026-10-28", self.runtime)
+        self.assertEqual(result["vulnerability_verdict"], "INSUFFICIENT_EVIDENCE")
+        base = [sys.executable, "-m", "app.cli", "audit-dossier",
+                "--path", str(self.root), "--as-of", "2026-10-28",
+                "--runtime-file", str(self.runtime)]
+        json_result = subprocess.run(base, check=True, capture_output=True, text=True)
+        markdown_result = subprocess.run(base + ["--format", "markdown"],
+                                         check=True, capture_output=True, text=True)
+        self.assertEqual(json.loads(json_result.stdout)["summary"]["observations_for_review"], 3)
+        self.assertIn("Dossier d'audit local", markdown_result.stdout)
+        self.assertNotIn(str(self.root), markdown_result.stdout)
+        self.assertNotIn("SECRET-MANDATE-001", markdown_result.stdout)
+
+
+if __name__ == "__main__":
+    unittest.main()

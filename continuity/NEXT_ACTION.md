@@ -48,6 +48,14 @@
 - La prochaine construction V0.2 peut étendre **sans collision** le recoupement des métadonnées GitHub et des avis PHP/CERT-FR, les contrats d'attestation runtime P2 et les schémas de preuve, sans scan distant arbitraire. Le collecteur ne met jamais à jour le catalogue local automatiquement. Les tâches d'une même ressource nécessitent le claim existant et le contrôle HEAD frais.
 - **P2S-NEXT-001 reste la porte de gouvernance** : vraies revues indépendantes PR #6 puis #1, CI exact SHA et décision de fusion gouvernée, sans inventer d'approbation. Récurrence horaire `6ae13640aa9c8191b20d3d120bf71ace` déjà active ; ne pas créer une seconde automation.
 
+## Dernière construction admise — déclaration de runtime PHP/SAPI P2 (28/10/2026)
+
+- **PR #2** : `app/runtime_evidence.py`, `tests/test_runtime_evidence.py`, `docs/V0_2_RUNTIME_EVIDENCE.md` et CLI `review-runtime-evidence --file ... --as-of ...` ajoutés. Validation stricte des fichiers locaux, schéma borné, empreinte, horodatage, version/SAPI et comparaison des deux CVE officielles ; **mandat et identité de collecte non authentifiés, runtime réel non prouvé, `asset_applicability=insufficient_evidence` invariant**. HEAD `424425116f54c353211aae554fc3866c242689b2` ; **89 tests et deux CI SUCCESS**.
+- **PR #3 S1** : merge à deux parents sans réécriture de l'historique, HEAD `199641477f9fbdb3cfdfcb6c98edcaa3f60b2020` ; quatre CI de tests/preflight **SUCCESS**. Aucune application installée sur les deux vhosts S1.
+- **P2S-NEXT-001 reste l'action de gouvernance prioritaire** : revue réellement indépendante des PR #6 puis #1 avant fusion ; demandes `Patricked-code` existantes ne valent pas APPROVED.
+- **Prochaine tranche technique** : modèle d'attestation **authentifiée** via mandats/identités MCP autorisés, vérification effective SAPI/packages PHP et backports fournisseur, puis rapprochement des avis officiels capturés ; aucune promotion depuis un fichier JSON auto-déclaré, aucune modification à distance.
+- Automatisation horaire existante `6ae13640aa9c8191b20d3d120bf71ace` conservée, relire le dernier checkpoint et le HEAD au début de chaque reprise pour éviter collisions.
+
 ## Action prioritaire au checkpoint initial
 
 **P2S-NEXT-001 — Finaliser la [PR #6](https://github.com/chainsolutions-wealthtech/Php2shell/pull/6) documentaire de continuité, puis préparer la revue/validation de PR #1 (V0.1).**

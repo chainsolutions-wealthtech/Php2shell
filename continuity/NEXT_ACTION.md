@@ -209,3 +209,10 @@ Le backlog [`WORK_PACKAGES.json`](WORK_PACKAGES.json) contient **61 work package
 - **Prochaine tranche décisive** : un collecteur HTTP P1 réellement gouverné et limité (cadre légal/mandat, protection SSRF à chaque connexion, résolution IP publique, DNS rebinding/redirects, robots, quotas, rate limits, pause/stop, preuve réelle de collecte), qui alimente le moteur de synthèse ; **ne pas utiliser l'API locale comme scanner public**.
 - Ensuite, pour respecter `P2S-UX-002` : connexion réelle et simple, stockage de rapport détaillé strictement lié au compte vérifié, preuve de propriété du domaine ou mandat distinct, connexion facultative au dépôt GitHub avec permissions minimales, raccordement privé P2 et autorisations spécifiques pour PHPPATCH.
 - **P2S-NEXT-001 demeure l'approbation indépendante PR #6 puis #1 avant fusion** ; préparer les tests des nouvelles tranches en parallèle sans se faire passer pour une revue indépendante.
+
+
+## P2S-EVT-041 — après normalisation HTTP locale (28/10/2026)
+
+- **Acquis sur PR #2 `6ca14032`** : transformation hors ligne de couples d'en-têtes HTTP fournis vers des indicateurs non vérifiés, sans valeurs de headers, cookies, URL de redirection, secrets, accès réseau ni sauvegarde. 12 tests ajoutés, **211 CLI + 17 API + 28 auth**, six CI SUCCESS au SHA exact. PR #3 `92053ae7` synchronisée sans force, 8 CI SUCCESS, trois fichiers S1 préservés. La chaîne fonctionne uniquement avec des **données déclarées**, pas une collecte réelle.
+- **Priorité unique `P2S-NEXT-001` inchangée** : obtenir une revue indépendante réelle PR #6 puis PR #1 et décider des fusions selon protections et HEAD exacts. Aucune approbation alternative du même propriétaire.
+- **Prochaines tranches indépendantes admissibles** : tests isolés de collecte HTTP P1 et de refus SSRF, sans réseau réel avant autorité et claim vérifiés ; identité/ACL et rapports privés réels restent à admettre. Ne pas exposer l'API locale, ne pas déployer S1, ne pas reclasser les exigences comme DONE. Vérifier les branches et la concurrence avant chaque écriture.

@@ -17,6 +17,11 @@ _DISPLAY_ON = re.compile(
     r"(?:on|1|yes|true)[ \t]{0,12}$", re.I
 )
 _ALLOWED_NAMES = {"php.ini", ".user.ini"}
+# Only assignments, not commented examples, can change the effective
+# setting. Multiple active assignments demand human runtime review.
+_ACTIVE_DISPLAY_ASSIGNMENT = re.compile(
+    r"^[ \\t]*display_errors[ \\t]*=", re.IGNORECASE
+)
 
 
 def propose_local_ini_patch(project_path, as_of_utc, evidence_id):
@@ -74,6 +79,15 @@ def propose_local_ini_patch(project_path, as_of_utc, evidence_id):
         raise ValueError("Unexpected line endings in ini")
     lines = text.splitlines(keepends=True)
     number = row["source_line"]
+    active_assignments = [
+        index for index, line in enumerate(lines, start=1)
+        if _ACTIVE_DISPLAY_ASSIGNMENT.match(line)
+    ]
+    if len(active_assignments) != 1 or active_assignments[0] != number:
+        raise ValueError(
+            "Multiple active display_errors directives or ambiguous evidence; "
+            "manual runtime review required"
+        )
     if number > len(lines):
         raise ValueError("Evidence line is no longer present")
     original = lines[number - 1]

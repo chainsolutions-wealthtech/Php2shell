@@ -201,3 +201,11 @@ Le backlog [`WORK_PACKAGES.json`](WORK_PACKAGES.json) contient **61 work package
 - Prévisualisation débutant hors ligne effectivement construite : trois étapes lisibles et réglages avancés repliés ; PR #2 `69cbbc6`, PR #3 `97808da`, CI toutes vertes.
 - **Parcours produit cible à construire :** entrée URL sans inscription et sans réseau ; connexion unique via IdP approuvé lorsqu'une analyse réelle est demandée ; vérification self-service de la propriété/délégation sur domaine ou dépôt par mécanisme externe fiable ; mandat P1/P2 et quotas invisibles au débutant mais appliqués côté backend ; rapport clair, PHPPATCH avec autorisation distincte pour patch et déploiement. Ne pas promettre un audit sur n'importe quel site non autorisé.
 - **P2S-NEXT-001** reste la revue indépendante réelle PR #6 puis PR #1, sans auto-approbation. En parallèle, définir les capacités d'IdP et de registre d'actifs pour un vrai onboarding et des contrôles d'autorité. Ne pas confondre une maquette compréhensible avec une plateforme utilisable en production.
+
+
+## P2S-EVT-040 — jalons après premier moteur de réponse courte
+
+- **Acquis réel (hors ligne)** : résumé anonyme sans conservation + API locale non exposée, PR #2 `dc2a61d`, PR #3 `ddc8871` ; 199 CLI/17 API/28 tests auth et CI vertes, aucune fausse autorisation.
+- **Prochaine tranche décisive** : un collecteur HTTP P1 réellement gouverné et limité (cadre légal/mandat, protection SSRF à chaque connexion, résolution IP publique, DNS rebinding/redirects, robots, quotas, rate limits, pause/stop, preuve réelle de collecte), qui alimente le moteur de synthèse ; **ne pas utiliser l'API locale comme scanner public**.
+- Ensuite, pour respecter `P2S-UX-002` : connexion réelle et simple, stockage de rapport détaillé strictement lié au compte vérifié, preuve de propriété du domaine ou mandat distinct, connexion facultative au dépôt GitHub avec permissions minimales, raccordement privé P2 et autorisations spécifiques pour PHPPATCH.
+- **P2S-NEXT-001 demeure l'approbation indépendante PR #6 puis #1 avant fusion** ; préparer les tests des nouvelles tranches en parallèle sans se faire passer pour une revue indépendante.

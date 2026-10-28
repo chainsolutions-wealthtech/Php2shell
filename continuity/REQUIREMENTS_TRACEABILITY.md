@@ -134,3 +134,6 @@ La PR #2 `7f6ae451c1129d0b6a1a0c103f2f91659d26e55b` ajoute `app/composer_consist
 
 
 - **REQ-003 / REQ-013 / REQ-020 / REQ-022 / REQ-032 PARTIELLES — P2S-EVT-039** : onboarding débutant à trois étapes sans compte pour preview hors ligne ; choix intelligibles pour P1/P2, budgets avancés repliés, aucune fonction live ni vrai login. PR #2 `69cbbc6b13a08d2ce845754d2e9156edc018510d` RED tests #40641715258 → GREEN 6 CI au HEAD ; PR #3 `97808da8783abb9625d7aa2b5efdfe7316cba998` 8 CI SUCCESS, 190 CLI historiques / 12 API / 28 auth. UX améliorée mais **aucune capacité V1.0 authentifiée ou de scan déployée**. Aucune évolution de statut des 61 work packages.
+
+
+- **REQ-003 / REQ-013 / REQ-020 / REQ-022 / REQ-032 PARTIELLES — P2S-EVT-040** : moteur de synthèse courte `app/public_summary.py` et API locale `/api/v0.2/guest/summary` ajoutés avec refus par défaut et aucun réseau, aucune identité, autorisation de scan ou persistance. RED 9 tests moteur #40642957257, GREEN #40643056790 ; RED 5 API #40643290583, GREEN #40643320032 ; PR #2 `dc2a61d` six CI SUCCESS, PR #3 `ddc8871` huit CI SUCCESS ; 199 historiques, 17 API, 28 auth. **Le vrai scan invité, les comptes, l'historique détaillé et le lien GitHub vérifié restent NON implémentés**.

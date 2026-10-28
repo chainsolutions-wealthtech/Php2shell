@@ -109,3 +109,7 @@ Toute nouvelle fonctionnalité doit :
 
 - **REQ-030 / P2S-WF-R06 : PARTIEL PRÉPARATOIRE** (P2S-EVT-032) : durcissement du diff local `display_errors` refusant les affectations actives multiples ; commentaires inactifs, indentation et non-écriture préservés. 166 tests historiques et 12 tests API sur PR #2 `6a41ef5c15ef78af95afa0aeda3561fd5c33dd8c` ; 6 CI vertes PR #3 `3bccdf0b4d776ba399621debbdc48488685e5eb6`. Il manque mandat/authentification, validation PHP SAPI, sandbox, approbation, PR corrective et rollback.
 - **REQ-020 / REQ-032 / P2S-WF-Q01 : PARTIEL** : deux nouveaux tests RED→GREEN, CI #40636184215 (RED), #40636281308 (GREEN), CI PR #3 #40636326106 SUCCESS (166 tests). Pas de qualification E2E ni de production.
+
+
+- **REQ-003 / P2S-WF-S01 PARTIEL, pas d'authentification réelle** (P2S-EVT-033) : `evaluate_action_gates` déclare les exigences séparées P1/P2, patch et déploiement, rejette l'élévation forgée et répond toujours `DENY_UNVERIFIED_AUTHORITY`. PR #2 `2e270c92048ee9725d9d3b3cba3d2d6ec10d2b97` ; 171 tests historiques, 12 API ; CI #40636985499/#40636985489 SUCCESS, RED #40636921508 conservée. **Non acquis :** vrai IdP, sessions, ACL, vérificateur de mandat/délégation, révocation, claims runtime, frontend authentifié et exécution.
+- **REQ-013/020/032 PARTIELLES** : matrice fail-closed et tests négatifs validés ; PR #3 `2da277bbdb0784f2fe73f69ac0db7b96407a7a71` synchronisée, 6 CI SUCCESS, aucun worker ni API production ni domaine S1 déployé. Statuts des work packages non élevés.

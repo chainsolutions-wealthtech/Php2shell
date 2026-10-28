@@ -1,0 +1,113 @@
+"""Conservative URL-entry preview tests. No DNS, HTTP, crawlers or P2 claims."""
+import json
+import socket
+import subprocess
+import sys
+import unittest
+from unittest.mock import patch
+
+from app.url_intake import preview_url_scope
+
+
+class UrlIntakeTests(unittest.TestCase):
+    def test_valid_https_site_normalized_but_never_admitted(self):
+        data = preview_url_scope(
+            "https://WWW.Example.COM/about/", "public_metadata",
+            max_pages=25, requests_per_minute=3
+        )
+        self.assertEqual(data["normalized_url"], "https://www.example.com/about/")
+        self.assertEqual(data["hostname"], "www.example.com")
+        self.assertEqual(data["base_path"], "/about/")
+        self.assertEqual(data["declared_scope"], "public_metadata")
+        self.assertFalse(data["allowed_to_crawl"])
+        self.assertFalse(data["allowed_to_inspect_source"])
+        self.assertFalse(data["mandate_authentication_verified"])
+        self.assertFalse(data["target_ownership_verified"])
+        self.assertFalse(data["dns_and_public_ip_validated"])
+        self.assertFalse(data["network_requests_made"])
+        self.assertEqual(data["request_count_executed"], 0)
+        self.assertEqual(data["max_pages_requested"], 25)
+        self.assertEqual(data["requests_per_minute_requested"], 3)
+
+    def test_lab_example_is_preview_only(self):
+        data = preview_url_scope("https://portail-demo.example")
+        self.assertEqual(data["normalized_url"], "https://portail-demo.example/")
+        self.assertFalse(data["allowed_to_crawl"])
+
+    def test_p2_scope_requires_reference_but_does_not_verify_it(self):
+        with self.assertRaises(ValueError):
+            preview_url_scope("https://site.example.com", "owned_source")
+        data = preview_url_scope(
+            "https://site.example.com", "owned_source", "SENSITIVE-P2-REFERENCE"
+        )
+        self.assertTrue(data["operator_mandate_supplied"])
+        self.assertEqual(data["declared_scope"], "owned_source")
+        self.assertFalse(data["allowed_to_inspect_source"])
+        self.assertFalse(data["mandate_authentication_verified"])
+        self.assertNotIn("SENSITIVE-P2-REFERENCE", json.dumps(data))
+
+    def test_bad_schemes_credentials_query_fragments_and_port_refused(self):
+        values = (
+            "http://example.com", "ftp://example.com",
+            "https://name:password@example.com",
+            "https://attacker.com@example.com", "https://example.com/?token=secret",
+            "https://example.com/#fragment", "https://example.com:8080/",
+            "https://example.com:bad/", "https://example.com:0/",
+            "https://example.com/%2e%2e/admin",
+            "https://example.com/a/../admin", "https://example.com//admin",
+            "https://example.com\\@attacker.local/",
+            "https://example.com/\nmetadata", "example.com", "", "https://example.com." ,
+        )
+        for value in values:
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                preview_url_scope(value)
+
+    def test_local_private_ip_and_encoded_ip_forms_blocked(self):
+        values = (
+            "https://localhost", "https://server.local",
+            "https://anything.internal", "https://example.test",
+            "https://example.invalid", "https://service.onion",
+            "https://metadata.google.internal",
+            "https://127.0.0.1", "https://10.0.0.1",
+            "https://192.168.1.1", "https://169.254.169.254",
+            "https://[::1]/", "https://[fe80::1]/",
+            "https://127.1", "https://0x7f.0x01",
+        )
+        for value in values:
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                preview_url_scope(value)
+
+    def test_rejects_bad_budgets_and_unknown_scope(self):
+        for n in (0, 101, -1, True, 1.5):
+            with self.subTest(max_pages=n), self.assertRaises(ValueError):
+                preview_url_scope("https://example.com", max_pages=n)
+        for n in (0, 31, -1, False, 1.4):
+            with self.subTest(rate=n), self.assertRaises(ValueError):
+                preview_url_scope("https://example.com", requests_per_minute=n)
+        with self.assertRaises(ValueError):
+            preview_url_scope("https://example.com", scope="admin")
+        with self.assertRaises(ValueError):
+            preview_url_scope("https://example.com", mandate_reference="../../env")
+
+    def test_default_port_and_safe_path_are_canonical(self):
+        data = preview_url_scope("https://ExAmPlE.com:443/path/sub_folder-1")
+        self.assertEqual(data["normalized_url"], "https://example.com/path/sub_folder-1")
+        self.assertEqual(data["request_count_executed"], 0)
+
+    def test_offline_behavior_and_cli_json(self):
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("network")):
+            result = preview_url_scope("https://example.com")
+        self.assertFalse(result["allowed_to_crawl"])
+        cli = subprocess.run(
+            [sys.executable, "-m", "app.cli", "preview-url",
+             "--url", "https://example.com"],
+            capture_output=True, text=True, check=True,
+        )
+        response = json.loads(cli.stdout)
+        self.assertEqual(response["preview_type"], "OFFLINE_URL_SCOPE_PREVIEW_NOT_ADMISSION")
+        self.assertFalse(response["dns_and_public_ip_validated"])
+        self.assertIn("revalidate every hop", " ".join(response["next_gates"]))
+
+
+if __name__ == "__main__":
+    unittest.main()

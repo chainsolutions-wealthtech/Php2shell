@@ -164,3 +164,11 @@ Le backlog [`WORK_PACKAGES.json`](WORK_PACKAGES.json) contient **61 work package
 - Construits sur PR #2 : cinq contrôles d'intention distincts, refus par défaut des assertions forgées, cinq tests supplémentaires, 171 tests CLI + 12 API, CI vertes ; PR #3 synchronisée (6 CI vertes). Aucun `ALLOW`, aucune création de compte, aucune activation réseau.
 - **P2S-NEXT-001 reste unique** : faire examiner PR #6 puis PR #1 par une véritable identité indépendante, fusion seulement après revue et contrôles.
 - **Travail technique suivant** : identifier et raccorder un vrai vérificateur d'identité/mandat P1/P2 à l'autorité existante, contrôler signature/audience/issuer, l'appartenance projet-ressource, révocation/expiration, claims, quotas, et produire tests de refus et d'admission. Le MCP interrogé ne fournit pas encore de capacité PHP2SHELL attestée. Les workers, scans, patches actifs et S1 restent interdits jusqu'à admission effective.
+
+
+## P2S-EVT-034 — prochain jalon réel après vérificateur Ed25519
+
+- Code et tests : vérificateur externe JWS Ed25519 **local** intégré à PR #2 `cb705a82` (10 tests auth SUCCESS, 171 tests historiques et 12 tests API SUCCESS) ; PR #3 `c22ac964` synchronisée, sans écriture S1.
+- **P2S-NEXT-001 inchangée :** obtenir la vraie revue indépendante de PR #6, puis PR #1, avant décision de fusion. Aucune approbation simulée.
+- **Dépendance d'authentification réelle à résoudre :** trouver un émetteur d'identité et un mécanisme d'attestation signé déjà admis par le MCP/IdP, définir un trust-store de clés publiques **côté serveur** et rotation, liaison à la session utilisateur et à l'ACL projet, révocation live, claim MCP et contrôles de ressources. Le prototype ne fournit pas ces éléments et ne doit pas être exposé comme une permission d'opérer.
+- Toute application/scan/crawl S1 reste interdite sans mandat explicite et mécanisme réellement exécutable.

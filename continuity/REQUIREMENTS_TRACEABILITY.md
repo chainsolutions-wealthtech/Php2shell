@@ -131,3 +131,6 @@ La PR #2 `7f6ae451c1129d0b6a1a0c103f2f91659d26e55b` ajoute `app/composer_consist
 
 
 - **REQ-003 / REQ-013 / REQ-020 / REQ-031 / REQ-032 PARTIELLES (P2S-EVT-038)** : `app/scoped_attestation_preflight.py` lie strictement URL canonique et JWS Ed25519 aux identifiants et opérations attendus, et P2 à un `mandate_id` signé exact. 8 tests nouveaux (28 auth cumulés), RED #40640364068 → GREEN #40640438069. PR #2 HEAD `a14968d1aa4ff842cfd025b118c5ce90d60c55aa` 6 CI SUCCESS ; PR #3 HEAD `f87eb7e1ecc41f21611aadd5c3029ac6e16f313e` 8 CI SUCCESS, 188 CLI historiques et 12 API sans régression. **Pas de vrai IdP client, ACL, mandat externe, gouvernance MCP PHP2SHELL ou `ALLOW`**.
+
+
+- **REQ-003 / REQ-013 / REQ-020 / REQ-022 / REQ-032 PARTIELLES — P2S-EVT-039** : onboarding débutant à trois étapes sans compte pour preview hors ligne ; choix intelligibles pour P1/P2, budgets avancés repliés, aucune fonction live ni vrai login. PR #2 `69cbbc6b13a08d2ce845754d2e9156edc018510d` RED tests #40641715258 → GREEN 6 CI au HEAD ; PR #3 `97808da8783abb9625d7aa2b5efdfe7316cba998` 8 CI SUCCESS, 190 CLI historiques / 12 API / 28 auth. UX améliorée mais **aucune capacité V1.0 authentifiée ou de scan déployée**. Aucune évolution de statut des 61 work packages.

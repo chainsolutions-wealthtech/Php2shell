@@ -194,3 +194,10 @@ Le backlog [`WORK_PACKAGES.json`](WORK_PACKAGES.json) contient **61 work package
 - **Autorité externe absente :** l'inventaire des 138 outils MCP exposés n'offre pas de service attesté de vérification des utilisateurs/mandats PHP2SHELL. Les governed sessions/oauth_subject concernent les agents MCP ; aucune preuve de réutilisation comme IdP client PHP2SHELL. **Ne pas exposer le prototype comme authentification réelle.**
 - **Prochaine dépendance concrète** : définir et approuver l'IdP des utilisateurs, le modèle d'ACL projet/actif et le service gouvernemental de délégation, vérifier les permissions des installations GitHub réellement utiles, fournir un trust-store serveur et une révocation live, puis tester une vraie session et un vrai mandat P2 en environnement isolé, avant toute permission réseau.
 - La **priorité gouvernée P2S-NEXT-001 ne change pas** : vraie revue indépendante PR #6 puis #1, CI exact SHA avant fusion, sans compte alternatif du même propriétaire en guise de revue indépendante.
+
+
+## P2S-EVT-039 — prochain jalon simplicité d'usage
+
+- Prévisualisation débutant hors ligne effectivement construite : trois étapes lisibles et réglages avancés repliés ; PR #2 `69cbbc6`, PR #3 `97808da`, CI toutes vertes.
+- **Parcours produit cible à construire :** entrée URL sans inscription et sans réseau ; connexion unique via IdP approuvé lorsqu'une analyse réelle est demandée ; vérification self-service de la propriété/délégation sur domaine ou dépôt par mécanisme externe fiable ; mandat P1/P2 et quotas invisibles au débutant mais appliqués côté backend ; rapport clair, PHPPATCH avec autorisation distincte pour patch et déploiement. Ne pas promettre un audit sur n'importe quel site non autorisé.
+- **P2S-NEXT-001** reste la revue indépendante réelle PR #6 puis PR #1, sans auto-approbation. En parallèle, définir les capacités d'IdP et de registre d'actifs pour un vrai onboarding et des contrôles d'autorité. Ne pas confondre une maquette compréhensible avec une plateforme utilisable en production.

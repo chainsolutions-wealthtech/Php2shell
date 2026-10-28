@@ -19,6 +19,12 @@ Les deux CVE initialement ciblées existent et leurs correctifs upstream sont do
 
 **État restant :** ni récupération périodique fiable des nouveaux avis, ni vérification de rétroportages fournisseur, ni preuve du runtime réellement exécuté, ni analyse automatique d'applicabilité sur actif. Le catalogue traite actuellement les deux CVE fondatrices : **pas un registre exhaustif de toutes les CVE PHP 2026**. L'alerte CERT-FR révisée mentionne d'autres risques qu'un futur collecteur devra gérer séparément.
 
+## Addendum opérationnel — client GitHub public GHSA borné V0.2 (28/10/2026)
+
+**Tranche implémentée, mais récupération live non testée :** PR #2 introduit `app/advisory_fetch.py` et `fetch-official-advisory --ghsa ... --as-of ... --permit-official-network`. Elle ne permet que `https://api.github.com/advisories/{GHSA}` pour un GHSA déjà enregistré dans le catalogue. Tests **81 succès au HEAD `e02ac06fe715ac643313e4d1a0110d56129fb8d6`**, réponse API strictement simulée par les tests, pas d'accès tiers ni d'écriture dans le catalogue, aucune conclusion de vulnérabilité sur un serveur.
+
+**L'endpoint GitHub global est une source officielle de métadonnées mais ne se substitue pas à l'avis primaire publié par le projet PHP ni au CERT-FR**. Une future intégration doit recouper ces sources, les branches PHP et les correctifs fournisseur/distribution. Une URL contrôlée n'est pas une preuve cryptographique de provenance, et une réponse HTTP authentifiée par TLS n'atteste pas l'environnement de l'actif. PR #3 S1 resynchronisée au HEAD `708d912ad19b54a4a9410084058d9114396d591c`, uniquement readiness/CI, **aucun service déployé**.
+
 ## Avis prioritaires
 
 | CVE | Identifiant avis primaire PHP | Résumé défensif | CVSS 4.0 upstream | Publication |

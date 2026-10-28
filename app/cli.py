@@ -13,6 +13,7 @@ from .runtime_reporting import export_runtime_review_csv
 from .audit_dossier import build_audit_dossier, render_audit_dossier_markdown
 from .url_intake import preview_url_scope
 from .campaign_plan import plan_offline_campaign
+from .report_html import render_dossier_html
 
 def main():
     parser = argparse.ArgumentParser(description='PHP2SHELL offline defensive prototype')
@@ -53,7 +54,7 @@ def main():
     dossier.add_argument('--path', required=True, help='Authorized local PHP project')
     dossier.add_argument('--as-of', required=True, help='UTC calendar date YYYY-MM-DD')
     dossier.add_argument('--runtime-file', help='Optional unverified local PHP runtime JSON')
-    dossier.add_argument('--format', choices=('json', 'markdown'), default='json')
+    dossier.add_argument('--format', choices=('json', 'markdown', 'html'), default='json')
     url_preview = sub.add_parser('preview-url',
                                  help='Offline URL scope preview, NOT an audit or mandate')
     url_preview.add_argument('--url', required=True, help='Public HTTPS site URL')
@@ -101,7 +102,9 @@ def main():
         result = scan_project(args.path)
     else:
         result = import_targets(args.file)
-    if args.command == 'audit-dossier' and args.format == 'markdown':
+    if args.command == 'audit-dossier' and args.format == 'html':
+        print(render_dossier_html(result), end='')
+    elif args.command == 'audit-dossier' and args.format == 'markdown':
         print(render_audit_dossier_markdown(result), end='')
     elif args.command == 'review-runtime-evidence' and args.format == 'csv':
         print(export_runtime_review_csv(result), end='')

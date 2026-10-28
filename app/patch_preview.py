@@ -20,7 +20,7 @@ _ALLOWED_NAMES = {"php.ini", ".user.ini"}
 # Only assignments, not commented examples, can change the effective
 # setting. Multiple active assignments demand human runtime review.
 _ACTIVE_DISPLAY_ASSIGNMENT = re.compile(
-    r"^[ \\t]*display_errors[ \\t]*=", re.IGNORECASE
+    r"^[ \t]*display_errors[ \t]*=", re.IGNORECASE
 )
 
 

@@ -79,7 +79,7 @@ def plan_offline_campaign(file, *, campaign_tag="local-preview", shards=4,
         "unique_targets": len(ordered),
         "duplicates_removed": source["duplicates_removed"],
         "declared_scopes": dict(sorted(
-            Counter(target["declared_scope"] for target in ordered).items()
+            Counter(target["scope"] for target in ordered).items()
         )),
         "partition_count": shards,
         "partitions": segments,

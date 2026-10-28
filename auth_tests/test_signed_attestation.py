@@ -162,5 +162,45 @@ class SignedAttestationContractTests(unittest.TestCase):
                 self.verify(self.token(body))
 
 
+    def test_bound_base_path_exact_match_without_execution_grant(self):
+        body = dict(self.claims, base_path="/client/private/")
+        binding = dict(self.expected, base_path="/client/private/")
+        decision = self.verify(self.token(body), expected=binding)
+        self.assertTrue(decision["signature_verified"])
+        self.assertFalse(decision["execution_enabled"])
+        self.assertFalse(decision["authorized"])
+
+    def test_bound_base_path_rejects_wrong_path_or_prefix_confusion(self):
+        body = dict(self.claims, base_path="/client/private/")
+        for path in ("/client/", "/client/private", "/client/private-other/",
+                     "/client/private/report", "/client/elsewhere/", "/"):
+            with self.subTest(path=path), self.assertRaises(ValueError):
+                self.verify(self.token(body),
+                            expected=dict(self.expected, base_path=path))
+
+    def test_missing_path_claim_or_request_binding_refused(self):
+        binding = dict(self.expected, base_path="/client/private/")
+        with self.assertRaises(ValueError):
+            self.verify(expected=binding)
+        with self.assertRaises(ValueError):
+            self.verify(self.token(dict(self.claims, base_path="/")), expected=self.expected)
+
+    def test_invalid_signed_and_request_paths_rejected(self):
+        bad = ("", "client/private", "/client//private", "/client/../admin",
+               "/client/./private", "/client/%2e%2e/", "/client?x=1",
+               "/client\\\\admin", "//host.example.com", "/client/#f")
+        for value in bad:
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                self.verify(self.token(dict(self.claims, base_path=value)),
+                            expected=dict(self.expected, base_path=value))
+
+    def test_original_legacy_root_contract_still_verifies_but_never_authorizes(self):
+        decision = self.verify()
+        self.assertFalse(decision["authorized"])
+        self.assertEqual(decision["verification_type"],
+                         "EXTERNAL_ED25519_ATTESTATION_NOT_ADMISSION")
+
+
+
 if __name__ == "__main__":
     unittest.main()

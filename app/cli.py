@@ -12,6 +12,7 @@ from .runtime_evidence import review_declared_runtime_evidence
 from .runtime_reporting import export_runtime_review_csv
 from .audit_dossier import build_audit_dossier, render_audit_dossier_markdown
 from .url_intake import preview_url_scope
+from .campaign_plan import plan_offline_campaign
 
 def main():
     parser = argparse.ArgumentParser(description='PHP2SHELL offline defensive prototype')
@@ -61,6 +62,13 @@ def main():
     url_preview.add_argument('--mandate-ref', help='Unverified operator reference, not output')
     url_preview.add_argument('--max-pages', type=int, default=20)
     url_preview.add_argument('--requests-per-minute', type=int, default=6)
+    campaign = sub.add_parser('plan-campaign',
+                              help='Offline partitions only; no worker, crawl or permission')
+    campaign.add_argument('--file', required=True, help='Existing JSON/CSV/TXT inventory')
+    campaign.add_argument('--tag', default='local-preview')
+    campaign.add_argument('--shards', type=int, default=4)
+    campaign.add_argument('--pages-per-target', type=int, default=20)
+    campaign.add_argument('--requests-per-minute', type=int, default=6)
     args = parser.parse_args()
     if args.command == 'check-version':
         result = evaluate(args.php)
@@ -83,6 +91,12 @@ def main():
     elif args.command == 'preview-url':
         result = preview_url_scope(args.url, args.scope, args.mandate_ref,
                                    args.max_pages, args.requests_per_minute)
+    elif args.command == 'plan-campaign':
+        result = plan_offline_campaign(
+            args.file, campaign_tag=args.tag, shards=args.shards,
+            pages_per_target=args.pages_per_target,
+            requests_per_minute=args.requests_per_minute,
+        )
     elif args.command == 'scan-local':
         result = scan_project(args.path)
     else:

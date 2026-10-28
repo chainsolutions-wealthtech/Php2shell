@@ -113,3 +113,88 @@ async def preview_url(payload: PreviewRequest, request: Request):
     except ValueError as exc:
         # Do not echo full operator-supplied URL/hostname in 422 exceptions.
         raise HTTPException(status_code=422, detail="INVALID_URL_PREVIEW") from exc
+
+
+class _ActualBodyLimitMiddleware:
+    """ASGI request-body bound, independent of Content-Length and chunk framing.
+
+    This contract-only application is never a deployment target. The adapter
+    buffers at most 4 KiB; streaming traffic larger than the bound is rejected
+    before Pydantic or endpoint code processes the untrusted body. It must not
+    be presented as a production reverse-proxy size/rate limit.
+    """
+
+    MAX_BODY_BYTES = 4096
+
+    def __init__(self, app):
+        self.app = app
+
+    @staticmethod
+    async def reject(scope, receive, send):
+        response = JSONResponse(
+            {"error": "REQUEST_TOO_LARGE"},
+            status_code=413,
+            headers={
+                "Cache-Control": "no-store",
+                "X-Content-Type-Options": "nosniff",
+                "X-Frame-Options": "DENY",
+            },
+        )
+        await response(scope, receive, send)
+
+    async def __call__(self, scope, receive, send):
+        if (scope["type"] != "http"
+                or scope.get("method") not in {"POST", "PUT", "PATCH"}):
+            return await self.app(scope, receive, send)
+
+        # Duplicate/malformed declared lengths are ambiguous even when a
+        # frontend proxy has already accepted the request.
+        lengths = [
+            value for key, value in scope.get("headers", [])
+            if key.lower() == b"content-length"
+        ]
+        if len(lengths) > 1 or (
+            lengths and (
+                not lengths[0].isascii() or not lengths[0].isdigit()
+                or len(lengths[0]) > 5 or int(lengths[0]) > self.MAX_BODY_BYTES
+            )
+        ):
+            return await self.reject(scope, receive, send)
+
+        total = 0
+        parts = []
+        while True:
+            event = await receive()
+            if event["type"] == "http.disconnect":
+                return
+            if event["type"] != "http.request":
+                return
+            chunk = event.get("body", b"")
+            total += len(chunk)
+            if total > self.MAX_BODY_BYTES:
+                return await self.reject(scope, receive, send)
+            parts.append(chunk)
+            if not event.get("more_body", False):
+                break
+
+        # Replay exactly one small bounded body to the existing FastAPI/ASGI
+        # contract. Further reads go to the original transport for disconnect.
+        initial = True
+
+        async def bounded_receive():
+            nonlocal initial
+            if initial:
+                initial = False
+                return {
+                    "type": "http.request",
+                    "body": b"".join(parts),
+                    "more_body": False,
+                }
+            return await receive()
+
+        return await self.app(scope, bounded_receive, send)
+
+
+# Installed last so the byte-boundary executes before request parsing and
+# the existing privacy/TrustedHost checks. No listener is started by import.
+app.add_middleware(_ActualBodyLimitMiddleware)

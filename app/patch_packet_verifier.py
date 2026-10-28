@@ -5,6 +5,8 @@ digest, packet, or user-provided JSON as identity, mandate or approval.
 No network, PHP execution, patch application or production mutation.
 """
 import json
+import os
+import stat
 from pathlib import Path
 
 from .patch_review_packet import build_patch_review_packet
@@ -65,6 +67,47 @@ def verify_local_review_packet(packet, project_path, as_of_utc, evidence_id):
     }
 
 
+def _read_bounded_regular_packet(path):
+    """Read a regular local file via a pinned descriptor, without following a final symlink.
+
+    This is a defensive offline input reader, NOT an atomic snapshot of a
+    mutable filesystem or a proof of the caller's identity/mandate.
+    """
+    nofollow = getattr(os, "O_NOFOLLOW", None)
+    if nofollow is None:
+        raise ValueError("Secure local packet opening unsupported")
+    flags = (os.O_RDONLY | nofollow | getattr(os, "O_CLOEXEC", 0)
+             | getattr(os, "O_NONBLOCK", 0))
+    try:
+        fd = os.open(path, flags)
+    except OSError as exc:
+        raise ValueError("Local review packet unavailable") from exc
+    try:
+        before = os.fstat(fd)
+        if not stat.S_ISREG(before.st_mode) or before.st_size > _MAX_PACKET_BYTES:
+            raise ValueError("Local review packet must be a bounded regular file")
+        data = bytearray()
+        while len(data) <= _MAX_PACKET_BYTES:
+            block = os.read(fd, min(4096, _MAX_PACKET_BYTES + 1 - len(data)))
+            if not block:
+                break
+            data.extend(block)
+        if len(data) > _MAX_PACKET_BYTES:
+            raise ValueError("Local review packet exceeds size limit")
+        after = os.fstat(fd)
+        if (not stat.S_ISREG(after.st_mode)
+                or after.st_size != before.st_size
+                or after.st_size != len(data)
+                or after.st_mtime_ns != before.st_mtime_ns
+                or after.st_ctime_ns != before.st_ctime_ns):
+            raise ValueError("Local review packet changed during read")
+        return bytes(data)
+    except OSError as exc:
+        raise ValueError("Local review packet unavailable") from exc
+    finally:
+        os.close(fd)
+
+
 def load_and_verify_local_review_packet(packet_file, project_path, as_of_utc,
                                         evidence_id):
     """Load a bounded, regular local JSON file without following symlinks."""
@@ -73,11 +116,7 @@ def load_and_verify_local_review_packet(packet_file, project_path, as_of_utc,
     path = Path(packet_file)
     if any(part.is_symlink() for part in (path, *path.parents)):
         raise ValueError("Symlinked local review packet path is forbidden")
-    if not path.is_file() or path.stat().st_size > _MAX_PACKET_BYTES:
-        raise ValueError("Local review packet unavailable or oversized")
-    data = path.read_bytes()
-    if len(data) > _MAX_PACKET_BYTES:
-        raise ValueError("Local review packet exceeds size limit")
+    data = _read_bounded_regular_packet(path)
     try:
         packet = json.loads(
             data.decode("utf-8"),

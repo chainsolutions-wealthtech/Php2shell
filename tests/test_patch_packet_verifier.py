@@ -1,6 +1,7 @@
 """Offline PHPPATCH packet integrity and denial-of-authority tests."""
 from copy import deepcopy
 import json
+import os
 import socket
 import tempfile
 import unittest
@@ -142,6 +143,70 @@ class PatchPacketVerifierTests(unittest.TestCase):
             verify_local_review_packet(
                 self.packet, self.root, "2026-10-27", self.evidence,
             )
+
+    def test_directory_and_fifo_packet_inputs_fail_closed(self):
+        directory = self.root / "packet-directory"
+        directory.mkdir()
+        with self.assertRaises(ValueError):
+            load_and_verify_local_review_packet(
+                directory, self.root, "2026-10-28", self.evidence,
+            )
+        if not hasattr(os, "mkfifo"):
+            self.skipTest("FIFO unavailable")
+        fifo = self.root / "packet-fifo"
+        os.mkfifo(fifo)
+        with self.assertRaises(ValueError):
+            load_and_verify_local_review_packet(
+                fifo, self.root, "2026-10-28", self.evidence,
+            )
+
+    def test_symlink_swap_just_before_descriptor_open_fails_closed(self):
+        packet_path = self.root / "packet-swap.json"
+        packet_path.write_text(json.dumps(self.packet), encoding="utf-8")
+        other = self.root / "other.json"
+        other.write_text(json.dumps(self.packet), encoding="utf-8")
+        try:
+            probe = self.root / "symlink-probe"
+            probe.symlink_to(other)
+            probe.unlink()
+        except (OSError, NotImplementedError):
+            self.skipTest("Symlinks unavailable")
+        real_open = os.open
+
+        def swap_then_open(path, flags, *args, **kwargs):
+            if Path(path) == packet_path:
+                packet_path.unlink()
+                packet_path.symlink_to(other)
+            return real_open(path, flags, *args, **kwargs)
+
+        with patch("app.patch_packet_verifier.os.open",
+                   side_effect=swap_then_open):
+            with self.assertRaises(ValueError):
+                load_and_verify_local_review_packet(
+                    packet_path, self.root, "2026-10-28", self.evidence,
+                )
+
+    def test_packet_growth_during_descriptor_read_fails_closed(self):
+        packet_path = self.root / "packet-growing.json"
+        packet_path.write_text(json.dumps(self.packet), encoding="utf-8")
+        real_read = os.read
+        changed = False
+
+        def grow_then_read(fd, count):
+            nonlocal changed
+            if not changed:
+                changed = True
+                with packet_path.open("ab") as handle:
+                    handle.write(b" ")
+            return real_read(fd, count)
+
+        with patch("app.patch_packet_verifier.os.read",
+                   side_effect=grow_then_read):
+            with self.assertRaises(ValueError):
+                load_and_verify_local_review_packet(
+                    packet_path, self.root, "2026-10-28", self.evidence,
+                )
+        self.assertTrue(changed)
 
 
 if __name__ == "__main__":

@@ -44,3 +44,19 @@ site, ne crée aucune PR, ne modifie ni `main` ni S1.
 Cette tranche constitue une preuve **partielle** pour le transfert et la
 revue PHPPATCH (REQ-030, P2S-WF-R06) et la non-régression (P2S-WF-Q01).
 Elle ne remplace pas les gates réels de la roadmap V0.1→V1.0.
+
+## Renforcement du lecteur local (28 octobre 2026)
+
+Le fichier de paquet est ouvert en lecture seule avec `O_NOFOLLOW` et
+`O_NONBLOCK` lorsqu'ils sont disponibles. Le descripteur est contrôlé par
+`fstat` : seul un fichier ordinaire de 16 Kio maximum est accepté ; les
+répertoires, FIFO et liens symboliques finaux sont refusés. Le lecteur borne
+également les octets effectivement lus et refuse un changement observable de
+taille ou de métadonnées pendant la lecture. Si `O_NOFOLLOW` n'existe pas,
+il échoue en mode fermé plutôt que d'affirmer une lecture protégée.
+
+Ces vérifications réduisent les risques de substitution locale entre le
+contrôle du chemin et l'ouverture. Elles ne constituent **pas** une protection
+complète contre toutes les mutations concurrentes des répertoires parents,
+ni un verrouillage de snapshot, une signature, un mandat ou une preuve de
+propriété. Aucune écriture, connexion réseau ou exécution PHP n'est ajoutée.

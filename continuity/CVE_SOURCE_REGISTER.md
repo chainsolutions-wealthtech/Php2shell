@@ -11,6 +11,14 @@ Les deux CVE initialement ciblées existent et leurs correctifs upstream sont do
 
 **Nouvelle décision :** officialiser ici les références vérifiées ; il restera à implémenter la consommation de sources, la fraîcheur, la vérification des signatures/provenances, l'attestation des runtimes réels et les cas de rétroportage, sur une PR V0.2 distincte, avant d'activer un diagnostic de vulnérabilité par actif. Ne pas changer les statuts du code en prétendant que le pipeline existe déjà.
 
+## Addendum de réalisation — instantané officiel PHP V0.2 (28/10/2026)
+
+**Première étape fonctionnelle implémentée dans la PR #2** : le code `app/security_advisories.py` valide un **instantané local** `app/data/php_security_advisories.json` fondé sur les références PHP et CERT-FR, avec deux commandes nouvelles `advisories` et `review-version --php X.Y.Z`. La sortie distingue systématiquement `advisory_source_verified_in_snapshot` et `asset_applicability: insufficient_evidence`. Le comportement de `check-version` V0.1 est conservé.
+
+**Preuves :** PR #2 HEAD `4848bff596977595e58b28db01eaebcd1a128e14`, CI [40609678329](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40609678329) et [40609685203](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40609685203) **SUCCESS (58 tests)**. PR #3 S1 intégrée sans rebase HEAD `e12cb5054d2a7ac9db1829a5da4eb37e6de919f1`, CI tests/préflight **SUCCESS**, sans installation.
+
+**État restant :** ni récupération périodique fiable des nouveaux avis, ni vérification de rétroportages fournisseur, ni preuve du runtime réellement exécuté, ni analyse automatique d'applicabilité sur actif. Le catalogue traite actuellement les deux CVE fondatrices : **pas un registre exhaustif de toutes les CVE PHP 2026**. L'alerte CERT-FR révisée mentionne d'autres risques qu'un futur collecteur devra gérer séparément.
+
 ## Avis prioritaires
 
 | CVE | Identifiant avis primaire PHP | Résumé défensif | CVSS 4.0 upstream | Publication |

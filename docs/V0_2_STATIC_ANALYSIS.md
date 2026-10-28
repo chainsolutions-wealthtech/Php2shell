@@ -75,3 +75,17 @@ La commande existante \`scan-local\` examine maintenant des fichiers de configur
 - Les secrets, mots de passe, URLs d'accès, autres paramètres et commentaires des configurations restent exclus du JSON. Aucun correctif n'est appliqué automatiquement.
 
 **Préparation de REQ-008 uniquement :** le scanner ne remplace pas une attestation de \`php -i\`/\`php-fpm -tt\`, de la configuration effective d'une instance autorisée, ni une revue des règles de sécurité contextuelles.
+
+## Export CSV des constats locaux — étape complémentaire V0.2
+
+```bash
+python -m app.cli scan-local --path /chemin/vers/projet-autorise --format json
+python -m app.cli scan-local --path /chemin/vers/projet-autorise --format csv
+```
+
+- `json` reste **le format par défaut**, avec les anciens champs, `locked_dependencies` et `php_configuration`. Ce comportement n'est pas remplacé.
+- `csv` produit un **inventaire des indicateurs uniquement**, composé des champs `finding_type,rule,severity,confidence,path,line,note` ; les constats lexicaux PHP et les réglages PHP ini sont différenciés par `finding_type`. Le CSV est écrit sur **stdout**, sans fichier ajouté au disque.
+- La sortie CSV ne contient **ni code source, ni valeurs brutes de configuration, ni secrets, ni chemin absolu du projet**. Les contenus susceptibles d'être interprétés comme une formule par un tableur sont préfixés de manière protectrice.
+- Cet export ne représente **pas encore** un dossier de remédiation PDF complet, ne déduit pas l'applicabilité réelle d'une CVE, et n'exécute aucun correctif.
+
+Les vérifications de confidentialité, de compatibilité de la sortie JSON, de validation des formats et d'injection de formules CSV sont couvertes par la CI.

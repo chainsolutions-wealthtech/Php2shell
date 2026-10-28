@@ -19,6 +19,8 @@ Le service n'effectue **ni DNS, ni HTTP externe, ni crawl, ni collecte de code, 
 - Erreurs de validation génériques qui ne réaffichent ni mot de passe ni URL saisie.
 - Pages de documentation/OpenAPI, endpoints de scan et de correction **absents**.
 - Refus préliminaire des corps dont `Content-Length` dépasse 4 KiB. Cette limite ne remplace pas une future borne sur les *octets effectivement lus* par le proxy/serveur.
+- Refus des corps HTTP dont les **octets effectivement lus** dépassent 4 Kio, même si `Content-Length` est absent, trompeur ou inférieur à la charge réelle ; rejet des déclarations de longueur dupliquées, malformées ou supérieures à la borne. Aucun contenu excessif n'est remis à Pydantic.
+- L'adaptateur ASGI met en mémoire au maximum 4 Kio par requête POST/PUT/PATCH ; en cas de dépassement, réponse générique `413 REQUEST_TOO_LARGE` avec en-têtes de confidentialité. Ce contrôle applicatif local **n'est ni un rate limiter, ni une protection HTTP de production, ni une authentification** : tout futur serveur exposé devra avoir des limites indépendantes au reverse proxy et des tests end-to-end.
 - Aucun lanceur de serveur ou fichier d'environnement de production ajouté ; l'API ne démarre **pas** simplement parce qu'elle est importée.
 
 ## Tests et dépendances
@@ -32,3 +34,9 @@ Le service n'effectue **ni DNS, ni HTTP externe, ni crawl, ni collecte de code, 
 Ce prototype ne remplace pas l'architecture cible **FastAPI + PostgreSQL + Redis + workers**, l'authentification réelle, le RBAC, les claims MCP, la gestion des secrets et de la rétention, le crawler autorisé anti-SSRF, le reporting PDF, PHPPATCH ou les deux domaines S1. Ne pas publier cette API sur Internet ni y injecter de données clients.
 
 **Prochaines dépendances :** identité réelle et contrôle de mandat P1/P2 via les autorités existantes, stockage de campagnes et isolation des projets, quotas et annulation côté workers, tests réseau isolés, puis intégration aux interfaces en PR gouvernée.
+
+## Complément de validation RED → GREEN — 28 octobre 2026
+
+- Trois tests ASGI sont ajoutés dans `api_tests/test_local_api.py` : corps HTTP fragmenté sans `Content-Length` ; longueur déclarée volontairement trompeuse ; requête valide fragmentée qui doit conserver le fonctionnement acquis.
+- Le commit de tests `b231bd7f4e7874c24cef75e06bb550cfcc706d83` a provoqué l'échec attendu de la CI `api-contract`. Le correctif `10ca05ed21295a7c4e8364d642eabc0f83addac2` a fait passer la CI `api-contract` #40635761978 (SUCCESS au SHA exact).
+- L'API est toujours un prototype de contrats local uniquement ; aucune cible réseau ni installation S1 testée par ce jalon.

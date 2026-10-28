@@ -1,0 +1,164 @@
+"""Strict offline runtime declaration review, never a trusted P2 attestation."""
+from copy import deepcopy
+import json
+import socket
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+
+from app.runtime_evidence import review_declared_runtime_evidence
+
+
+def _fixture():
+    return {
+        "schema_version": "0.2",
+        "evidence_type": "DECLARED_PHP_RUNTIME",
+        "asset_hostname": "portail-demo.example",
+        "mandate_reference": "LAB-P2-001",
+        "source_channel": "laboratory_fixture",
+        "collected_at_utc": "2026-10-28T00:00:00Z",
+        "php_version": "8.3.34",
+        "sapi": "fpm-fcgi",
+        "vendor_backport_status": "not_verified",
+    }
+
+
+class RuntimeEvidenceTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.path = self.root / "runtime.json"
+        self.put(_fixture())
+
+    def put(self, obj):
+        self.path.write_text(json.dumps(obj), encoding="utf-8")
+
+    def inspect(self, day="2026-10-28"):
+        return review_declared_runtime_evidence(self.path, day)
+
+    def test_lab_demo_version_is_comparison_not_cve_attestation(self):
+        res = self.inspect()
+        self.assertEqual(res["review_type"], "DECLARED_RUNTIME_EVIDENCE_NOT_ATTESTATION")
+        self.assertEqual(res["asset_hostname"], "portail-demo.example")
+        self.assertEqual(res["snapshot_age_days"], 0)
+        self.assertFalse(res["snapshot_stale"])
+        self.assertFalse(res["mandate_authorization_verified"])
+        self.assertFalse(res["signature_verified"])
+        self.assertFalse(res["effective_http_runtime_attested"])
+        self.assertEqual(res["vendor_backport_status"], "not_verified")
+        self.assertEqual(res["asset_applicability"], "insufficient_evidence")
+        self.assertEqual(
+            {x["cve"] for x in res["upstream_version_comparisons"]},
+            {"CVE-2026-109618", "CVE-2026-109619"}
+        )
+        for x in res["upstream_version_comparisons"]:
+            self.assertEqual(x["status"], "below_reference_fix")
+            self.assertEqual(x["reference_fix"], "8.3.36")
+            self.assertEqual(x["asset_applicability"], "insufficient_evidence")
+        self.assertEqual(len(res["declaration_sha256"]), 64)
+
+    def test_fixed_upstream_version_remains_unverified_asset(self):
+        obj = _fixture()
+        obj["php_version"] = "8.3.36"
+        self.put(obj)
+        res = self.inspect()
+        self.assertTrue(all(
+            item["status"] == "at_or_above_reference_fix"
+            for item in res["upstream_version_comparisons"]
+        ))
+        self.assertEqual(res["asset_applicability"], "insufficient_evidence")
+
+    def test_stale_evidence_does_not_become_current(self):
+        res = self.inspect("2026-11-29")
+        self.assertEqual(res["snapshot_age_days"], 32)
+        self.assertTrue(res["snapshot_stale"])
+        self.assertFalse(res["effective_http_runtime_attested"])
+
+    def test_rejects_forged_attestation_and_scope_escalation_fields(self):
+        for key, value in (
+            ("mandate_authorization_verified", True),
+            ("signature_verified", True),
+            ("effective_http_runtime_attested", True),
+            ("asset_applicability", "confirmed"),
+            ("raw_php_info", "TOKEN_SECRET"),
+        ):
+            with self.subTest(field=key):
+                obj = _fixture()
+                obj[key] = value
+                self.put(obj)
+                with self.assertRaises(ValueError):
+                    self.inspect()
+                self.put(_fixture())
+
+    def test_rejects_unverified_backport_claims_and_invalid_provenance(self):
+        for field, value in (
+            ("vendor_backport_status", "verified"),
+            ("source_channel", "remote_unmandated_scan"),
+            ("source_channel", []),
+            ("mandate_reference", ""),
+            ("mandate_reference", "../secrets"),
+            ("sapi", "unrecognized"),
+            ("php_version", "8.3.34-dev"),
+            ("php_version", "8.3.34; echo hacked"),
+            ("asset_hostname", "http://portail-demo.example"),
+        ):
+            with self.subTest(field=field):
+                obj = _fixture()
+                obj[field] = value
+                self.put(obj)
+                with self.assertRaises(ValueError):
+                    self.inspect()
+                self.put(_fixture())
+
+    def test_future_or_ill_formed_timestamps_rejected(self):
+        for when in ("2026-10-29T00:00:00Z",
+                     "2026-02-30T00:00:00Z",
+                     "2026-10-28T00:00:00+02:00",
+                     "not-a-date"):
+            with self.subTest(when=when):
+                obj = _fixture()
+                obj["collected_at_utc"] = when
+                self.put(obj)
+                with self.assertRaises(ValueError):
+                    self.inspect()
+                self.put(_fixture())
+        with self.assertRaises(ValueError):
+            self.inspect("bad-date")
+
+    def test_invalid_json_and_symlink_blocked(self):
+        self.path.write_text("{invalid", encoding="utf-8")
+        with self.assertRaises(ValueError):
+            self.inspect()
+        self.put(_fixture())
+        other = self.root / "alias.json"
+        try:
+            other.symlink_to(self.path)
+        except (OSError, NotImplementedError):
+            pass
+        else:
+            with self.assertRaises(ValueError):
+                review_declared_runtime_evidence(other, "2026-10-28")
+        self.path.write_bytes(b" " * 16_385)
+        with self.assertRaises(ValueError):
+            self.inspect()
+
+    def test_offline_no_execution_and_cli_json_output(self):
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("network")):
+            res = self.inspect()
+        self.assertFalse(res["signature_verified"])
+        output = subprocess.run(
+            [sys.executable, "-m", "app.cli", "review-runtime-evidence",
+             "--file", str(self.path), "--as-of", "2026-10-28"],
+            capture_output=True, text=True, check=True,
+        )
+        cli = json.loads(output.stdout)
+        self.assertEqual(cli["php_version"], "8.3.34")
+        self.assertEqual(cli["asset_applicability"], "insufficient_evidence")
+
+
+if __name__ == "__main__":
+    unittest.main()

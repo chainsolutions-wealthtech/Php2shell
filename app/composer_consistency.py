@@ -43,8 +43,13 @@ def _read_local_json(root: Path, filename: str):
     No path is accepted from a manifest. Linux O_NOFOLLOW prevents the usual
     symlink swap; this is not a general-purpose hostile filesystem sandbox.
     """
+    # A missing O_NOFOLLOW is not permission to follow a potentially
+    # substituted Composer metadata symlink. Fail closed on such platforms.
+    nofollow = getattr(os, "O_NOFOLLOW", None)
+    if not isinstance(nofollow, int) or nofollow == 0:
+        return None, "UNSAFE_OR_UNREADABLE"
     flags = (os.O_RDONLY | getattr(os, "O_CLOEXEC", 0)
-             | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0))
+             | nofollow | getattr(os, "O_NONBLOCK", 0))
     try:
         fd = os.open(root / filename, flags)
     except FileNotFoundError:
@@ -59,6 +64,15 @@ def _read_local_json(root: Path, filename: str):
             raw = file.read(MAX_BYTES + 1)
         if len(raw) > MAX_BYTES:
             return None, "UNSAFE_OR_TOO_LARGE"
+        after = os.fstat(fd)
+        if (not stat.S_ISREG(after.st_mode)
+                or after.st_dev != info.st_dev
+                or after.st_ino != info.st_ino
+                or after.st_size != info.st_size
+                or len(raw) != info.st_size
+                or after.st_mtime_ns != info.st_mtime_ns
+                or after.st_ctime_ns != info.st_ctime_ns):
+            return None, "UNSAFE_OR_UNREADABLE"
         value = json.loads(raw.decode("utf-8"), object_pairs_hook=_unique_pairs,
                            parse_constant=_reject_constant)
         if not isinstance(value, dict):

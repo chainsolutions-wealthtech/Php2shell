@@ -1,12 +1,13 @@
 """Tests of local-only Composer metadata consistency; never contact an asset."""
 import json
+import os
 import socket
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from app.composer_consistency import audit_composer_consistency
+from app.composer_consistency import audit_composer_consistency, _read_local_json
 
 
 class ComposerConsistencyTests(unittest.TestCase):
@@ -126,6 +127,39 @@ class ComposerConsistencyTests(unittest.TestCase):
         path.write_text("x")
         with self.assertRaises(ValueError):
             audit_composer_consistency(path)
+
+
+    def test_missing_nofollow_support_rejects_even_regular_metadata(self):
+        self.put("composer.json", {"require": {"acme/pkg": "1.0.0"}})
+        self.put("composer.lock", {"packages": [{"name": "acme/pkg", "version": "1.0.0"}]})
+        with patch.object(os, "O_NOFOLLOW", 0, create=True):
+            result = self.audit()
+        self.assertEqual(result["status"], "insufficient_local_evidence")
+        self.assertIn("LOCAL_ARTIFACT_UNSAFE_OR_UNREADABLE",
+                      [row["rule"] for row in result["observations"]])
+        self.assertFalse(result["installed_versions_verified"])
+        self.assertFalse(result["authorized_for_patch"])
+
+    def test_mutation_after_read_is_rejected_by_descriptor_metadata(self):
+        self.put("composer.json", {"require": {"acme/pkg": "1.0.0"}})
+        original_fstat = os.fstat
+        calls = 0
+        path = self.root / "composer.json"
+
+        def mutate_on_second_stat(fd):
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                with path.open("ab") as output:
+                    output.write(b" ")
+            return original_fstat(fd)
+
+        with patch("app.composer_consistency.os.fstat",
+                   side_effect=mutate_on_second_stat):
+            value, error = _read_local_json(self.root, "composer.json")
+        self.assertIsNone(value)
+        self.assertEqual(error, "UNSAFE_OR_UNREADABLE")
+        self.assertEqual(calls, 2)
 
 
 if __name__ == "__main__":

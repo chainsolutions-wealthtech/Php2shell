@@ -188,6 +188,14 @@
           "source_head": "53e4378e6f95b28a1c93c2a6061a84fb3fe4ebaf",
           "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40639125695",
           "limits": "20 offline Ed25519 verification tests, no real identity/mandate/worker/signed issuer or network rights"
+        },
+        {
+          "observation_date": "2026-10-28",
+          "kind": "SIGNED_URL_SCOPE_AND_P2_MANDATE_EXACT_BINDING_NOT_AUTHORIZATION",
+          "source_pr": 2,
+          "source_head": "a14968d1aa4ff842cfd025b118c5ce90d60c55aa",
+          "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40640507524",
+          "limits": "8 new auth tests; 28 auth total; no approved issuer, IdP session, ACL, claim, network scanning or deployment"
         }
       ]
     },
@@ -692,6 +700,14 @@
           "source_head": "cb705a82e5a2d0c2bf7193139873b7e7fc210706",
           "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40638158899",
           "limits": "10 offline signature/negative tests, ephemeral signer, no issuer MCP identity/ACL/claims or production rights"
+        },
+        {
+          "observation_date": "2026-10-28",
+          "kind": "SIGNED_URL_SCOPE_AND_P2_MANDATE_EXACT_BINDING_NOT_AUTHORIZATION",
+          "source_pr": 2,
+          "source_head": "a14968d1aa4ff842cfd025b118c5ce90d60c55aa",
+          "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40640507524",
+          "limits": "8 new auth tests; 28 auth total; no approved issuer, IdP session, ACL, claim, network scanning or deployment"
         }
       ]
     },
@@ -945,6 +961,14 @@
           "source_head": "7f6ae451c1129d0b6a1a0c103f2f91659d26e55b",
           "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40639429710",
           "limits": "17 new local-only tests; 188 historical tests, 12 API and 20 auth remain green; no semver solving, installed packages, P2 mandate or CVE applicability"
+        },
+        {
+          "observation_date": "2026-10-28",
+          "kind": "SIGNED_URL_SCOPE_AND_P2_MANDATE_EXACT_BINDING_NOT_AUTHORIZATION",
+          "source_pr": 2,
+          "source_head": "a14968d1aa4ff842cfd025b118c5ce90d60c55aa",
+          "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40640507524",
+          "limits": "8 new auth tests; 28 auth total; no approved issuer, IdP session, ACL, claim, network scanning or deployment"
         }
       ]
     },

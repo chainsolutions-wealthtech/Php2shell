@@ -23,11 +23,15 @@ _CLAIMS = frozenset({
     "iss", "aud", "sub", "project_id", "asset_hostname", "scope",
     "action", "mandate_id", "iat", "nbf", "exp", "jti",
 })
+# The path-scoped contract is additive; the original contract stays read-only.
+_SCOPED_PATH_CLAIMS = _CLAIMS | {"base_path"}
 _BINDING = frozenset({
     "subject", "project_id", "asset_hostname", "scope", "action",
 })
+_SCOPED_PATH_BINDING = _BINDING | {"base_path"}
 _ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,79}\Z", re.ASCII)
 _B64 = re.compile(r"[A-Za-z0-9_-]+\Z", re.ASCII)
+_BASE_PATH = re.compile(r"/[A-Za-z0-9._~/-]*\Z", re.ASCII)
 _ACTIONS = {
     "public_crawl": "public_metadata",
     "source_read": "owned_source",
@@ -84,6 +88,13 @@ def _valid_id(value):
     return isinstance(value, str) and bool(_ID.fullmatch(value))
 
 
+def _valid_base_path(value):
+    return (isinstance(value, str) and 1 <= len(value) <= 512
+            and bool(_BASE_PATH.fullmatch(value))
+            and "//" not in value
+            and all(segment not in (".", "..") for segment in value.split("/")))
+
+
 def verify_external_attestation(token, *, trusted_public_keys,
                                 expected_issuer, expected_audience,
                                 request_binding, observed_at_epoch,
@@ -105,7 +116,7 @@ def verify_external_attestation(token, *, trusted_public_keys,
             or not isinstance(trusted_public_keys, dict)
             or not callable(revocation_checker)
             or not isinstance(request_binding, dict)
-            or set(request_binding) != _BINDING):
+            or set(request_binding) not in (_BINDING, _SCOPED_PATH_BINDING)):
         _deny()
 
     parts = token.split(".")
@@ -113,7 +124,8 @@ def verify_external_attestation(token, *, trusted_public_keys,
     if (set(header) != _HEADER or header.get("typ") != _ATT_TYPE
             or header.get("alg") != "EdDSA"
             or not _valid_id(header.get("kid"))
-            or set(claims) != _CLAIMS):
+            or set(claims) not in (_CLAIMS, _SCOPED_PATH_CLAIMS)
+            or (("base_path" in claims) != ("base_path" in request_binding))):
         _deny()
 
     kid = header["kid"]
@@ -148,6 +160,12 @@ def verify_external_attestation(token, *, trusted_public_keys,
         if (not _valid_id(request_binding[key])
                 or request_binding[key] != claims[claim_field]):
             _deny()
+
+    if "base_path" in request_binding and (
+            not _valid_base_path(request_binding["base_path"])
+            or not _valid_base_path(claims["base_path"])
+            or request_binding["base_path"] != claims["base_path"]):
+        _deny()
 
     iat, nbf, exp = (claims["iat"], claims["nbf"], claims["exp"])
     if (any(type(x) is not int for x in (iat, nbf, exp))

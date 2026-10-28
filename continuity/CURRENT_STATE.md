@@ -12,8 +12,8 @@
 | Dépôt source | `chainsolutions-wealthtech/Php2shell` | public | dépôt GitHub |
 | `main` | `a9d799b008fc65ed5745745bc4ef09e8b889aabe` | inchangé, CLI expérimentale | ref GitHub |
 | PR #1 / V0.1 | `c17f0931db2cae659e4301585b0bf3db9078ca09` | ouverte, base `main` | https://github.com/chainsolutions-wealthtech/Php2shell/pull/1 |
-| PR #2 / V0.2 | `664cf5cde8743713053f4799c24b7d05a074441f` | ouverte, DRAFT, base branche PR #1 | https://github.com/chainsolutions-wealthtech/Php2shell/pull/2 |
-| PR #3 / S1 | `2d599f48958d54ceefa1454e01a37eb56d86c06d` | ouverte, DRAFT, base branche PR #2 | https://github.com/chainsolutions-wealthtech/Php2shell/pull/3 |
+| PR #2 / V0.2 | `4848bff596977595e58b28db01eaebcd1a128e14` | ouverte, DRAFT, base branche PR #1 ; 58 tests au HEAD | https://github.com/chainsolutions-wealthtech/Php2shell/pull/2 |
+| PR #3 / S1 | `e12cb5054d2a7ac9db1829a5da4eb37e6de919f1` | ouverte, DRAFT, base branche PR #2 ; 4 CI au HEAD | https://github.com/chainsolutions-wealthtech/Php2shell/pull/3 |
 | Issue #4 | — | ouverte, admission S1 | https://github.com/chainsolutions-wealthtech/Php2shell/issues/4 |
 | Issue #5 | — | ancre de continuité ouverte | https://github.com/chainsolutions-wealthtech/Php2shell/issues/5 |
 | Branche continuité | `docs/canonical-continuity-20261027` | créée sur `main` vérifié ; **PR #6 ouverte, non fusionnée** | https://github.com/chainsolutions-wealthtech/Php2shell/pull/6 |

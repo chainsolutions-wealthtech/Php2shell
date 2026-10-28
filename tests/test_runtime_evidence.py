@@ -98,6 +98,7 @@ class RuntimeEvidenceTests(unittest.TestCase):
         for field, value in (
             ("vendor_backport_status", "verified"),
             ("source_channel", "remote_unmandated_scan"),
+            ("source_channel", []),
             ("mandate_reference", ""),
             ("mandate_reference", "../secrets"),
             ("sapi", "unrecognized"),

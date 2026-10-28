@@ -27,6 +27,13 @@
 - Travail V0.2 restant : préparation de l'ingestion officielle datée des avis sous permission réseau bornée, suivi des révisions et backports des distributions, preuve P2 de runtime/SAPI, extension de l'analyse PHP AST, puis dossier de remédiation. Les contrôles P1/P2 et la preuve de mandat précèdent tout audit distant.
 - **Action métier unique toujours `P2S-NEXT-001`** : revue indépendante/fusion gouvernée PR #6 puis PR #1. Continuer entre-temps les sous-tranches indépendantes sur PR #2, sans collision, avec CI exact SHA et checkpoint. L'automatisation horaire conserve ce mandat, pas de nouvelle automation.
 
+## Reprise après audit de provenance du catalogue — 28 octobre 2026
+
+- **PR #2 V0.2** : `audit-catalog --as-of YYYY-MM-DD` codé et testé, SHA `2d2d7abee3b33edcc86bb17975cbe8fa5c1c4390`, CI [40610646884](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40610646884) **SUCCESS**. Produit âge de revue, empreinte canonique et avertissements permanents ; ne consulte aucune source distante. L'empreinte **n'est pas une signature éditeur**.
+- **PR #3 S1** : resynchronisée par merge à deux parents, SHA `58a15991d4218d756f84acbe1d8b1687d4af8bdd`, quatre CI [40610704047](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40610704047), [40610704076](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40610704076), [40610712317](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40610712317), [40610712452](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40610712452) **SUCCESS**. Seuls les fichiers propres à la préparation S1 restent dans son diff ; aucun déploiement.
+- **NEXT_ACTION métier inchangée** : `P2S-NEXT-001`, revue indépendante de PR #6 puis PR #1, décision de fusion gouvernée. Pendant l'attente, sélectionner une autre tranche indépendante V0.2 (validation de provenance, tests de sécurité locale, AST, politique de cache et révision des avis) **uniquement après réconciliation des HEAD/CI/claims** ; ne pas refaire la tranche d'empreinte.
+- **Blocages conservés** : pas de preuve de revue indépendante `APPROVED` sur #1/#6 ; pas de mandat de scan distant ni de commande MCP scoped de déploiement S1 ; pas de backports/runtime attestés, pas d'interface URL→PHPPATCH déployée.
+
 ## Action prioritaire au checkpoint initial
 
 **P2S-NEXT-001 — Finaliser la [PR #6](https://github.com/chainsolutions-wealthtech/Php2shell/pull/6) documentaire de continuité, puis préparer la revue/validation de PR #1 (V0.1).**

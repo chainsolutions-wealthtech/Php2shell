@@ -9,6 +9,7 @@ from .catalog_audit import audit_catalog_snapshot
 from .catalog_update import propose_catalog_update
 from .advisory_fetch import fetch_curated_php_advisory
 from .runtime_evidence import review_declared_runtime_evidence
+from .runtime_reporting import export_runtime_review_csv
 
 def main():
     parser = argparse.ArgumentParser(description='PHP2SHELL offline defensive prototype')
@@ -42,6 +43,8 @@ def main():
                              help='Inspect a local declared PHP/SAPI snapshot, NOT a verified runtime')
     runtime.add_argument('--file', required=True, help='Local JSON only; no network or PHP execution')
     runtime.add_argument('--as-of', required=True, help='Explicit UTC calendar date YYYY-MM-DD')
+    runtime.add_argument('--format', choices=('json', 'csv'), default='json',
+                         help='CSV is a limited unverified comparison summary')
     args = parser.parse_args()
     if args.command == 'check-version':
         result = evaluate(args.php)
@@ -63,7 +66,9 @@ def main():
         result = scan_project(args.path)
     else:
         result = import_targets(args.file)
-    if args.command == 'scan-local' and args.format == 'csv':
+    if args.command == 'review-runtime-evidence' and args.format == 'csv':
+        print(export_runtime_review_csv(result), end='')
+    elif args.command == 'scan-local' and args.format == 'csv':
         print(export_findings_csv(result), end='')
     else:
         print(json.dumps(result, indent=2, ensure_ascii=False))

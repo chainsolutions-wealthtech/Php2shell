@@ -28,6 +28,8 @@
 
 | 2026-10-28 | P2S-EVT-015 | Ajout à V0.2 de la lecture bornée et non intrusive de `composer.lock`, tests de sécurité/confidentialité, et nouvelle synchronisation de PR #3 avec PR #2 sans forcer l'historique | PR #2 HEAD `664cf5cde8743713053f4799c24b7d05a074441f` ; PR #3 HEAD `2d599f48958d54ceefa1454e01a37eb56d86c06d` ; CI et checkpoint issue #5 |
 
+| 2026-10-28 | P2S-EVT-016 | Ajout en V0.2 d'une lecture bornée des configurations PHP ini/FPM et d'un export CSV des indicateurs avec protection anti-injection tableur ; 49 tests validés, puis synchronisation de PR #3 avec le HEAD V0.2 sans rebase forcé | PR #2 HEAD `47303c1eea0fc7d454ef5b73ac53d94e5c16875f` / CI #40605915430, #40605924812 ; PR #3 HEAD `baf7dc9916e117f13ac3d9ce606f72a4e58d38d4` / quatre CI SUCCESS ; issue #5 checkpoint à émettre |
+
 ## Règles de qualification
 - **Observé** : objet GitHub/CI/S1 vérifié avec date/HEAD ; **déclaré** : demande utilisateur ; **prévu** : architecture non livrée.
 - Indiquer lorsque des observations anciennes peuvent avoir changé, y compris les DNS/TLS et statuts de PR.

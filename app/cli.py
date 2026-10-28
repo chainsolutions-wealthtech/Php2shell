@@ -6,6 +6,7 @@ from .campaign_import import import_targets
 from .reporting import export_findings_csv
 from .security_advisories import list_verified_advisories, review_declared_php_version
 from .catalog_audit import audit_catalog_snapshot
+from .catalog_update import propose_catalog_update
 
 def main():
     parser = argparse.ArgumentParser(description='PHP2SHELL offline defensive prototype')
@@ -25,6 +26,10 @@ def main():
     audit.add_argument('--as-of', required=True, help='Explicit UTC calendar date YYYY-MM-DD')
     sourced = sub.add_parser('review-version', help='Sourced version comparison, NOT asset diagnosis')
     sourced.add_argument('--php', required=True, help='User-declared PHP version only')
+    proposal = sub.add_parser('propose-catalog-update',
+                              help='Review a local candidate advisory JSON without applying it')
+    proposal.add_argument('--candidate', required=True, help='Local JSON candidate, never fetched remotely')
+    proposal.add_argument('--as-of', required=True, help='Explicit UTC date YYYY-MM-DD')
     args = parser.parse_args()
     if args.command == 'check-version':
         result = evaluate(args.php)
@@ -36,6 +41,8 @@ def main():
         result = review_declared_php_version(args.php)
     elif args.command == 'audit-catalog':
         result = audit_catalog_snapshot(args.as_of)
+    elif args.command == 'propose-catalog-update':
+        result = propose_catalog_update(args.candidate, args.as_of)
     elif args.command == 'scan-local':
         result = scan_project(args.path)
     else:

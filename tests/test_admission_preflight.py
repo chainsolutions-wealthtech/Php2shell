@@ -154,7 +154,7 @@ class MandateDeclarationTests(unittest.TestCase):
             self.evaluate()
 
     def test_public_metadata_declaration_is_not_permission(self):
-        self.preview = preview_url_scope("https://site.example.com")
+        self.preview = preview_url_scope("https://site.example.com", requests_per_minute=5)
         a = claim()
         a["scope"] = "public_metadata"
         self.write(a)

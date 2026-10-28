@@ -202,5 +202,60 @@ class SignedAttestationContractTests(unittest.TestCase):
 
 
 
+    def test_signed_p1_budgets_bound_to_request(self):
+        body = dict(self.claims, scope="public_metadata", action="public_crawl",
+                    base_path="/public/", max_pages=20, requests_per_minute=6)
+        binding = dict(self.expected, scope="public_metadata", action="public_crawl",
+                       base_path="/public/", max_pages=10, requests_per_minute=4)
+        result = self.verify(self.token(body), expected=binding)
+        self.assertTrue(result["signature_verified"])
+        self.assertFalse(result["authorized"])
+        self.assertFalse(result["execution_enabled"])
+
+    def test_p1_requires_path_and_both_signed_budgets(self):
+        base = dict(self.claims, scope="public_metadata", action="public_crawl")
+        binding = dict(self.expected, scope="public_metadata", action="public_crawl")
+        with self.assertRaises(ValueError):
+            self.verify(self.token(base), expected=binding)
+        for missing in ("base_path", "max_pages", "requests_per_minute"):
+            signed = dict(base, base_path="/public/", max_pages=20,
+                          requests_per_minute=6)
+            request = dict(binding, base_path="/public/", max_pages=10,
+                           requests_per_minute=4)
+            signed.pop(missing)
+            request.pop(missing)
+            with self.subTest(missing=missing), self.assertRaises(ValueError):
+                self.verify(self.token(signed), expected=request)
+
+    def test_budget_escalation_and_missing_binding_are_refused(self):
+        signed = dict(self.claims, max_pages=20, requests_per_minute=6)
+        request = dict(self.expected, max_pages=21, requests_per_minute=7)
+        with self.assertRaises(ValueError):
+            self.verify(self.token(signed), expected=request)
+        with self.assertRaises(ValueError):
+            self.verify(self.token(signed), expected=self.expected)
+        with self.assertRaises(ValueError):
+            self.verify(expected=dict(self.expected,
+                                      max_pages=20, requests_per_minute=6))
+
+    def test_bool_zero_and_out_of_range_budgets_refused(self):
+        for pages, rate in ((True, 6), (20, False), (0, 6), (20, 0),
+                            (101, 6), (20, 31), (-1, 5)):
+            with self.subTest(pages=pages, rate=rate), self.assertRaises(ValueError):
+                self.verify(
+                    self.token(dict(self.claims, max_pages=pages,
+                                    requests_per_minute=rate)),
+                    expected=dict(self.expected, max_pages=pages,
+                                  requests_per_minute=rate),
+                )
+
+    def test_partial_budget_fields_rejected(self):
+        for partial in ({"max_pages": 20}, {"requests_per_minute": 6}):
+            with self.subTest(partial=partial), self.assertRaises(ValueError):
+                self.verify(self.token(dict(self.claims, **partial)),
+                            expected=dict(self.expected, **partial))
+
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -172,6 +172,14 @@
           "source_head": "2e270c92048ee9725d9d3b3cba3d2d6ec10d2b97",
           "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40636985499",
           "limits": "No authenticated identity, delegated mandate, governed claim or production operation"
+        },
+        {
+          "observation_date": "2026-10-28",
+          "kind": "EXTERNAL_ED25519_CRYPTO_CONTRACT_NOT_AUTHENTICATION_OR_ADMISSION",
+          "source_pr": 2,
+          "source_head": "cb705a82e5a2d0c2bf7193139873b7e7fc210706",
+          "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40638158899",
+          "limits": "10 offline signature/negative tests, ephemeral signer, no issuer MCP identity/ACL/claims or production rights"
         }
       ]
     },
@@ -648,6 +656,14 @@
           "source_head": "2e270c92048ee9725d9d3b3cba3d2d6ec10d2b97",
           "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40636985499",
           "limits": "No authenticated identity, delegated mandate, governed claim or production operation"
+        },
+        {
+          "observation_date": "2026-10-28",
+          "kind": "EXTERNAL_ED25519_CRYPTO_CONTRACT_NOT_AUTHENTICATION_OR_ADMISSION",
+          "source_pr": 2,
+          "source_head": "cb705a82e5a2d0c2bf7193139873b7e7fc210706",
+          "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40638158899",
+          "limits": "10 offline signature/negative tests, ephemeral signer, no issuer MCP identity/ACL/claims or production rights"
         }
       ]
     },
@@ -877,6 +893,14 @@
           "source_head": "2e270c92048ee9725d9d3b3cba3d2d6ec10d2b97",
           "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40636985499",
           "limits": "No authenticated identity, delegated mandate, governed claim or production operation"
+        },
+        {
+          "observation_date": "2026-10-28",
+          "kind": "EXTERNAL_ED25519_CRYPTO_CONTRACT_NOT_AUTHENTICATION_OR_ADMISSION",
+          "source_pr": 2,
+          "source_head": "cb705a82e5a2d0c2bf7193139873b7e7fc210706",
+          "check": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40638158899",
+          "limits": "10 offline signature/negative tests, ephemeral signer, no issuer MCP identity/ACL/claims or production rights"
         }
       ]
     },

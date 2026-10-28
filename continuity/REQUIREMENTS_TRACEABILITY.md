@@ -88,3 +88,11 @@ Toute nouvelle fonctionnalité doit :
 - **REQ-030 / P2S-WF-R06 (PARTIEL PRÉPARATOIRE SEULEMENT)** : transfert hors ligne d'identifiants de preuves et de règles indicatives, refus de promouvoir vulnérabilité, mandat, signature, approbation, patch ou production. Aucun diff, aucune sandbox, aucune PR de correctif ni rollback ne sont livrés.
 - **REQ-020/032 / P2S-WF-Q01 (PARTIEL)** : neuf tests négatifs supplémentaires, **122 tests** au HEAD PR #2 `fc277eb8b8f1a277a606826e48bbf673028f8449` avec CI #40622112932/#40622118348 SUCCESS ; PR #3 `686e68980c5807ca84bcdf4ef1e8a2f046fe09f8` avec 4 CI SUCCESS.
 - Ce jalon ne modifie **aucune** des 32 exigences ni leurs critères d'acceptation ; le DAG de 61 work packages reste une planification, et les dépendances bloquantes ne sont pas réputées franchies. Aucune action S1, scan tiers, correction PHP ou nouvelle gouvernance.
+
+
+## Preuve additive — deux prototypes statiques séparés (P2S-EVT-026/027, 28/10/2026)
+
+- **REQ-023 / P2S-WF-U01 = PARTIEL** : formulaire URL PHP2SHELL local déjà existant, aucune vérification de mandat, DNS live, crawl ou API ; pas d'audit actif.
+- **REQ-030 / P2S-WF-U05 = PARTIEL PRÉPARATOIRE** : nouvelle maquette `web/phppatch/index.html` **non connectée** à `app/dossier_handoff.py`, quatre actions désactivées, affichage des gates P2/runtime/CVE/diff/Docker/revue/rollback. Aucun correctif, aucune approbation, aucun transfert réel.
+- **REQ-020/032 / P2S-WF-Q01 = PARTIEL** : cinq tests de sécurité statique ajoutés ; 153 tests au HEAD PR #2 `daeca8bff5b776f497e7323e0ab92041b895347a`, CI #40627849277/#40627853683 SUCCESS ; PR #3 synchronisée `a7d62aae30908533409cf7931f248ab2ae1a489b`, quatre CI SUCCESS.
+- Aucun critère d'acceptation ni exigence n'est supprimé ou marqué DONE. **Les 32 exigences, 6 lots, 61 work packages, V0.1→V1.0 et moteur commun / deux destinations S1 sont préservés.**

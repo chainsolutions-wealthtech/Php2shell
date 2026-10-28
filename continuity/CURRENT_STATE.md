@@ -179,3 +179,12 @@ Ce fichier doit être mis à jour **dans une PR dédiée ou la branche légitime
 - **Statuts PARTIELS** : mandat P1/P2 déclaratif non authentifié ; échantillons DNS/IP précontrôlés sans résolution/connections ; partitions de campagnes non exécutées ; document HTML et frontend statique non déployés. Aucune vulnérabilité confirmée, aucun patch ni admission réseau.
 - **PR #3 S1 encore au HEAD `686e68980c5807ca84bcdf4ef1e8a2f046fe09f8`** : la synchronisation a été bloquée par l'outil et **n'a pas été réalisée**. Ses anciens tests ne couvrent pas cette tranche. La maquette statique de la seconde interface n'a pas pu être créée.
 - FastAPI, PostgreSQL, Redis, workers, crawler autorisé, vraie vérification DNS de connexion, RBAC, PDF, sandbox, PHPPATCH, déploiement S1 et revue indépendante restent **non terminés**. Les 61 work packages, 32 exigences, six lots, cinq versions, deux sous-domaines S1 et `P2S-NEXT-001` demeurent intacts.
+
+
+## Actualisation datée — construction des deux prototypes locaux (28/10/2026, après checkpoint #019)
+
+- Dernier HEAD **PR #2** de cette tranche : `daeca8bff5b776f497e7323e0ab92041b895347a`, 153 tests et deux CI SUCCESS (#40627849277, #40627853683). Deux prototypes statiques distincts `web/php2shell/index.html` et `web/phppatch/index.html` sont désormais sur la branche V0.2, **sans backend ni connexion** ; les boutons d'audit/patch restent inactifs.
+- Dernier HEAD **PR #3** : `a7d62aae30908533409cf7931f248ab2ae1a489b` ; merge non forcé à deux parents, trois fichiers S1 conservés, quatre CI SUCCESS (#40627886714, #40627886718, #40627892087, #40627892033). La divergence PR #2/#3 du checkpoint #019 est résolue à ce HEAD.
+- **PR #1** `c17f0931db2cae659e4301585b0bf3db9078ca09`, `main` `a9d799b008fc65ed5745745bc4ef09e8b889aabe` inchangés pendant cette tranche ; PR #6 en cours de documentation. Reviewer `Patricked-code` demandé sur #1/#6, aucune revue indépendante APPROVED au contrôle.
+- Les deux domaines S1 demeurent des destinations **non déployées applicativement** selon la dernière preuve historique. Aucune sonde S1 nouvelle, aucun scan tiers, aucun mandat P2 authentifié ni claim runtime MCP attesté. Les CI ne prouvent que les tests des branches.
+- **P2S-NEXT-001** demeure la revue indépendante PR #6 puis #1 ; aucune étape de déploiement ni de patch déclarée DONE.

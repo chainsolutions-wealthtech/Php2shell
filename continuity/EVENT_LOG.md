@@ -52,3 +52,7 @@
 - Indiquer lorsque des observations anciennes peuvent avoir changé, y compris les DNS/TLS et statuts de PR.
 - Un nouvel événement ne doit pas masquer un incident ou une régression antérieure ; conserver les liens des contrôles rouges et verts.
 - Ajouter un `P2S-EVT-nnn` seulement si pertinent et relier au commentaire checkpoint exact de l'issue #5.
+
+
+| 2026-10-28 | P2S-EVT-026 | Reprise du checkpoint #019 : précontrôles locaux P1/P2, préflight réseau sans connexion, campagnes hors ligne, rapport HTML et première maquette PHP2SHELL ; PR #3 était alors en retard sur PR #2, et `NEXT_ACTION.md` non actualisé. **État historique**, pas une synchronisation attestée à ce jalon. | Issue #5 checkpoint #019 ; PR #2 `e9533f2adda02ad1dcb254b3d3bba64cb398884b`, 148 tests, CI #40625550297/#40625555508 SUCCESS ; PR #3 ancien `686e68980c5807ca84bcdf4ef1e8a2f046fe09f8`. |
+| 2026-10-28 | P2S-EVT-027 | Construction additive de la **console PHPPATCH statique fail-closed**, distincte de PHP2SHELL, sans formulaire, script, réseau ni action active ; 5 nouveaux tests, **153 tests** ; PR #3 raccordée sans force par merge à deux parents et ses trois fichiers S1 préservés. **Aucune authentification, aucun mandat P2 attesté, aucun patch, aucun déploiement.** | PR #2 `daeca8bff5b776f497e7323e0ab92041b895347a`, CI #40627849277/#40627853683 SUCCESS ; PR #3 `a7d62aae30908533409cf7931f248ab2ae1a489b`, CI #40627886714/#40627886718/#40627892087/#40627892033 SUCCESS. |

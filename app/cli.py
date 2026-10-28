@@ -10,6 +10,7 @@ from .catalog_update import propose_catalog_update
 from .advisory_fetch import fetch_curated_php_advisory
 from .runtime_evidence import review_declared_runtime_evidence
 from .runtime_reporting import export_runtime_review_csv
+from .audit_dossier import build_audit_dossier, render_audit_dossier_markdown
 
 def main():
     parser = argparse.ArgumentParser(description='PHP2SHELL offline defensive prototype')
@@ -45,6 +46,12 @@ def main():
     runtime.add_argument('--as-of', required=True, help='Explicit UTC calendar date YYYY-MM-DD')
     runtime.add_argument('--format', choices=('json', 'csv'), default='json',
                          help='CSV is a limited unverified comparison summary')
+    dossier = sub.add_parser('audit-dossier',
+                             help='Assemble offline review-only audit dossier, no code/secret export')
+    dossier.add_argument('--path', required=True, help='Authorized local PHP project')
+    dossier.add_argument('--as-of', required=True, help='UTC calendar date YYYY-MM-DD')
+    dossier.add_argument('--runtime-file', help='Optional unverified local PHP runtime JSON')
+    dossier.add_argument('--format', choices=('json', 'markdown'), default='json')
     args = parser.parse_args()
     if args.command == 'check-version':
         result = evaluate(args.php)
@@ -62,11 +69,15 @@ def main():
         result = fetch_curated_php_advisory(args.ghsa, args.as_of)
     elif args.command == 'review-runtime-evidence':
         result = review_declared_runtime_evidence(args.file, args.as_of)
+    elif args.command == 'audit-dossier':
+        result = build_audit_dossier(args.path, args.as_of, args.runtime_file)
     elif args.command == 'scan-local':
         result = scan_project(args.path)
     else:
         result = import_targets(args.file)
-    if args.command == 'review-runtime-evidence' and args.format == 'csv':
+    if args.command == 'audit-dossier' and args.format == 'markdown':
+        print(render_audit_dossier_markdown(result), end='')
+    elif args.command == 'review-runtime-evidence' and args.format == 'csv':
         print(export_runtime_review_csv(result), end='')
     elif args.command == 'scan-local' and args.format == 'csv':
         print(export_findings_csv(result), end='')

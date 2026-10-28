@@ -92,3 +92,12 @@ Le backlog [`WORK_PACKAGES.json`](WORK_PACKAGES.json) contient **61 work package
 - V1.0 : interface Web PHP2SHELL + PHPPATCH, moteur commun, projets, rapports/historique.
 
 **Règle :** ce fichier est un snapshot de reprise. Le dernier checkpoint GitHub ne remplace pas une observation de la réalité GitHub/S1 avant action.
+
+
+## Dernière tranche technique indépendante — reporting runtime déclaré CSV (28/10/2026)
+
+- **PR #2** HEAD `e5df6bb8761584716a60bab9067c880276b97b14` : module `app/runtime_reporting.py`, `review-runtime-evidence --format csv`, sept tests de reporting, documentation `docs/V0_2_RUNTIME_CSV_REPORT.md`. **96 tests** au HEAD, CI [40616269007](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40616269007) et [40616272906](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40616272906) SUCCESS.
+- **PR #3** HEAD `2d3d2c9107a5b2c9ac2fdfcc6239083bbba8211b` : branche S1 resynchronisée par merge à deux parents, sans force, fichiers propres S1 conservés. CI [40616321539](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40616321539), [40616321597](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40616321597), [40616327531](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40616327531), [40616327538](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40616327538) SUCCESS.
+- La sortie CSV **n'atteste ni mandat, ni runtime HTTP, ni signature, ni backport, ni applicabilité CVE**. Seuls des champs autorisés sont exportés avec protection anti-formules. JSON historique conservé. **REQ-019 demeure PARTIELLE** : PDF, dossier de remédiation et flux PHPPATCH non livrés.
+- **P2S-NEXT-001 inchangée** : revue réellement indépendante PR #6 puis PR #1 avant fusion gouvernée. Les 6 lots, 32 exigences, 61 work packages, V0.1→V1.0, workflow URL→audit autorisé→PHPPATCH, Docker isolé, moteur partagé et les deux sous-domaines S1 demeurent au programme, sans déploiement attesté.
+- MCP read-only `ping` a exigé une interaction de connexion indisponible dans cette exécution ; aucune sonde S1 ni claim runtime MCP n'est prétendu vérifié. La construction GitHub s'est appuyée sur le mandat utilisateur explicite, les branches existantes et le contrôle `expected_sha` anti-collision. Aucun nouvel agent/claim/gateway créé.

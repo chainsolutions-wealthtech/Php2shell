@@ -80,7 +80,7 @@ class LocalApiContractTests(unittest.TestCase):
                     "scope": "owned_source",
                 })
         self.assertEqual(res.status_code, 422)
-        self.assertEqual(res.json(), {"detail": "INVALID_URL_PREVIEW"})
+        self.assertEqual(res.json(), {"error": "INVALID_REQUEST"})
 
     def test_invalid_urls_and_unknown_fields_are_never_echoed(self):
         secret = "https://private:SECRET_TOKEN@example.com/"

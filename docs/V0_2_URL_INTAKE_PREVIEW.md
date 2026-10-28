@@ -40,3 +40,26 @@ python -m app.cli preview-url \
 `tests/test_url_intake.py` : URL HTTPS normale, sous-chemin, URL de laboratoire non exécutable, refus credentials/fragment/ports/IP/hosts internes/chemins suspects, limites et scopes, absence réseau et contrat CLI JSON.
 
 Cette tranche complète **REQ-002, REQ-003, REQ-022 et REQ-031 à l'état PREVIEW/PARTIEL**, sans les considérer implémentées en production. Elle ne remplace pas les 61 work packages et les autres exigences fondatrices.
+
+## Renforcement local du précontrôle DNS et des redirections (V0.2)
+
+Le module `app/network_preflight.py` refuse désormais les hôtes DNS fournis
+qui ressemblent à une URL, une IP littérale, un nom local/réservé ou une
+variante numérique ambiguë. Il applique les mêmes restrictions de saisie
+que `preview-url`, **sans résoudre aucun DNS**. Les adresses IPv6
+encapsulant de l'IPv4 (mapped, 6to4, Teredo) sont classées conservativement
+comme bloquées dans les réponses A/AAAA **fournies localement**.
+
+La fonction `check_same_origin_redirects` accepte en complément le paramètre
+optionnel `allowed_base_path="/app"` : le départ et chaque destination
+doivent appartenir à `/app` ou à un sous-chemin séparé par `/`.
+`/application` ne satisfait pas `/app`. Sans ce paramètre, la politique
+historique *same-origin* est conservée pour les appelants existants.
+
+Les résultats restent `network_requests_made=false`,
+`authorized_to_crawl=false`, `peer_connection_authorized=false`.
+**Ce précontrôle hors ligne n'est ni une validation de mandat P1/P2, ni
+un garde-fou SSRF utilisable seul en production** : un futur worker autorisé
+devra revalider CNAME/A/AAAA, IP du pair, TLS, chaque redirection et
+l'intégralité du périmètre au moment de la connexion, sous claim MCP valide.
+Aucun scan ni déploiement S1 n'est exécuté par ce changement.

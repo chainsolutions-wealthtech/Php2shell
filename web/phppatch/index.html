@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'none'; connect-src 'none'; img-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>PHPPATCH — File de revue locale (prototype)</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#192d3f;background:#f1f5f8}
+    body{max-width:940px;margin:0 auto;padding:32px 20px}
+    header{padding:26px;background:#26334d;color:white;border-radius:14px}
+    h1{margin:0 0 8px;font-size:1.8rem}
+    main{display:grid;gap:16px;margin-top:20px}
+    section{background:white;border:1px solid #d8e0ea;border-radius:14px;padding:22px}
+    .gate{padding:12px 14px;margin:9px 0;background:#f6f8fb;border-left:4px solid #bd712a}
+    .status{font-weight:700;color:#8a321c}
+    button{border:0;border-radius:8px;padding:12px 16px;margin:5px 7px 5px 0;font:inherit}
+    button[disabled]{background:#cbd3dd;color:#394e63;cursor:not-allowed}
+    small{display:block;color:#516275;margin-top:12px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PHPPATCH</h1>
+    <p>Console distincte de remédiation — aperçu statique hors ligne</p>
+    <strong>Aucun dossier importé · Aucun patch généré · Aucun accès réseau</strong>
+  </header>
+  <main>
+    <section aria-labelledby="queue">
+      <h2 id="queue">1. File de revue PHP2SHELL → PHPPATCH</h2>
+      <p role="status" class="status">NON CONNECTÉ — Aucune preuve ni autorisation authentifiée.</p>
+      <p>Le futur moteur partagé recevra uniquement des dossiers d'audit validés, avec provenance vérifiée. Une empreinte SHA-256 seule n'est pas une signature.</p>
+      <div class="gate">Dossier d'audit : <strong>non chargé</strong></div>
+      <div class="gate">Mandat P2 / propriété : <strong>non vérifiés</strong></div>
+      <div class="gate">PHP/SAPI/backports : <strong>non attestés</strong></div>
+      <div class="gate">Applicabilité des CVE : <strong>preuves insuffisantes</strong></div>
+      <button type="button" disabled aria-disabled="true">Importer un dossier — indisponible</button>
+    </section>
+    <section aria-labelledby="remediation">
+      <h2 id="remediation">2. Proposition, validation et approbation</h2>
+      <div class="gate">Diff candidat : <strong>non généré</strong></div>
+      <div class="gate">Tests Docker isolés : <strong>non exécutés</strong></div>
+      <div class="gate">Revue indépendante : <strong>non demandée</strong></div>
+      <div class="gate">Sauvegarde et rollback : <strong>non prouvés</strong></div>
+      <button type="button" disabled aria-disabled="true">Générer un diff — indisponible</button>
+      <button type="button" disabled aria-disabled="true">Approuver — indisponible</button>
+      <button type="button" disabled aria-disabled="true">Appliquer — indisponible</button>
+      <small>Cette page ne collecte aucune donnée, n'importe aucun fichier et ne peut déclencher ni correctif ni déploiement. Elle n'est pas publiée sur S1.</small>
+    </section>
+  </main>
+</body>
+</html>

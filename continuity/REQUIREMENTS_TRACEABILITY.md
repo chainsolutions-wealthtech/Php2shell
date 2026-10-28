@@ -80,3 +80,11 @@ Toute nouvelle fonctionnalité doit :
 5. publier un checkpoint dans l'issue #5 pour les jalons importants.
 
 **Pas de modification ni de scan de sites gouvernementaux/bancaires ou de tiers sans mandat opérationnel explicite.**
+
+
+## Preuve additive V0.2 — handoff PHP2SHELL→PHPPATCH (P2S-EVT-025, 28/10/2026)
+
+- **REQ-029 / P2S-WF-E12 (PARTIEL)** : dossier JSON/Markdown antérieur conservé ; le nouveau contrat local `app/dossier_handoff.py` prépare une file de revue whitelist, **pas** un rapport Web/PDF ni une attestation de sécurité.
+- **REQ-030 / P2S-WF-R06 (PARTIEL PRÉPARATOIRE SEULEMENT)** : transfert hors ligne d'identifiants de preuves et de règles indicatives, refus de promouvoir vulnérabilité, mandat, signature, approbation, patch ou production. Aucun diff, aucune sandbox, aucune PR de correctif ni rollback ne sont livrés.
+- **REQ-020/032 / P2S-WF-Q01 (PARTIEL)** : neuf tests négatifs supplémentaires, **122 tests** au HEAD PR #2 `fc277eb8b8f1a277a606826e48bbf673028f8449` avec CI #40622112932/#40622118348 SUCCESS ; PR #3 `686e68980c5807ca84bcdf4ef1e8a2f046fe09f8` avec 4 CI SUCCESS.
+- Ce jalon ne modifie **aucune** des 32 exigences ni leurs critères d'acceptation ; le DAG de 61 work packages reste une planification, et les dépendances bloquantes ne sont pas réputées franchies. Aucune action S1, scan tiers, correction PHP ou nouvelle gouvernance.

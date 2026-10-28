@@ -162,3 +162,12 @@ Ce fichier doit être mis à jour **dans une PR dédiée ou la branche légitime
 - La sortie CSV **n'atteste ni mandat, ni runtime HTTP, ni signature, ni backport, ni applicabilité CVE**. Seuls des champs autorisés sont exportés avec protection anti-formules. JSON historique conservé. **REQ-019 demeure PARTIELLE** : PDF, dossier de remédiation et flux PHPPATCH non livrés.
 - **P2S-NEXT-001 inchangée** : revue réellement indépendante PR #6 puis PR #1 avant fusion gouvernée. Les 6 lots, 32 exigences, 61 work packages, V0.1→V1.0, workflow URL→audit autorisé→PHPPATCH, Docker isolé, moteur partagé et les deux sous-domaines S1 demeurent au programme, sans déploiement attesté.
 - MCP read-only `ping` a exigé une interaction de connexion indisponible dans cette exécution ; aucune sonde S1 ni claim runtime MCP n'est prétendu vérifié. La construction GitHub s'est appuyée sur le mandat utilisateur explicite, les branches existantes et le contrôle `expected_sha` anti-collision. Aucun nouvel agent/claim/gateway créé.
+
+
+## Checkpoint technique additionnel — P2S-EVT-025, 28/10/2026
+
+- **PR #2 V0.2** `fc277eb8b8f1a277a606826e48bbf673028f8449` : nouveau handoff local de revue PHP2SHELL→PHPPATCH, 9 tests additionnels, **122 tests SUCCESS** aux CI #40622112932/#40622118348. Aucun patch généré, aucune autorisation élevée, aucun accès réseau, aucun chemin/code/secret exporté vers la file de revue.
+- **PR #3** `686e68980c5807ca84bcdf4ef1e8a2f046fe09f8` : merge Git à deux parents avec PR #2, sans rebase forcé, 3 fichiers propres au preflight S1 conservés, **4 CI SUCCESS** au SHA exact #40622188626/#40622188699/#40622194348/#40622194350.
+- **PR #1** `c17f0931db2cae659e4301585b0bf3db9078ca09` OPEN ; **PR #6** en attente de CI et revue indépendante ; `main` reste à vérifier en direct à chaque reprise. `Patricked-code` sollicité sur #1/#6, aucun APPROVED observé lors de cette tranche.
+- **MCP read-only** ping/reconcile : deux sous-domaines S1 listés sous la même souscription, aucun outil de déploiement spécifique PHP2SHELL/PHPPATCH trouvé dans le catalogue ; pas de mandat runtime PHP ni de déploiement revendiqué. La file MCP n'est pas une autorité de claims du dépôt PHP2SHELL.
+- **État métier** : V0.2 toujours PARTIELLE ; REQ-029/030 partiellement préparées, V0.3 diff/sandbox/rollback non implémentée, V0.4 Docker/MCP/S1 non déployée, V1.0 frontend non implémenté. Les 6 lots, 32 exigences, 61 work packages, moteur partagé, workflow URL→audit autorisé→diagnostic→PHPPATCH et les deux sous-domaines sont conservés.

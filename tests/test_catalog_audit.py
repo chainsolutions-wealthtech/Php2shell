@@ -1,0 +1,68 @@
+"""Offline provenance/freshness tests; no claims about deployed PHP."""
+import copy
+import json
+from pathlib import Path
+import socket
+import subprocess
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+
+from app.catalog_audit import audit_catalog_snapshot
+from app.security_advisories import load_advisory_catalog
+
+
+class CatalogAuditTests(unittest.TestCase):
+    def test_explicit_date_and_fingerprint(self):
+        result = audit_catalog_snapshot("2026-10-28")
+        self.assertEqual(result["snapshot_age_days"], 0)
+        self.assertEqual(result["advisory_count"], 2)
+        self.assertEqual(len(result["canonical_json_sha256"]), 64)
+        self.assertEqual(result["source_freshness"], "NOT_A_LIVE_FEED")
+        self.assertTrue(result["independent_upstream_reverification_required"])
+        self.assertEqual(result["asset_applicability"], "insufficient_evidence")
+        self.assertIn("NOT_LIVE_VALIDATION", result["audit_type"])
+        self.assertEqual(audit_catalog_snapshot("2026-11-28")["snapshot_age_days"], 31)
+
+    def test_invalid_and_future_dates_rejected(self):
+        for value in ("2026-10-27", "2026-02-30", "28-10-2026", "2026-10-28Z", None, 20261028):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                audit_catalog_snapshot(value)
+
+    def test_canonical_fingerprint_is_independent_of_json_whitespace(self):
+        catalog = load_advisory_catalog()
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "snapshot.json"
+            path.write_text(json.dumps(catalog, indent=4), encoding="utf-8")
+            first = audit_catalog_snapshot("2026-10-28", path)
+            path.write_text(json.dumps(catalog, separators=(",", ":")), encoding="utf-8")
+            second = audit_catalog_snapshot("2026-10-28", path)
+            self.assertEqual(first["canonical_json_sha256"], second["canonical_json_sha256"])
+            changed = copy.deepcopy(catalog)
+            changed["limitations"] += " Independently reviewed."
+            path.write_text(json.dumps(changed), encoding="utf-8")
+            third = audit_catalog_snapshot("2026-10-28", path)
+            self.assertNotEqual(first["canonical_json_sha256"], third["canonical_json_sha256"])
+
+    def test_rejects_unvalidated_catalog(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "invalid.json"
+            path.write_text('{"schema_version":"0.2"}', encoding="utf-8")
+            with self.assertRaises(ValueError):
+                audit_catalog_snapshot("2026-10-28", path)
+
+    def test_cli_and_library_never_access_network(self):
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("network")):
+            self.assertEqual(audit_catalog_snapshot("2026-10-28")["advisory_count"], 2)
+        proc = subprocess.run(
+            [sys.executable, "-m", "app.cli", "audit-catalog", "--as-of", "2026-10-28"],
+            check=True, capture_output=True, text=True,
+        )
+        result = json.loads(proc.stdout)
+        self.assertEqual(result["snapshot_age_days"], 0)
+        self.assertEqual(result["asset_applicability"], "insufficient_evidence")
+
+
+if __name__ == "__main__":
+    unittest.main()

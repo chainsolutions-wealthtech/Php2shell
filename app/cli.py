@@ -15,6 +15,7 @@ from .url_intake import preview_url_scope
 from .patch_preview import propose_local_ini_patch
 from .patch_rehearsal import rehearse_local_ini_patch
 from .patch_review_packet import build_patch_review_packet
+from .patch_packet_verifier import load_and_verify_local_review_packet
 from .campaign_plan import plan_offline_campaign
 from .report_html import render_dossier_html
 
@@ -88,6 +89,16 @@ def main():
     review_packet.add_argument('--path', required=True, help='Authorized local project only')
     review_packet.add_argument('--as-of', required=True, help='UTC calendar date YYYY-MM-DD')
     review_packet.add_argument('--evidence-id', required=True, help='Current local evidence ID')
+    verify_packet = sub.add_parser('verify-patch-review',
+                                   help='Revalidate a local PHPPATCH packet; NOT an approval')
+    verify_packet.add_argument('--packet-file', required=True,
+                               help='Local JSON packet file, never uploaded')
+    verify_packet.add_argument('--path', required=True,
+                               help='Authorized local project directory')
+    verify_packet.add_argument('--as-of', required=True,
+                               help='UTC date used to create the packet')
+    verify_packet.add_argument('--evidence-id', required=True,
+                               help='Current local PHP configuration evidence ID')
     args = parser.parse_args()
     if args.command == 'check-version':
         result = evaluate(args.php)
@@ -122,6 +133,13 @@ def main():
         result = rehearse_local_ini_patch(args.path, args.as_of, args.evidence_id)
     elif args.command == 'prepare-patch-review':
         result = build_patch_review_packet(args.path, args.as_of, args.evidence_id)
+    elif args.command == 'verify-patch-review':
+        try:
+            result = load_and_verify_local_review_packet(
+                args.packet_file, args.path, args.as_of, args.evidence_id,
+            )
+        except (ValueError, OSError):
+            parser.error('Local PHPPATCH review packet rejected')
     elif args.command == 'scan-local':
         result = scan_project(args.path)
     else:

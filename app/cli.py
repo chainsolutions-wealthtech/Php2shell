@@ -12,6 +12,7 @@ from .runtime_evidence import review_declared_runtime_evidence
 from .runtime_reporting import export_runtime_review_csv
 from .audit_dossier import build_audit_dossier, render_audit_dossier_markdown
 from .url_intake import preview_url_scope
+from .patch_preview import propose_local_ini_patch
 from .campaign_plan import plan_offline_campaign
 from .report_html import render_dossier_html
 
@@ -70,6 +71,11 @@ def main():
     campaign.add_argument('--shards', type=int, default=4)
     campaign.add_argument('--pages-per-target', type=int, default=20)
     campaign.add_argument('--requests-per-minute', type=int, default=6)
+    patch_proposal = sub.add_parser('propose-config-patch',
+                                    help='Offline php.ini display_errors diff; NEVER applied')
+    patch_proposal.add_argument('--path', required=True, help='Authorized local PHP project directory')
+    patch_proposal.add_argument('--as-of', required=True, help='UTC calendar date YYYY-MM-DD')
+    patch_proposal.add_argument('--evidence-id', required=True, help='One local dossier P2S-EV indicator')
     args = parser.parse_args()
     if args.command == 'check-version':
         result = evaluate(args.php)
@@ -98,6 +104,8 @@ def main():
             pages_per_target=args.pages_per_target,
             requests_per_minute=args.requests_per_minute,
         )
+    elif args.command == 'propose-config-patch':
+        result = propose_local_ini_patch(args.path, args.as_of, args.evidence_id)
     elif args.command == 'scan-local':
         result = scan_project(args.path)
     else:

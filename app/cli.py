@@ -8,6 +8,7 @@ from .security_advisories import list_verified_advisories, review_declared_php_v
 from .catalog_audit import audit_catalog_snapshot
 from .catalog_update import propose_catalog_update
 from .advisory_fetch import fetch_curated_php_advisory
+from .runtime_evidence import review_declared_runtime_evidence
 
 def main():
     parser = argparse.ArgumentParser(description='PHP2SHELL offline defensive prototype')
@@ -37,6 +38,10 @@ def main():
     fetch.add_argument('--as-of', required=True, help='Explicit UTC observation date YYYY-MM-DD')
     fetch.add_argument('--permit-official-network', required=True, action='store_true',
                        help='Explicit opt-in: contacts only api.github.com over HTTPS')
+    runtime = sub.add_parser('review-runtime-evidence',
+                             help='Inspect a local declared PHP/SAPI snapshot, NOT a verified runtime')
+    runtime.add_argument('--file', required=True, help='Local JSON only; no network or PHP execution')
+    runtime.add_argument('--as-of', required=True, help='Explicit UTC calendar date YYYY-MM-DD')
     args = parser.parse_args()
     if args.command == 'check-version':
         result = evaluate(args.php)
@@ -52,6 +57,8 @@ def main():
         result = propose_catalog_update(args.candidate, args.as_of)
     elif args.command == 'fetch-official-advisory':
         result = fetch_curated_php_advisory(args.ghsa, args.as_of)
+    elif args.command == 'review-runtime-evidence':
+        result = review_declared_runtime_evidence(args.file, args.as_of)
     elif args.command == 'scan-local':
         result = scan_project(args.path)
     else:

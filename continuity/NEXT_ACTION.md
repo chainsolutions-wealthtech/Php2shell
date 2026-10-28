@@ -13,6 +13,13 @@
 - Le compte `Patricked-code` est **sollicité** pour les PR #1 et #6. Une automatisation horaire (id `6ae13640aa9c8191b20d3d120bf71ace`) a été créée pour contrôler et reprendre les travaux admissibles, sans contourner les permissions.
 - **NEXT_ACTION unique** : contrôler les revues et conditions de fusion de PR #6 et PR #1, répondre aux observations éventuelles ; en parallèle, poursuivre les fonctionnalités sur les **branches existantes** si absence de collision et CI au HEAD. Aucun déploiement S1 tant qu'un outil MCP réellement autorisé et les prérequis applicatifs ne sont pas prêts.
 
+## Point de continuité construction (28/10/2026)
+
+- PR #2 V0.2 : `scan-local` enrichi d'indicateurs PHP ini/FPM et de l'export CSV hors ligne (JSON préservé) ; HEAD exact `47303c1eea0fc7d454ef5b73ac53d94e5c16875f`, **49 tests et deux CI SUCCESS**. Les nouvelles observations doivent rester des **indices** en l'absence d'attestation runtime.
+- PR #3 S1 : intégration des changements V0.2 sans rebase forcé, HEAD `baf7dc9916e117f13ac3d9ce606f72a4e58d38d4`, **quatre CI SUCCESS**. Ne pas modifier les vhosts tant que le pipeline MCP PHP2SHELL n'est pas disponible.
+- Le jalon unique `P2S-NEXT-001` demeure **revue indépendante/fusion gouvernée PR #6 puis PR #1**, en parallèle de la construction V0.2 non bloquée ; ne pas attendre les revues pour des études/tests PR indépendants autorisés.
+- Automatisation `Continuité PHP2SHELL`, identifiant `6ae13640aa9c8191b20d3d120bf71ace`, **horaire** : reprendre à partir du dernier checkpoint plutôt que du présent snapshot ; pas de scheduler permanent en cours d'exécution attesté par ce fichier.
+
 ## Action prioritaire au checkpoint initial
 
 **P2S-NEXT-001 — Finaliser la [PR #6](https://github.com/chainsolutions-wealthtech/Php2shell/pull/6) documentaire de continuité, puis préparer la revue/validation de PR #1 (V0.1).**

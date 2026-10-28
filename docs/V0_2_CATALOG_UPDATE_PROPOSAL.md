@@ -1,0 +1,37 @@
+# V0.2 — Proposition gouvernée de mise à jour du catalogue CVE (hors ligne)
+
+**Statut : implémentation locale de comparaison et de revue, pas de collecte automatisée des avis upstream ni de publication effective.**
+
+## Objectif
+
+Permettre à un agent de comparer le **catalogue CVE actuellement acquis** à un candidat local (JSON) avant toute décision. Prévenir les suppressions silencieuses, les retours en arrière de date, les modifications de sources et les déplacements de seuils correctifs. Conserver l'audit existant `audit-catalog` et toutes les commandes précédentes.
+
+## Exemple
+
+```bash
+python -m app.cli advisories
+python -m app.cli audit-catalog --as-of 2026-10-28
+python -m app.cli propose-catalog-update --candidate ./candidate.json --as-of 2026-10-28
+```
+
+- Le candidat doit être un fichier JSON **local régulier, sans symlink**, inférieur au plafond du catalogue. Il suit les mêmes validations strictes que `app/data/php_security_advisories.json`.
+- La fonction `propose_catalog_update()` **n'écrit rien** dans le catalogue installé, ne contacte aucun domaine et n'ajoute pas de permission d'analyse. Elle renvoie les identifiants CVE ajoutés/supprimés, les champs modifiés, les versions upstream de référence avant/après, l'évolution de la date de revue et les empreintes SHA-256 des deux instantanés.
+- `NO_CHANGE` = contenu canonique identique ; `AWAITING_INDEPENDENT_UPSTREAM_REVIEW` = proposition modifiée non appliquée ; `BLOCKED_DELETION_OR_DATE_ROLLBACK` = retrait d'avis ou régression de date, à traiter séparément sous décision documentée.
+- Changer la source primaire PHP, le GHSA, le score, la sévérité ou un correctif upstream impose **une nouvelle validation externe réelle**. Le contrôle de format d'une URL officielle **ne démontre pas que cette URL existe ni qu'elle authentifie son contenu**.
+- Les empreintes SHA-256 permettent la comparaison de contenu, mais **ne constituent pas une signature éditeur**. L'automatisation ne doit pas transformer ce résultat en approbation automatique.
+
+## Tests de non-régression
+
+`tests/test_catalog_update.py` couvre : catalogue identique, ajout d'une CVE de fixture, suppression interdite, retour en arrière de date, changement de branche PHP, changement de lien CERT-FR, rejet des sources falsifiées, JSON invalide, symlink, date future et fonctionnement local sans réseau. Aucune fixture synthétique de ce test ne doit être traitée comme un avis réel.
+
+`python -m unittest discover -s tests -v` est exécuté dans GitHub Actions au HEAD exact.
+
+## Suite du programme
+
+Cette tranche prolonge **REQ-005**, sans la clore. Il reste notamment :
+- récupération *bornée et autorisée* des avis PHP/GHSA/CERT-FR à partir de sources vérifiables ;
+- contrôle de fraîcheur sur les sources distantes, changements officiels, signatures si disponibles et approbation de la mise à jour ;
+- interprétation des correctifs rétroportés par distribution/fournisseur et attestation runtime PHP/SAPI sous mandat P2 ;
+- diagnostic de l'actif et remise de ses propositions de correction à PHPPATCH, sans application automatique.
+
+**Interdiction :** aucun catalogue candidat n'est fusionné automatiquement, aucune CVE déclarée applicable au seul motif d'une version PHP fournie et aucun système tiers n'est analysé ou modifié par cette commande.

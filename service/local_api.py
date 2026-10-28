@@ -14,6 +14,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.url_intake import preview_url_scope
+from app.public_summary import build_guest_public_summary
 
 
 class PreviewRequest(BaseModel):
@@ -113,6 +114,27 @@ async def preview_url(payload: PreviewRequest, request: Request):
     except ValueError as exc:
         # Do not echo full operator-supplied URL/hostname in 422 exceptions.
         raise HTTPException(status_code=422, detail="INVALID_URL_PREVIEW") from exc
+
+
+class GuestSummaryRequest(BaseModel):
+    """Strict local-only prototype; external evidence is always UNVERIFIED."""
+    model_config = ConfigDict(extra="forbid", strict=True)
+
+    url: str = Field(min_length=1, max_length=2048)
+    public_response_evidence: dict[str, object] | None = None
+
+
+@app.post("/api/v0.2/guest/summary")
+async def guest_short_summary(payload: GuestSummaryRequest, request: Request):
+    """Return an honest public *preview*, never an audit or stored report."""
+    if (os.getenv("P2S_ENABLE_LOCAL_GUEST_SUMMARY") != "1"
+            or not _is_loopback_peer(request)):
+        raise HTTPException(status_code=403, detail="GUEST_SUMMARY_NOT_AVAILABLE")
+    try:
+        return build_guest_public_summary(
+            payload.url, payload.public_response_evidence)
+    except (ValueError, TypeError) as exc:
+        raise HTTPException(status_code=422, detail="INVALID_GUEST_PREVIEW") from exc
 
 
 class _ActualBodyLimitMiddleware:

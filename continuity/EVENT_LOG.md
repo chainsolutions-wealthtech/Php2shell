@@ -42,6 +42,9 @@
 
 | 2026-10-28 | P2S-EVT-022 | Reporting CSV V0.2 des comparaisons runtime/SAPI **déclarées non attestées**, champs whitelist, refus de promotion de confiance, protection CSV formule, CLI JSON préservée, 7 tests ajoutés ; branche S1 raccordée par merge à deux parents sans force | PR #2 HEAD `e5df6bb8761584716a60bab9067c880276b97b14`, CI #40616269007/#40616272906 SUCCESS (96 tests) ; PR #3 HEAD `2d3d2c9107a5b2c9ac2fdfcc6239083bbba8211b`, CI #40616321539/#40616321597/#40616327531/#40616327538 SUCCESS ; issue #5 checkpoint #016 à publier |
 
+| 2026-10-28 | P2S-EVT-023 | Dossier d'audit local V0.2 JSON/Markdown construit avec signaux PHP/config, runtime déclaré non attesté facultatif, recommandations pour revue PHPPATCH et suppression de données sensibles ; aucun patch ni vulnérabilité déclarée confirmée | PR #2 HEAD intermédiaire `183426ee7f17a0cea28e416e8cf5d6cd54df1ac9`, CI #40618487923/#40618493317 SUCCESS (105 tests) ; branche PR #3 raccordée sans force SHA `0a34021a6c81e615751fbee36b4fe29947b30d40` |
+| 2026-10-28 | P2S-EVT-024 | Prévisualisation URL hors ligne du futur frontend : HTTPS, validation de syntaxe, hôtes privés/IP/ports rejetés, déclaration P1/P2 non authentifiée, budgets de crawl simulés et refus explicite d'exécution ; 113 tests | PR #2 HEAD `4ded6646d57af4bb8f6ee11f4a7b73c828962d29`, CI #40619000385/#40619006476 SUCCESS ; PR #3 HEAD `3739323768ca9b59a87eabe3cd96730a238c0f86` 4 CI SUCCESS ; issue #5 checkpoint suivant |
+
 ## Règles de qualification
 - **Observé** : objet GitHub/CI/S1 vérifié avec date/HEAD ; **déclaré** : demande utilisateur ; **prévu** : architecture non livrée.
 - Indiquer lorsque des observations anciennes peuvent avoir changé, y compris les DNS/TLS et statuts de PR.

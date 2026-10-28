@@ -1,0 +1,147 @@
+"""RED: the real signed verifier must be bound to canonical URL intake.
+
+All keys are ephemeral unit-test keys; no service, OAuth, production mandate,
+network request, authorization, or production token is created.
+"""
+import base64
+import json
+import unittest
+
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+
+from app.scoped_attestation_preflight import verify_scoped_attestation_preflight
+
+
+def encoded(data):
+    return base64.urlsafe_b64encode(json.dumps(
+        data, separators=(",", ":")).encode()).rstrip(b"=").decode()
+
+
+class ScopedAttestationPreflightTests(unittest.TestCase):
+    def setUp(self):
+        self.key = Ed25519PrivateKey.generate()
+        public = self.key.public_key().public_bytes(
+            serialization.Encoding.Raw, serialization.PublicFormat.Raw)
+        self.trust = {"fixture-key": public}
+        self.base = {
+            "iss": "test-external-issuer",
+            "aud": "p2s-internal-verification",
+            "sub": "user-001", "project_id": "project-001",
+            "asset_hostname": "example.com", "scope": "public_metadata",
+            "action": "public_crawl", "mandate_id": "fixture-mandate-1",
+            "base_path": "/web/", "max_pages": 10, "requests_per_minute": 4,
+            "iat": 1793163600, "nbf": 1793163600, "exp": 1793163720,
+            "jti": "fixture-jti-1",
+        }
+        self.now = 1793163650
+
+    def token(self, claims=None):
+        header = {"typ": "p2s-mcp-attestation+jwt",
+                  "alg": "EdDSA", "kid": "fixture-key"}
+        body = self.base if claims is None else claims
+        signing_input = encoded(header) + "." + encoded(body)
+        sig = self.key.sign(signing_input.encode("ascii"))
+        return signing_input + "." + base64.urlsafe_b64encode(sig).rstrip(
+            b"=").decode()
+
+    def evaluate(self, *, claims=None, url="https://example.com/web/",
+                 scope="public_metadata", action="public_crawl",
+                 subject="user-001", project="project-001",
+                 reference=None, pages=8, rate=3, revoked=None,
+                 trusted=None):
+        return verify_scoped_attestation_preflight(
+            url=url, declared_scope=scope, action=action,
+            subject_from_trusted_session=subject,
+            project_from_trusted_registry=project,
+            mandate_reference=reference,
+            max_pages=pages, requests_per_minute=rate,
+            external_attestation=self.token(claims),
+            trusted_public_keys=self.trust if trusted is None else trusted,
+            expected_issuer="test-external-issuer",
+            expected_audience="p2s-internal-verification",
+            observed_at_epoch=self.now,
+            revocation_checker=(lambda _: False if revoked is None else revoked),
+        )
+
+    def test_p1_valid_signed_claim_is_verified_but_never_granted(self):
+        d = self.evaluate()
+        self.assertTrue(d["signature_verified"])
+        self.assertTrue(d["request_bound"])
+        self.assertFalse(d["authorized"])
+        self.assertFalse(d["execution_enabled"])
+        self.assertFalse(d["user_session_authenticated"])
+        self.assertFalse(d["mcp_claim_verified"])
+        self.assertNotIn("example.com", json.dumps(d))
+        self.assertNotIn("user-001", json.dumps(d))
+
+    def test_p1_different_path_or_requested_budget_exceeding_signed_denied(self):
+        for changes in (
+            {"url": "https://example.com/elsewhere/"},
+            {"url": "https://different.example.com/web/"},
+            {"pages": 11}, {"rate": 5},
+            {"action": "source_read"},
+            {"scope": "owned_source"},
+        ):
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                self.evaluate(**changes)
+
+    def test_signed_p2_source_reference_bound_and_still_not_authorized(self):
+        p2 = dict(self.base, scope="owned_source", action="source_read",
+                  mandate_id="mandate-owned-001")
+        p2.pop("max_pages")
+        p2.pop("requests_per_minute")
+        d = self.evaluate(claims=p2, scope="owned_source", action="source_read",
+                          reference="mandate-owned-001")
+        self.assertTrue(d["signature_verified"])
+        self.assertFalse(d["authorized"])
+        self.assertFalse(d["execution_enabled"])
+        self.assertFalse(d["project_acl_verified"])
+
+    def test_p2_wrong_or_missing_mandate_reference_rejected(self):
+        p2 = dict(self.base, scope="owned_source", action="source_read",
+                  mandate_id="mandate-owned-001")
+        p2.pop("max_pages")
+        p2.pop("requests_per_minute")
+        for ref in (None, "other-mandate"):
+            with self.subTest(ref=ref), self.assertRaises(ValueError):
+                self.evaluate(claims=p2, scope="owned_source",
+                              action="source_read", reference=ref)
+
+    def test_p2_unscoped_signed_token_must_not_authorize_any_resource(self):
+        p2 = dict(self.base, scope="owned_source", action="source_read",
+                  mandate_id="mandate-owned-001")
+        for f in ("base_path", "max_pages", "requests_per_minute"):
+            p2.pop(f)
+        with self.assertRaises(ValueError):
+            self.evaluate(claims=p2, scope="owned_source", action="source_read",
+                          reference="mandate-owned-001")
+
+    def test_signed_claim_cannot_replace_trusted_subject_or_project(self):
+        for modified in ({"subject": "other-user"}, {"project": "other-project"}):
+            with self.subTest(modified=modified), self.assertRaises(ValueError):
+                self.evaluate(**modified)
+
+    def test_revoked_key_missing_or_malformed_url_refused(self):
+        with self.assertRaises(ValueError):
+            self.evaluate(revoked=True)
+        with self.assertRaises(ValueError):
+            self.evaluate(trusted={})
+        for url in ("http://example.com/web/", "https://127.0.0.1/web/",
+                    "https://example.com/%2e%2e/"):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                self.evaluate(url=url)
+
+    def test_p2_action_cannot_be_promoted_to_patch_or_deploy(self):
+        p2 = dict(self.base, scope="owned_source", action="source_read",
+                  mandate_id="mandate-owned-001")
+        p2.pop("max_pages")
+        p2.pop("requests_per_minute")
+        for op in ("patch_propose", "patch_apply", "deploy"):
+            with self.subTest(op=op), self.assertRaises(ValueError):
+                self.evaluate(claims=p2, scope="owned_source",
+                              action=op, reference="mandate-owned-001")
+
+
+if __name__ == "__main__":
+    unittest.main()

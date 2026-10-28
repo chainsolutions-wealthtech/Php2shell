@@ -38,6 +38,11 @@ _ALLOWED_BINDING_SHAPES = (
     _BINDING, _SCOPED_PATH_BINDING,
     _BINDING | _BUDGET, _SCOPED_PATH_BINDING | _BUDGET,
 )
+# An exact mandate binding is opt-in for trusted adapters; legacy callers
+# continue to verify without acquiring any execution rights.
+_ALLOWED_BINDING_SHAPES += tuple(
+    shape | {"mandate_id"} for shape in _ALLOWED_BINDING_SHAPES
+)
 _ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,79}\Z", re.ASCII)
 _B64 = re.compile(r"[A-Za-z0-9_-]+\Z", re.ASCII)
 _BASE_PATH = re.compile(r"/[A-Za-z0-9._~/-]*\Z", re.ASCII)
@@ -172,6 +177,11 @@ def verify_external_attestation(token, *, trusted_public_keys,
         if (not _valid_id(request_binding[key])
                 or request_binding[key] != claims[claim_field]):
             _deny()
+
+    if "mandate_id" in request_binding and (
+            not _valid_id(request_binding["mandate_id"])
+            or request_binding["mandate_id"] != claims["mandate_id"]):
+        _deny()
 
     if "base_path" in request_binding and (
             not _valid_base_path(request_binding["base_path"])

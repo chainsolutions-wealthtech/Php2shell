@@ -4,6 +4,7 @@ from .core import evaluate, inventory, load_targets
 from .static_analysis import scan_project
 from .campaign_import import import_targets
 from .reporting import export_findings_csv
+from .security_advisories import list_verified_advisories, review_declared_php_version
 
 def main():
     parser = argparse.ArgumentParser(description='PHP2SHELL offline defensive prototype')
@@ -18,11 +19,18 @@ def main():
                       help='Result format; CSV is a findings-only summary')
     camp = sub.add_parser('import-targets', help='Preview an offline JSON, CSV or TXT campaign')
     camp.add_argument('--file', required=True, help='Local file only; no network requests')
+    sub.add_parser('advisories', help='List dated official PHP advisory references from local snapshot')
+    sourced = sub.add_parser('review-version', help='Sourced version comparison, NOT asset diagnosis')
+    sourced.add_argument('--php', required=True, help='User-declared PHP version only')
     args = parser.parse_args()
     if args.command == 'check-version':
         result = evaluate(args.php)
     elif args.command == 'inventory':
         result = inventory(load_targets(args.file))
+    elif args.command == 'advisories':
+        result = list_verified_advisories()
+    elif args.command == 'review-version':
+        result = review_declared_php_version(args.php)
     elif args.command == 'scan-local':
         result = scan_project(args.path)
     else:

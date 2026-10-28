@@ -1,0 +1,163 @@
+"""Curated PHP security advisory references, read-only and fully offline.
+
+The data is a *reviewed snapshot*, not a live vulnerability feed. Neither
+this module nor its caller proves applicability to any public website.
+"""
+from datetime import date
+import json
+from pathlib import Path
+import re
+from urllib.parse import urlsplit
+
+from .core import parse_version
+
+_DEFAULT_CATALOG = Path(__file__).resolve().parent / "data" / "php_security_advisories.json"
+_MAX_CATALOG_BYTES = 250_000
+_CVE_ID = re.compile(r"CVE-\d{4}-\d{4,}")
+_GHSA_ID = re.compile(r"GHSA-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}")
+_PHP_ADVISORY_PREFIX = "https://github.com/php/php-src/security/advisories/"
+_SOURCE_DOMAINS = {
+    "PHP": "github.com",
+    "CERT-FR": "www.cert.cyber.gouv.fr",
+    "CERT-EU": "cert.europa.eu",
+    "CVE": "www.cve.org",
+    "NVD": "nvd.nist.gov",
+}
+
+
+def _require_iso_date(value):
+    if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+        raise ValueError("Invalid advisory date")
+    try:
+        date.fromisoformat(value)
+    except ValueError as exc:
+        raise ValueError("Invalid advisory date") from exc
+
+
+def _validate_source(source, ghsa):
+    if not isinstance(source, dict):
+        raise ValueError("Malformed advisory source")
+    publisher, url = source.get("publisher"), source.get("url")
+    if publisher not in _SOURCE_DOMAINS or not isinstance(url, str):
+        raise ValueError("Unknown advisory publisher or URL")
+    parts = urlsplit(url)
+    if (parts.scheme != "https" or parts.hostname != _SOURCE_DOMAINS[publisher]
+            or parts.username or parts.password or parts.port
+            or parts.query or parts.fragment):
+        raise ValueError("Advisory source must be a canonical HTTPS link")
+    if publisher == "PHP" and url != _PHP_ADVISORY_PREFIX + ghsa:
+        raise ValueError("PHP primary advisory URL does not match GHSA")
+    if publisher == "CERT-FR" and not parts.path.startswith("/alerte/"):
+        raise ValueError("Unexpected CERT-FR source path")
+
+
+def load_advisory_catalog(path=None):
+    """Load and validate a local curated snapshot; no network or web crawling."""
+    file = _DEFAULT_CATALOG if path is None else Path(path)
+    if file.is_symlink() or not file.is_file() or file.stat().st_size > _MAX_CATALOG_BYTES:
+        raise ValueError("Advisory catalog must be a bounded regular file")
+    try:
+        catalog = json.loads(file.read_text(encoding="utf-8"))
+    except (ValueError, UnicodeError, OSError) as exc:
+        raise ValueError("Invalid local advisory catalog") from exc
+    if not isinstance(catalog, dict) or catalog.get("schema_version") != "0.2":
+        raise ValueError("Unsupported advisory catalog schema")
+    if (catalog.get("catalog_type") != "CURATED_OFFLINE_SNAPSHOT"
+            or catalog.get("source_freshness") != "NOT_A_LIVE_FEED"):
+        raise ValueError("Missing curated snapshot disclaimers")
+    _require_iso_date(catalog.get("reviewed_on_utc"))
+    if not isinstance(catalog.get("limitations"), str) or not catalog["limitations"]:
+        raise ValueError("Catalog needs explicit limitations")
+    advisories = catalog.get("advisories")
+    if not isinstance(advisories, list) or not 0 < len(advisories) <= 100:
+        raise ValueError("Invalid advisory list")
+    seen = set()
+    for entry in advisories:
+        if not isinstance(entry, dict):
+            raise ValueError("Malformed advisory")
+        cve, ghsa = entry.get("cve"), entry.get("ghsa")
+        if (not isinstance(cve, str) or not _CVE_ID.fullmatch(cve)
+                or cve in seen or not isinstance(ghsa, str)
+                or not _GHSA_ID.fullmatch(ghsa)):
+            raise ValueError("Invalid or duplicate CVE/GHSA")
+        seen.add(cve)
+        if (not isinstance(entry.get("title"), str) or not entry["title"]
+                or entry.get("severity") not in {"low", "moderate", "high", "critical"}):
+            raise ValueError("Missing advisory title or severity")
+        score = entry.get("cvss_v4_base_score")
+        if isinstance(score, bool) or not isinstance(score, (int, float)) or not 0 <= score <= 10:
+            raise ValueError("Invalid CVSS score")
+        _require_iso_date(entry.get("published_on"))
+        fixed = entry.get("fixed_upstream")
+        if not isinstance(fixed, dict) or not fixed:
+            raise ValueError("Missing branch-specific upstream fixes")
+        for branch, version in fixed.items():
+            if not isinstance(branch, str) or not re.fullmatch(r"\d+\.\d+", branch):
+                raise ValueError("Invalid PHP branch")
+            if not isinstance(version, str) or ".".join(version.split(".")[:2]) != branch:
+                raise ValueError("Fixed PHP version does not match branch")
+            parse_version(version)
+        sources = entry.get("sources")
+        if not isinstance(sources, list) or not sources:
+            raise ValueError("Advisory must cite a primary source")
+        for source in sources:
+            _validate_source(source, ghsa)
+        if not any(source["publisher"] == "PHP" for source in sources):
+            raise ValueError("PHP primary source is required")
+    return catalog
+
+
+def list_verified_advisories():
+    """Return a dated, published-advisory snapshot. No asset diagnosis."""
+    catalog = load_advisory_catalog()
+    return {
+        "schema_version": catalog["schema_version"],
+        "catalog_type": catalog["catalog_type"],
+        "reviewed_on_utc": catalog["reviewed_on_utc"],
+        "source_freshness": catalog["source_freshness"],
+        "advisories": catalog["advisories"],
+        "limitations": catalog["limitations"],
+    }
+
+
+def review_declared_php_version(version):
+    """Compare user-supplied versions with sourced upstream thresholds only.
+
+    Output MUST NOT be classified as an actual vulnerable asset without a
+    separate, authorized attestation of PHP runtime, SAPI, vendor package
+    revisions and vendor backports.
+    """
+    current = parse_version(version)
+    branch = ".".join(version.split(".")[:2])
+    catalog = load_advisory_catalog()
+    reviews = []
+    for advisory in catalog["advisories"]:
+        minimum = advisory["fixed_upstream"].get(branch)
+        status = ("review_vendor_support" if minimum is None else
+                  "below_reference_fix" if current < parse_version(minimum) else
+                  "at_or_above_reference_fix")
+        reviews.append({
+            "cve": advisory["cve"],
+            "ghsa": advisory["ghsa"],
+            "advisory_source_verified_in_snapshot": True,
+            "advisory_last_reviewed_on_utc": catalog["reviewed_on_utc"],
+            "cvss_v4_base_score": advisory["cvss_v4_base_score"],
+            "reported_php_version": version,
+            "version_provenance": "user_supplied_unverified",
+            "status": status,
+            "reference_fix": minimum,
+            "asset_applicability": "insufficient_evidence",
+            "needs_runtime_and_vendor_backport_attestation": True,
+            "sources": advisory["sources"],
+            "note": ("Version comparison against a reviewed upstream advisory only; "
+                     "confirm active PHP runtime, SAPI, distribution packages, "
+                     "vendor backports and environment-specific exposure."),
+        })
+    return {
+        "schema_version": "0.2",
+        "review_type": "OFFLINE_UPSTREAM_VERSION_COMPARISON_NOT_ASSET_DIAGNOSIS",
+        "catalog_reviewed_on_utc": catalog["reviewed_on_utc"],
+        "reported_php_version": version,
+        "results": reviews,
+        "limitations": catalog["limitations"],
+    }

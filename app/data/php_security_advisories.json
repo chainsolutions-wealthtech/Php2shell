@@ -1,0 +1,57 @@
+{
+  "schema_version": "0.2",
+  "catalog_type": "CURATED_OFFLINE_SNAPSHOT",
+  "reviewed_on_utc": "2026-10-28",
+  "source_freshness": "NOT_A_LIVE_FEED",
+  "limitations": "Verified public advisory references only. A declared PHP version does not attest an installed runtime, vendor backport, exposed application, SAPI, or CVE exploitability. Fresh vendor/distribution advisories must be checked independently before remediation.",
+  "advisories": [
+    {
+      "cve": "CVE-2026-109618",
+      "ghsa": "GHSA-w8hw-w9fx-j79w",
+      "title": "PHP memory handling / out-of-memory corruption",
+      "severity": "critical",
+      "cvss_v4_base_score": 9.2,
+      "published_on": "2026-10-21",
+      "fixed_upstream": {
+        "8.2": "8.2.35",
+        "8.3": "8.3.36",
+        "8.4": "8.4.27",
+        "8.5": "8.5.12"
+      },
+      "sources": [
+        {
+          "publisher": "PHP",
+          "url": "https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w"
+        },
+        {
+          "publisher": "CERT-FR",
+          "url": "https://www.cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-014/"
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2026-109619",
+      "ghsa": "GHSA-6wmf-4rv5-p3rp",
+      "title": "PHP stale global state / use-after-free",
+      "severity": "critical",
+      "cvss_v4_base_score": 9.2,
+      "published_on": "2026-10-21",
+      "fixed_upstream": {
+        "8.2": "8.2.35",
+        "8.3": "8.3.36",
+        "8.4": "8.4.27",
+        "8.5": "8.5.12"
+      },
+      "sources": [
+        {
+          "publisher": "PHP",
+          "url": "https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp"
+        },
+        {
+          "publisher": "CERT-FR",
+          "url": "https://www.cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-014/"
+        }
+      ]
+    }
+  ]
+}

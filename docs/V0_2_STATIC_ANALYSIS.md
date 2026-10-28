@@ -89,3 +89,30 @@ python -m app.cli scan-local --path /chemin/vers/projet-autorise --format csv
 - Cet export ne représente **pas encore** un dossier de remédiation PDF complet, ne déduit pas l'applicabilité réelle d'une CVE, et n'exécute aucun correctif.
 
 Les vérifications de confidentialité, de compatibilité de la sortie JSON, de validation des formats et d'injection de formules CSV sont couvertes par la CI.
+
+## Catalogue officiel PHP sourcé — instantané hors ligne V0.2
+
+Les identifiants CVE-2026-109618 et CVE-2026-109619, les bulletins PHP du **21 octobre 2026** et l'alerte **CERTFR-2026-ALE-014**, dernière version constatée le **27 octobre 2026**, ont été vérifiés auprès de l'éditeur et du CERT-FR. Cela **corrige la qualification historique** « données d'exemple non vérifiées » qui s'appliquait au prototype V0.1 et à l'absence d'un pipeline de provenance. Ce changement **n'atteste aucun actif**. Les correctifs PHP amont de référence sont 8.2.35, 8.3.36, 8.4.27 et 8.5.12.
+
+Fichiers nouveaux :
+- `app/data/php_security_advisories.json` : instantané local daté `2026-10-28`, avec GHSA, CVE, score, source PHP primaire et CERT-FR, et seuils PHP par branche.
+- `app/security_advisories.py` : validation stricte de l'identité, des dates, des URLs HTTPS officielles, des seuils, des doublons et des avertissements obligatoires. **Lecture locale uniquement**, pas de réseau ni de synchronisation automatique.
+- `tests/test_security_advisories.py` : seuils, versions non couvertes, double provenance, refus d'URLs falsifiées, de doublons et d'entrées invalides, absence de requêtes réseau et compatibilité des commandes historiques.
+
+Commandes ajoutées **sans modifier** `check-version` :
+
+```bash
+python -m app.cli advisories
+python -m app.cli review-version --php 8.3.34
+```
+
+`advisories` expose les références officiellement publiées, mais le fichier local reste un **instantané**, jamais un flux CVE à jour automatiquement. `review-version` retourne `below_reference_fix`, `at_or_above_reference_fix` ou `review_vendor_support` selon une **version déclarée**, avec `asset_applicability: insufficient_evidence` dans tous les cas. Aucune source ni URL publique ne permet à elle seule d'attester le runtime PHP réellement exécuté ou les correctifs rétroportés par un fournisseur.
+
+**Règle de non-régression :** le comportement et la sortie de `python -m app.cli check-version --php ...` restent inchangés. Les anciennes données et commentaires de démonstration restent dans les versions précédentes pour la traçabilité ; le nouveau catalogue sourcé ne doit jamais être confondu avec une validation automatique de toutes les CVE, des nouvelles versions ou d'un serveur public.
+
+Sources :
+- [PHP — GHSA-w8hw-w9fx-j79w](https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w).
+- [PHP — GHSA-6wmf-4rv5-p3rp](https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp).
+- [CERT-FR — CERTFR-2026-ALE-014](https://www.cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-014/).
+
+**Prochain jalon technique :** acquisition automatisée et gouvernée des avis en provenance des sources officielles, réconciliation des versions fournisseur, puis attestation P2 du runtime en production avec permissions vérifiées ; ne jamais utiliser ce snapshot pour établir seul une vulnérabilité exploitable.

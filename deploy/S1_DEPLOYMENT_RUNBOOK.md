@@ -55,3 +55,10 @@ Do **not** publish a remediation API at either address before the release gates 
 - Keep existing vhosts in place. Never purge an existing site or alter other subscriptions.
 - Prior to a rollout, snapshot the exact target content/config and register a rollback reference.
 - On failed smoke test, revert to the last approved artifact through the same governed deployment route; do not modify protected host directories manually.
+
+## Addendum V0.2 — candidate CVE review and S1 checkpoint (28 October 2026)
+
+- The current source tree includes a **local, non-mutating advisory update proposal**: `python -m app.cli propose-catalog-update --candidate ./candidate.json --as-of 2026-10-28`. It compares validated offline JSON snapshots and **blocks unreviewed deletions/date rollbacks**; a changed snapshot cannot be promoted to a trusted production feed or a vulnerability finding automatically. Code, tests, and review evidence are maintained in PR #2, with this downstream PR #3 preserving its S1-specific controls.
+- The previous internal S1 DNS/HTTPS curl failures in this runbook are **historical observations**, not a current outage assertion. At the later S1 check on **2026-10-27 23:42 UTC**, both hostnames resolved from S1 and returned `HTTP 200` with `PleskLin` and 464-byte placeholder pages. No cause of the former errors or explicit cache purge was established. Repeat the live check before any release.
+- DNS/HTTPS readiness **does not prove application deployment**. At the cited inspection only the MCP SSH Bridge container was running; neither PHP2SHELL nor PHPPATCH was installed on S1. All application, authentication, isolated Docker, authorized scoped MCP deployment, rollback and production approval gates remain required.
+- This paragraph is **documentation only** and does not change Plesk, Docker, DNS, SSL, vhost or deployment state. It updates the downstream PR branch after a non-forced integration of the latest reviewed V0.2 changes.

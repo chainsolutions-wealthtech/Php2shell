@@ -35,5 +35,33 @@ class FrontendPreviewTests(unittest.TestCase):
         self.assertNotIn('type="submit"', markup)
 
 
+    def test_beginner_entry_is_plain_language(self):
+        html = (ROOT / "web/php2shell/index.html").read_text(encoding="utf-8")
+        self.assertIn("En trois étapes, sans jargon", html)
+        self.assertIn("1. Indiquez votre site", html)
+        self.assertIn("2. Choisissez votre analyse", html)
+        self.assertIn("3. Consultez votre résultat", html)
+        self.assertIn("Vérifier les informations publiques", html)
+        self.assertIn("Analyser le code de mon site", html)
+        self.assertIn('value="public_metadata"', html)
+        self.assertIn('value="owned_source"', html)
+        self.assertIn("Paramètres avancés", html)
+        self.assertIn("<details", html)
+        self.assertIn("Sans inscription pour la prévisualisation", html)
+
+    def test_real_scan_and_login_are_never_faked_in_demo(self):
+        html = (ROOT / "web/php2shell/index.html").read_text(encoding="utf-8")
+        js = (ROOT / "web/shared/url-preview.js").read_text(encoding="utf-8")
+        self.assertIn("aucun site n'est contacté", html.lower())
+        self.assertIn("Connexion et vérification des droits : non disponibles", html)
+        self.assertIn("Démarrer un audit — indisponible", html)
+        self.assertIn("disabled", html)
+        self.assertIn("connect-src 'none'", html)
+        self.assertIn("vérification de vos droits", html)
+        self.assertNotIn("fetch(", js)
+        self.assertNotIn("XMLHttpRequest", js)
+
+
+
 if __name__ == "__main__":
     unittest.main()

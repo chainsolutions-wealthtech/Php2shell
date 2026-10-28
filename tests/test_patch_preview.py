@@ -126,5 +126,38 @@ class IniPatchPreviewTests(unittest.TestCase):
         self.assertNotIn("DO_NOT_LEAK_SESSION_SECRET", proc.stdout)
 
 
+    def test_duplicate_active_display_errors_refused(self):
+        """A single-line diff cannot claim to fix conflicting active ini entries."""
+        self.config.write_text(
+            "display_errors=On\n"
+            "session.secret=DO_NOT_LEAK_SESSION_SECRET\n"
+            "display_errors=Off\n", encoding="utf-8"
+        )
+        dossier = build_audit_dossier(self.root, "2026-10-28")
+        candidates = [row for row in dossier["observations"]
+                      if row["rule"] == "PHP-CONFIG-DISPLAY-ERRORS"]
+        self.assertGreaterEqual(len(candidates), 1)
+        before = self.config.read_bytes()
+        with self.assertRaisesRegex(ValueError, "Multiple active"):
+            propose_local_ini_patch(
+                self.root, "2026-10-28", candidates[0]["evidence_id"]
+            )
+        self.assertEqual(before, self.config.read_bytes())
+
+    def test_commented_second_setting_is_not_an_active_override(self):
+        """Inactive comments are not interpreted as an overriding directive."""
+        self.config.write_text(
+            "display_errors=On\n"
+            "; display_errors=Off\n"
+            "session.secret=DO_NOT_LEAK_SESSION_SECRET\n",
+            encoding="utf-8",
+        )
+        result = propose_local_ini_patch(
+            self.root, "2026-10-28", self.evidence()
+        )
+        self.assertFalse(result["patch_applied"])
+        self.assertNotIn("DO_NOT_LEAK_SESSION_SECRET", result["unified_diff"])
+
+
 if __name__ == "__main__":
     unittest.main()

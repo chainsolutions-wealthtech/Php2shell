@@ -5,6 +5,7 @@ from .static_analysis import scan_project
 from .campaign_import import import_targets
 from .reporting import export_findings_csv
 from .security_advisories import list_verified_advisories, review_declared_php_version
+from .catalog_audit import audit_catalog_snapshot
 
 def main():
     parser = argparse.ArgumentParser(description='PHP2SHELL offline defensive prototype')
@@ -20,6 +21,8 @@ def main():
     camp = sub.add_parser('import-targets', help='Preview an offline JSON, CSV or TXT campaign')
     camp.add_argument('--file', required=True, help='Local file only; no network requests')
     sub.add_parser('advisories', help='List dated official PHP advisory references from local snapshot')
+    audit = sub.add_parser('audit-catalog', help='Offline snapshot age and provenance, NOT a live feed')
+    audit.add_argument('--as-of', required=True, help='Explicit UTC calendar date YYYY-MM-DD')
     sourced = sub.add_parser('review-version', help='Sourced version comparison, NOT asset diagnosis')
     sourced.add_argument('--php', required=True, help='User-declared PHP version only')
     args = parser.parse_args()
@@ -31,6 +34,8 @@ def main():
         result = list_verified_advisories()
     elif args.command == 'review-version':
         result = review_declared_php_version(args.php)
+    elif args.command == 'audit-catalog':
+        result = audit_catalog_snapshot(args.as_of)
     elif args.command == 'scan-local':
         result = scan_project(args.path)
     else:

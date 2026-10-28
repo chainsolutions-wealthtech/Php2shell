@@ -23,13 +23,15 @@ preview.addEventListener("click", () => {
     }
     if (scope === "owned_source") {
       result.textContent =
-        "Demande P2 : URL saisie, mais mandat et propriété non vérifiés. " +
-        "L'analyse du code source reste désactivée.";
+        "Vous souhaitez analyser le code PHP de ce site. " +
+        "C'est possible uniquement après vérification de vos droits : " +
+        "aucune lecture du code n'est activée pour le moment.";
     } else {
       result.textContent =
-        "Demande P1 : URL saisie (" + url.hostname +
-        "), " + pages + " pages proposées. " +
-        "Aucune analyse ni validation DNS n'a été effectuée.";
+        "Votre aperçu est prêt pour " + url.hostname +
+        " (jusqu'à " + pages + " pages proposées). " +
+        "Pour lancer une vraie vérification, il faudra d'abord confirmer " +
+        "l'autorisation sur ce site. Aucun site n'est contacté.";
     }
     result.className = "meta ok";
   } catch (_error) {

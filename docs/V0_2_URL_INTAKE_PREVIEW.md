@@ -63,3 +63,16 @@ un garde-fou SSRF utilisable seul en production** : un futur worker autorisé
 devra revalider CNAME/A/AAAA, IP du pair, TLS, chaque redirection et
 l'intégralité du périmètre au moment de la connexion, sous claim MCP valide.
 Aucun scan ni déploiement S1 n'est exécuté par ce changement.
+
+
+## Contrat additionnel de gates P1/P2 — 28 octobre 2026
+
+`app/admission_preflight.py::evaluate_action_gates` est une extension **purement locale et non exécutante** du précontrôle de déclarations. Elle propose une matrice de conditions nécessaires à cinq familles d'actions distinctes : `public_crawl`, `source_read`, `patch_propose`, `patch_apply` et `deploy`.
+
+- **P1** : l'accès aux métadonnées publiques n'est pas une autorisation de crawl. Il exige une identité authentifiée, une admission du périmètre P1, les contrôles réseau anti-SSRF et un claim/budget gouverné.
+- **P2** : la lecture des sources privées exige une délégation P2 et une ACL sur le projet/ressource, à laquelle s'ajoutent validité temporelle, révision des droits et claim gouverné. Une simple référence de mandat, même non expirée, ne prouve aucune délégation.
+- **PHPPATCH** : proposer un patch, l'appliquer en sandbox et déployer sont trois capacités distinctes. L'application exige validation/régression/rollback/approbation ; le déploiement exige encore son mandat gouverné indépendant.
+- L'extension **refuse explicitement** les booléens d'autorité forgés et les actions inconnues ; elle ne renvoie jamais de jeton, de secret, de preuve de propriété, de permis ou de résultat `ALLOW`. `decision=DENY_UNVERIFIED_AUTHORITY`, `authorized=false`, `execution_enabled=false` sont invariants.
+- Cette matrice est un **contrat d'intégration en attente de capacités MCP de vérification de l'identité et de l'autorité réellement déléguées**. Elle ne se substitue pas aux vrais droits GitHub/Plesk, au système de mandats, de révocation, de claims, ni aux protections du worker. Aucun endpoint public ou privilège n'est ouvert par cette tranche.
+
+Les tests `AuthorizationGateContractTests` couvrent les cinq opérations, l'absence d'escalade P1→P2, le refus des indicateurs de confiance falsifiés, les expirations et les différences de hostname. Les tests historiques restent conservés. Aucune opération réseau ou serveur n'est exécutée.

@@ -79,7 +79,8 @@ def review_declared_runtime_evidence(path, as_of_utc):
     mandate = source["mandate_reference"]
     if not isinstance(mandate, str) or not _ID.fullmatch(mandate):
         raise ValueError("Invalid mandate reference")
-    if source["source_channel"] not in _SOURCES:
+    if (not isinstance(source["source_channel"], str)
+            or source["source_channel"] not in _SOURCES):
         raise ValueError("Unknown evidence channel")
     if source["vendor_backport_status"] != "not_verified":
         raise ValueError("Backports must remain unverified until trusted provenance is available")

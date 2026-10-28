@@ -65,7 +65,7 @@ def plan_offline_campaign(file, *, campaign_tag="local-preview", shards=4,
     ]
     signature = _fingerprint([
         campaign_tag, shards, pages_per_target, requests_per_minute,
-        [[target["hostname"], target["declared_scope"]]
+        [[target["hostname"], target["scope"]]
          for target in ordered],
     ])
     return {

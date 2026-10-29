@@ -1,0 +1,170 @@
+"""Regression tests for strictly read-only PHP advisory update proposals."""
+import copy
+import json
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+import socket
+
+from app.catalog_update import propose_catalog_update
+from app.security_advisories import load_advisory_catalog
+
+
+class CatalogUpdateTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.base = load_advisory_catalog()
+        self.candidate = self.root / "candidate.json"
+        self.save(self.base)
+
+    def save(self, doc):
+        self.candidate.write_text(json.dumps(doc, indent=2), encoding="utf-8")
+
+    def propose(self, date="2026-10-28"):
+        return propose_catalog_update(self.candidate, date)
+
+    def test_identical_snapshot_is_no_change_and_non_mutating(self):
+        before = self.candidate.read_bytes()
+        result = self.propose()
+        self.assertEqual(result["proposal_state"], "NO_CHANGE")
+        self.assertFalse(result["content_changed"])
+        self.assertFalse(result["canonical_catalog_modified"])
+        self.assertEqual(result["added_cves"], [])
+        self.assertEqual(result["removed_cves"], [])
+        self.assertEqual(result["modified_advisories"], [])
+        self.assertEqual(result["changed_catalog_metadata_fields"], [])
+        self.assertEqual(self.candidate.read_bytes(), before)
+        self.assertEqual(result["baseline_canonical_json_sha256"],
+                         result["candidate_canonical_json_sha256"])
+
+    def test_additional_reviewer_approved_candidate_is_only_a_proposal(self):
+        doc = copy.deepcopy(self.base)
+        extra = copy.deepcopy(doc["advisories"][0])
+        extra["cve"] = "CVE-2026-999999"
+        extra["ghsa"] = "GHSA-abcd-1234-efgh"
+        extra["sources"][0]["url"] = (
+            "https://github.com/php/php-src/security/advisories/GHSA-abcd-1234-efgh"
+        )
+        # The schema verifies source URL format, not the existence of an
+        # advisory.  Never promote this synthetic example into the baseline.
+        doc["advisories"].append(extra)
+        self.save(doc)
+        result = self.propose()
+        self.assertEqual(result["added_cves"], ["CVE-2026-999999"])
+        self.assertEqual(result["proposal_state"], "AWAITING_INDEPENDENT_UPSTREAM_REVIEW")
+        self.assertEqual(len(load_advisory_catalog()["advisories"]), 2)
+        self.assertTrue(result["independent_upstream_reverification_required"])
+        self.assertEqual(result["asset_applicability"], "insufficient_evidence")
+
+    def test_advisory_deletion_is_blocked_not_silent(self):
+        doc = copy.deepcopy(self.base)
+        doc["advisories"].pop()
+        self.save(doc)
+        result = self.propose()
+        self.assertEqual(result["removed_cves"], ["CVE-2026-109619"])
+        self.assertEqual(result["proposal_state"], "BLOCKED_DELETION_OR_DATE_ROLLBACK")
+        self.assertIn("removals", " ".join(result["warnings"]))
+        self.assertFalse(result["canonical_catalog_modified"])
+        self.assertEqual(len(load_advisory_catalog()["advisories"]), 2)
+
+    def test_review_date_rollback_is_blocked(self):
+        doc = copy.deepcopy(self.base)
+        doc["reviewed_on_utc"] = "2026-10-27"
+        self.save(doc)
+        result = self.propose()
+        self.assertEqual(result["proposal_state"], "BLOCKED_DELETION_OR_DATE_ROLLBACK")
+        self.assertIn("reviewed_on_utc", result["changed_catalog_metadata_fields"])
+        self.assertNotEqual(result["baseline_canonical_json_sha256"],
+                            result["candidate_canonical_json_sha256"])
+
+    def test_fix_version_change_needs_review_and_exposes_delta(self):
+        doc = copy.deepcopy(self.base)
+        doc["advisories"][0]["fixed_upstream"]["8.3"] = "8.3.37"
+        self.save(doc)
+        result = self.propose()
+        finding = result["modified_advisories"][0]
+        self.assertEqual(finding["cve"], "CVE-2026-109618")
+        self.assertTrue(finding["security_sensitive_change"])
+        self.assertIn("fixed_upstream", finding["changed_fields"])
+        self.assertEqual(finding["upstream_fix_changes"], [{
+            "branch": "8.3",
+            "previous_upstream_fix": "8.3.36",
+            "candidate_upstream_fix": "8.3.37",
+            "review_required": True,
+        }])
+        self.assertEqual(result["proposal_state"], "AWAITING_INDEPENDENT_UPSTREAM_REVIEW")
+
+    def test_remove_branch_and_change_sources_reported_without_leaking_metadata(self):
+        doc = copy.deepcopy(self.base)
+        doc["advisories"][0]["fixed_upstream"].pop("8.2")
+        doc["advisories"][0]["sources"][1]["url"] = (
+            "https://www.cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-015/"
+        )
+        self.save(doc)
+        result = self.propose()
+        finding = result["modified_advisories"][0]
+        self.assertTrue(finding["security_sensitive_change"])
+        self.assertIn("sources", finding["changed_fields"])
+        self.assertIn("fixed_upstream", finding["changed_fields"])
+        self.assertIn(None, [row["candidate_upstream_fix"]
+                            for row in finding["upstream_fix_changes"]])
+        self.assertNotIn("CERTFR-2026-ALE-015", json.dumps(result))
+        self.assertFalse(result["canonical_catalog_modified"])
+
+    def test_rejects_future_invalid_and_symlink_catalog(self):
+        with self.assertRaises(ValueError):
+            self.propose("2026-10-27")
+        with self.assertRaises(ValueError):
+            self.propose("2026-02-30")
+        with self.assertRaises(ValueError):
+            self.propose("invalid-date")
+        with self.assertRaises(ValueError):
+            propose_catalog_update(None, "2026-10-28")
+        link = self.root / "linked.json"
+        try:
+            link.symlink_to(self.candidate)
+        except (OSError, NotImplementedError):
+            pass
+        else:
+            with self.assertRaises(ValueError):
+                propose_catalog_update(link, "2026-10-28")
+
+    def test_rejects_malformed_and_spoofed_candidate_sources(self):
+        doc = copy.deepcopy(self.base)
+        doc["advisories"][0]["sources"][0]["url"] = (
+            "https://github.com.attacker.invalid/php/php-src"
+        )
+        self.save(doc)
+        with self.assertRaises(ValueError):
+            self.propose()
+        self.candidate.write_text("{}", encoding="utf-8")
+        with self.assertRaises(ValueError):
+            self.propose()
+
+    def test_explicit_future_review_date_is_not_accepted(self):
+        doc = copy.deepcopy(self.base)
+        doc["reviewed_on_utc"] = "2026-10-29"
+        self.save(doc)
+        with self.assertRaises(ValueError):
+            self.propose("2026-10-28")
+
+    def test_offline_cli_and_no_network(self):
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("network")):
+            self.assertEqual(self.propose()["proposal_state"], "NO_CHANGE")
+        result = subprocess.run(
+            [sys.executable, "-m", "app.cli", "propose-catalog-update",
+             "--candidate", str(self.candidate), "--as-of", "2026-10-28"],
+            capture_output=True, text=True, check=True,
+        )
+        parsed = json.loads(result.stdout)
+        self.assertEqual(parsed["proposal_state"], "NO_CHANGE")
+        self.assertFalse(parsed["canonical_catalog_modified"])
+
+
+if __name__ == "__main__":
+    unittest.main()

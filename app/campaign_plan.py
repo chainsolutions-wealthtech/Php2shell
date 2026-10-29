@@ -1,0 +1,98 @@
+"""Deterministic, offline multi-target campaign scheduling *preview*.
+
+Never creates workers, network calls, queue jobs, MCP claims or authorizations.
+Project quotas are proposals and must be re-admitted by the existing
+authorized control plane before any network execution.
+"""
+from collections import Counter
+from hashlib import sha256
+import json
+import re
+
+from .campaign_import import import_targets
+
+_CAMPAIGN_TAG = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,63}")
+_MAX_TARGETS = 10000
+
+
+def _fingerprint(value):
+    return sha256(json.dumps(value, sort_keys=True, ensure_ascii=False,
+                             separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def plan_offline_campaign(file, *, campaign_tag="local-preview", shards=4,
+                          pages_per_target=20, requests_per_minute=6):
+    """Partition imported sites predictably; no authorization or dispatch."""
+    if not isinstance(campaign_tag, str) or not _CAMPAIGN_TAG.fullmatch(campaign_tag):
+        raise ValueError("Invalid campaign tag")
+    if (type(shards) is not int or not 1 <= shards <= 32
+            or type(pages_per_target) is not int or not 1 <= pages_per_target <= 100
+            or type(requests_per_minute) is not int
+            or not 1 <= requests_per_minute <= 30):
+        raise ValueError("Invalid offline campaign bounds")
+    source = import_targets(file)
+    targets = source["targets"]
+    if len(targets) > _MAX_TARGETS:
+        raise ValueError("Campaign target limit exceeded")
+    # Sorting provides deterministic results regardless of CSV or JSON row
+    # order. Do not pass through source_access_allowed from the old importer:
+    # it is a DECLARATION, not a verified permission.
+    ordered = sorted(targets, key=lambda x: x["hostname"])
+    groups = [[] for _ in range(shards)]
+    for target in ordered:
+        hostname, scope = target["hostname"], target["scope"]
+        key = _fingerprint([hostname, scope])
+        shard_id = int(key[:8], 16) % shards
+        groups[shard_id].append({
+            "asset_ref": "P2S-TGT-" + key[:16],
+            "hostname": hostname,
+            "declared_scope": scope,
+            "mandate_authenticated": False,
+            "network_admission_granted": False,
+            "source_access_authorized": False,
+            "execution_status": "PLANNED_NOT_ADMITTED",
+            "proposed_page_limit": pages_per_target,
+            "proposed_request_rate_per_minute": requests_per_minute,
+        })
+    segments = [
+        {
+            "partition": index,
+            "target_count": len(rows),
+            "status": "OFFLINE_PLANNING_ONLY",
+            "targets": rows,
+        }
+        for index, rows in enumerate(groups)
+    ]
+    signature = _fingerprint([
+        campaign_tag, shards, pages_per_target, requests_per_minute,
+        [[target["hostname"], target["scope"]]
+         for target in ordered],
+    ])
+    return {
+        "schema_version": "0.2",
+        "plan_type": "OFFLINE_CAMPAIGN_DAG_PREVIEW_NOT_SCHEDULER",
+        "campaign_tag": campaign_tag,
+        "campaign_fingerprint_sha256": signature,
+        "campaign_fingerprint_is_signature": False,
+        "source_format": source["source_format"],
+        "source_rows_received": source["rows_received"],
+        "unique_targets": len(ordered),
+        "duplicates_removed": source["duplicates_removed"],
+        "declared_scopes": dict(sorted(
+            Counter(target["scope"] for target in ordered).items()
+        )),
+        "partition_count": shards,
+        "partitions": segments,
+        "jobs_created": 0,
+        "jobs_running": 0,
+        "network_requests_made": False,
+        "authorization_verified": False,
+        "mcp_claims_acquired": False,
+        "safe_to_execute": False,
+        "limitations": (
+            "Offline partitions are a scheduling proposal only. No job queue, "
+            "worker, actual user permissions, target ownership, DNS policy, "
+            "rate control, retry execution, API, or production deployment "
+            "is provided by this planner."
+        ),
+    }

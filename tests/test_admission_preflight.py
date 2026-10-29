@@ -1,0 +1,258 @@
+"""Untrusted P1/P2 mandate declaration tests; offline fail closed."""
+import json
+import socket
+import tempfile
+import unittest
+from copy import deepcopy
+from pathlib import Path
+from unittest.mock import patch
+
+from app.admission_preflight import evaluate_mandate_declaration, evaluate_action_gates
+from app.url_intake import preview_url_scope
+
+
+def claim():
+    return {
+        "schema_version": "0.2",
+        "declaration_type": "UNVERIFIED_OPERATOR_MANDATE",
+        "mandate_reference": "LAB-P2-001",
+        "subject": "operator-1",
+        "asset_hostname": "site.example.com",
+        "scope": "owned_source",
+        "not_before_utc": "2026-10-28T00:00:00Z",
+        "expires_at_utc": "2026-10-28T12:00:00Z",
+        "max_pages": 30,
+        "requests_per_minute": 5,
+    }
+
+
+class MandateDeclarationTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.file = Path(self.tmp.name) / "declaration.json"
+        self.write(claim())
+        self.preview = preview_url_scope(
+            "https://site.example.com/path", "owned_source",
+            mandate_reference="LAB-P2-001", max_pages=20,
+            requests_per_minute=4,
+        )
+
+    def write(self, data):
+        self.file.write_text(json.dumps(data), encoding="utf-8")
+
+    def evaluate(self, timestamp="2026-10-28T06:00:00Z"):
+        return evaluate_mandate_declaration(self.preview, self.file, timestamp)
+
+    def test_matching_fresh_p2_is_still_not_authorized(self):
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("network")):
+            result = self.evaluate()
+        self.assertTrue(result["declaration_matches_request"])
+        self.assertTrue(result["declaration_validity_window_matched"])
+        self.assertEqual(result["blockers"], [])
+        for key in (
+            "mandate_signature_verified", "subject_authenticated",
+            "asset_ownership_verified", "mcp_claim_verified",
+            "network_peer_verified", "authorized_to_crawl",
+            "authorized_to_inspect_source", "ready_for_production",
+        ):
+            self.assertIs(result[key], False)
+        self.assertNotIn("LAB-P2-001", json.dumps(result))
+        self.assertNotIn("operator-1", json.dumps(result))
+
+    def test_expired_or_not_yet_valid_is_flagged(self):
+        future = self.evaluate("2026-10-28T12:00:00Z")
+        self.assertIn("EXPIRED", future["blockers"])
+        self.assertFalse(future["declaration_validity_window_matched"])
+        early = self.evaluate("2026-10-27T23:59:59Z")
+        self.assertIn("NOT_YET_VALID", early["blockers"])
+        self.assertFalse(early["authorized_to_crawl"])
+
+    def test_scope_and_hostname_mismatch(self):
+        a = claim()
+        a["asset_hostname"] = "other.example.com"
+        self.write(a)
+        self.assertIn("HOSTNAME_MISMATCH", self.evaluate()["blockers"])
+        a = claim()
+        a["scope"] = "public_metadata"
+        self.write(a)
+        self.assertIn("SCOPE_MISMATCH", self.evaluate()["blockers"])
+
+    def test_request_cannot_escalate_budgets(self):
+        a = claim()
+        a["max_pages"] = 15
+        a["requests_per_minute"] = 3
+        self.write(a)
+        self.assertEqual(self.evaluate()["blockers"],
+                         ["PAGE_BUDGET_EXCEEDED", "RATE_BUDGET_EXCEEDED"])
+
+    def test_forged_preview_flags_fail_closed(self):
+        for key in (
+            "allowed_to_crawl", "allowed_to_inspect_source",
+            "mandate_authentication_verified", "target_ownership_verified",
+            "dns_and_public_ip_validated", "network_requests_made",
+        ):
+            with self.subTest(key=key):
+                preview = dict(self.preview)
+                preview[key] = True
+                with self.assertRaises(ValueError):
+                    evaluate_mandate_declaration(
+                        preview, self.file, "2026-10-28T06:00:00Z")
+        preview = dict(self.preview)
+        preview["max_pages_requested"] = 1000
+        with self.assertRaises(ValueError):
+            evaluate_mandate_declaration(preview, self.file, "2026-10-28T06:00:00Z")
+
+    def test_mandate_cannot_sneak_in_approval_flags_or_secrets(self):
+        for field, value in (
+            ("mcp_signature_verified", True),
+            ("authorized_to_crawl", True),
+            ("secret_token", "LEAK"),
+            ("approved", "yes"),
+        ):
+            with self.subTest(field=field):
+                a = claim()
+                a[field] = value
+                self.write(a)
+                with self.assertRaises(ValueError):
+                    self.evaluate()
+
+    def test_rejects_invalid_typed_claims_and_time(self):
+        for field, value in (
+            ("scope", "admin"),
+            ("asset_hostname", "https://site.example.com"),
+            ("subject", ""),
+            ("max_pages", True),
+            ("requests_per_minute", 31),
+            ("not_before_utc", "2026-10-28T12:00:00Z"),
+            ("expires_at_utc", "2026-10-29T00:00:01Z"),
+            ("expires_at_utc", "2026-10-28TbadZ"),
+            ("mandate_reference", []),
+        ):
+            with self.subTest(field=field):
+                a = claim()
+                a[field] = value
+                self.write(a)
+                with self.assertRaises(ValueError):
+                    self.evaluate()
+        self.write(claim())
+        with self.assertRaises(ValueError):
+            self.evaluate("not-a-timestamp")
+
+    def test_symlink_and_giant_file_refused(self):
+        link = self.file.parent / "link.json"
+        try:
+            link.symlink_to(self.file)
+        except (OSError, NotImplementedError):
+            pass
+        else:
+            with self.assertRaises(ValueError):
+                evaluate_mandate_declaration(
+                    self.preview, link, "2026-10-28T06:00:00Z")
+        self.file.write_bytes(b" " * 8193)
+        with self.assertRaises(ValueError):
+            self.evaluate()
+
+    def test_public_metadata_declaration_is_not_permission(self):
+        self.preview = preview_url_scope("https://site.example.com", requests_per_minute=5)
+        a = claim()
+        a["scope"] = "public_metadata"
+        self.write(a)
+        result = self.evaluate()
+        self.assertEqual(result["declared_scope"], "public_metadata")
+        self.assertTrue(result["declaration_matches_request"])
+        self.assertFalse(result["authorized_to_crawl"])
+
+
+
+class AuthorizationGateContractTests(unittest.TestCase):
+    """Local tests: no operator-supplied flags become trusted permissions."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.file = Path(self.tmp.name) / "unverified.json"
+        self.file.write_text(json.dumps(claim()), encoding="utf-8")
+        self.preview = preview_url_scope(
+            "https://site.example.com/path", "owned_source",
+            mandate_reference="LAB-P2-001",
+            max_pages=20, requests_per_minute=4,
+        )
+        self.preflight = evaluate_mandate_declaration(
+            self.preview, self.file, "2026-10-28T06:00:00Z"
+        )
+
+    def test_all_sensitive_actions_denied_even_when_declaration_matches(self):
+        actions = (
+            "public_crawl", "source_read", "patch_propose",
+            "patch_apply", "deploy",
+        )
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("network")):
+            for action in actions:
+                with self.subTest(action=action):
+                    decision = evaluate_action_gates(self.preflight, action)
+                    self.assertEqual(decision["decision"], "DENY_UNVERIFIED_AUTHORITY")
+                    self.assertFalse(decision["authorized"])
+                    self.assertFalse(decision["identity_authenticated"])
+                    self.assertFalse(decision["mandate_verified"])
+                    self.assertFalse(decision["mcp_claim_verified"])
+                    self.assertFalse(decision["execution_enabled"])
+                    self.assertEqual(decision["action"], action)
+                    self.assertGreater(len(decision["required_gates"]), 0)
+                    self.assertNotIn("LAB-P2-001", json.dumps(decision))
+                    self.assertNotIn("operator-1", json.dumps(decision))
+
+    def test_p2_does_not_implicitly_grant_public_crawl_or_patch(self):
+        crawl = evaluate_action_gates(self.preflight, "public_crawl")
+        source = evaluate_action_gates(self.preflight, "source_read")
+        deploy = evaluate_action_gates(self.preflight, "deploy")
+        self.assertIn("P1_TARGET_SCOPE_ADMITTED", crawl["required_gates"])
+        self.assertIn("P2_SOURCE_DELEGATION_VERIFIED", source["required_gates"])
+        self.assertIn("INDEPENDENT_DEPLOYMENT_APPROVAL", deploy["required_gates"])
+        self.assertNotIn("P2_SOURCE_DELEGATION_VERIFIED", crawl["required_gates"])
+        self.assertFalse(crawl["authorized"])
+        self.assertFalse(source["authorized"])
+        self.assertFalse(deploy["authorized"])
+
+    def test_forged_trusted_authority_flags_rejected(self):
+        for field in ("subject_authenticated", "mandate_signature_verified",
+                      "asset_ownership_verified", "mcp_claim_verified",
+                      "network_peer_verified", "authorized_to_crawl",
+                      "authorized_to_inspect_source", "ready_for_production"):
+            with self.subTest(field=field):
+                forged = deepcopy(self.preflight)
+                forged[field] = True
+                with self.assertRaises(ValueError):
+                    evaluate_action_gates(forged, "source_read")
+        forged = deepcopy(self.preflight)
+        forged["evaluation_type"] = "SIGNED_PERMISSION"
+        with self.assertRaises(ValueError):
+            evaluate_action_gates(forged, "public_crawl")
+
+    def test_unknown_action_and_invalid_claim_fail_closed(self):
+        for action in ("admin", "ssh_exec", "patch_apply;deploy", "", None, 42):
+            with self.subTest(action=action), self.assertRaises(ValueError):
+                evaluate_action_gates(self.preflight, action)
+        with self.assertRaises(ValueError):
+            evaluate_action_gates({"blockers": []}, "public_crawl")
+
+    def test_expired_and_mismatched_preflights_remain_denied(self):
+        expired = evaluate_mandate_declaration(
+            self.preview, self.file, "2026-10-28T12:00:00Z"
+        )
+        self.assertIn("EXPIRED", evaluate_action_gates(
+            expired, "source_read"
+        )["blockers"])
+        declared = claim()
+        declared["asset_hostname"] = "wrong.example.com"
+        self.file.write_text(json.dumps(declared), encoding="utf-8")
+        mismatched = evaluate_mandate_declaration(
+            self.preview, self.file, "2026-10-28T06:00:00Z"
+        )
+        self.assertIn("HOSTNAME_MISMATCH", evaluate_action_gates(
+            mismatched, "source_read"
+        )["blockers"])
+
+
+if __name__ == "__main__":
+    unittest.main()

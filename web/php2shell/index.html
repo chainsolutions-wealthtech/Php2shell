@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'self'; base-uri 'none'; form-action 'none'; connect-src 'none'">
+  <title>PHP2SHELL — Prévisualisation locale</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17283d;background:#eff4f8}
+    body{max-width:940px;margin:0 auto;padding:32px 20px}
+    header{padding:26px;background:#142d50;color:#fff;border-radius:14px}
+    h1{margin:0 0 9px;font-size:1.8rem}
+    main{display:grid;gap:16px;margin-top:20px}
+    section{background:#fff;padding:24px;border:1px solid #d8e0ea;border-radius:14px}
+    label{display:block;font-weight:650;margin-bottom:8px}
+    input,select{box-sizing:border-box;min-height:44px;width:100%;padding:10px;border-radius:7px;border:1px solid #8b9bb0;font:inherit}
+    button{border:0;border-radius:8px;background:#155d92;color:#fff;padding:13px 16px;font:inherit;font-weight:650;cursor:pointer}
+    button[disabled]{background:#c5ceda;color:#43566c;cursor:not-allowed}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media(max-width:650px){.grid{grid-template-columns:1fr}}
+    .meta{color:#526174;font-size:.91rem}
+    .check{margin:10px 0;padding:10px;background:#f6f8fb;border-radius:7px}
+    .danger{font-weight:650;color:#a33420}
+    .ok{color:#125b4c}
+    .steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0;padding:0}
+    .steps li{background:#f4f8fd;border:1px solid #d8e0ea;padding:12px;border-radius:10px;font-weight:600}
+    details{margin:14px 0;border:1px solid #d8e0ea;border-radius:10px;padding:12px;background:#f8fafc}
+    summary{cursor:pointer;font-weight:650}
+    @media(max-width:650px){.steps{grid-template-columns:1fr}}
+    code{overflow-wrap:anywhere}
+  </style>
+  <script src="../shared/url-preview.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>PHP2SHELL</h1>
+    <p>Comprendre la sécurité de votre site, en langage simple — prototype hors ligne</p>
+    <strong>Prévisualisation locale uniquement · Aucun site n'est audité et aucun site n'est contacté</strong>
+  </header>
+  <main>
+    <section aria-labelledby="saisie">
+      <h2 id="saisie">1. Indiquez votre site</h2>
+      <p class="meta">En trois étapes, sans jargon : voyez ce que l'outil pourra faire, puis vérifiez vos droits avant toute analyse réelle.</p>
+      <ol class="steps" aria-label="Les trois étapes">
+        <li>1. Indiquez votre site</li>
+        <li>2. Choisissez votre analyse</li>
+        <li>3. Consultez votre résultat</li>
+      </ol>
+      <p class="meta"><strong>Sans inscription pour la prévisualisation.</strong> Un compte et la vérification de vos droits seront nécessaires avant toute analyse de site ou de code.</p>
+      <label for="url">L'adresse de votre site</label>
+      <input id="url" type="url" inputmode="url" spellcheck="false" placeholder="https://www.example.com/" autocomplete="off" maxlength="2048">
+      <label for="scope">2. Choisissez votre analyse</label>
+      <select id="scope">
+        <option value="public_metadata">Vérifier les informations publiques de mon site</option>
+        <option value="owned_source">Analyser le code de mon site (accès autorisé nécessaire)</option>
+      </select>
+      <details>
+        <summary>Paramètres avancés (facultatif)</summary>
+        <label for="pages">Nombre maximal de pages proposé</label>
+        <input id="pages" type="number" min="1" max="100" value="20">
+        <p class="meta">P1 : informations publiques, après autorisation de la cible. P2 : fichiers PHP et configuration, après vérification des droits. Aucun de ces niveaux n'est activé ici.</p>
+      </details>
+      <p><button type="button" id="preview">Prévisualiser sans connexion</button></p>
+      <p class="meta" id="message" role="status" aria-live="polite">Aucun site n'est contacté : seul un aperçu de votre demande est préparé.</p>
+    </section>
+    <section aria-labelledby="etapes">
+      <h2 id="etapes">3. Consultez votre résultat</h2>
+      <p>Une fois l'analyse autorisée et réellement disponible, vous pourrez consulter un rapport compréhensible, puis préparer des corrections avec PHPPATCH. Aucun résultat d'audit n'est disponible dans ce prototype.</p>
+      <p class="meta"><strong>Connexion et vérification des droits : non disponibles</strong> dans cette prévisualisation. La future plateforme devra proposer une connexion unique, sans demande de termes techniques P1/P2.</p>
+      <details>
+        <summary>Pourquoi certaines étapes sont-elles encore indisponibles ?</summary>
+      <div class="check">Identité, autorisation et consentement : <strong>non vérifiés</strong></div>
+      <div class="check">DNS / IP de destination, redirections et quotas : <strong>non vérifiés</strong></div>
+      <div class="check">Collecte passive des pages : <strong>non exécutée</strong></div>
+      <div class="check">Analyse PHP/SAPI et backports : <strong>non attestée</strong></div>
+      <div class="check">Rapport et passage PHPPATCH : <strong>à valider</strong></div>
+      <button type="button" disabled aria-disabled="true">Démarrer un audit — indisponible</button>
+      <p class="meta">La future plateforme devra vérifier votre droit d'auditer la cible, puis appliquer les protections réseau et les mandats MCP existants.</p>
+      </details>
+    </section>
+  </main>
+</body>
+</html>

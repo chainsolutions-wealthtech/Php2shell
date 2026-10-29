@@ -1,0 +1,88 @@
+"""Offline reporting contract and spreadsheet-injection regression tests."""
+import csv
+import io
+import json
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+from app.reporting import export_findings_csv
+from app.static_analysis import scan_project
+
+
+class ReportingTests(unittest.TestCase):
+    def test_csv_contains_php_and_config_indicators_no_raw_config(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "index.php").write_text("<?php eval($untrusted);", encoding="utf-8")
+            (root / "php.ini").write_text(
+                "display_errors=On\n"
+                "db_password=DO_NOT_PUBLISH_SECRET\n", encoding="utf-8")
+            output = export_findings_csv(scan_project(root))
+            rows = list(csv.DictReader(io.StringIO(output)))
+            self.assertEqual(len(rows), 2)
+            self.assertEqual({x["finding_type"] for x in rows},
+                             {"php_lexical", "php_config"})
+            self.assertEqual({x["rule"] for x in rows},
+                             {"PHP-DYNAMIC-EVAL", "PHP-CONFIG-DISPLAY-ERRORS"})
+            self.assertNotIn("DO_NOT_PUBLISH_SECRET", output)
+            self.assertNotIn("$untrusted", output)
+            self.assertNotIn(str(root), output)
+
+    def test_formula_prefixes_are_escaped_in_filename(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            path = root / "=2+2.php"
+            path.write_text("<?php eval($input);")
+            output = export_findings_csv(scan_project(root))
+            rows = list(csv.DictReader(io.StringIO(output)))
+            self.assertEqual(rows[0]["path"], "'=2+2.php")
+            self.assertEqual(rows[0]["rule"], "PHP-DYNAMIC-EVAL")
+
+    def test_csv_does_not_change_json_default_cli(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "index.php").write_text("<?php echo 1;")
+            cli = [sys.executable, "-m", "app.cli", "scan-local", "--path", str(root)]
+            j = subprocess.run(cli, capture_output=True, text=True, check=True)
+            self.assertIn("php_configuration", json.loads(j.stdout))
+            c = subprocess.run(cli + ["--format", "csv"],
+                               capture_output=True, text=True, check=True)
+            self.assertEqual(len(list(csv.DictReader(io.StringIO(c.stdout)))), 0)
+            self.assertIn("finding_type,rule,severity,confidence,path,line,note", c.stdout)
+
+    def test_empty_findings_have_csv_header_only(self):
+        result = {
+            "schema_version": "0.2",
+            "findings": [],
+            "php_configuration": {"config_indicators": []},
+        }
+        csv_data = export_findings_csv(result)
+        self.assertEqual(csv_data.count("\n"), 1)
+
+    def test_malformed_result_is_rejected(self):
+        for bad in ({}, {"schema_version": "0.1"},
+                    {"schema_version": "0.2", "findings": None},
+                    {"schema_version": "0.2", "findings": [False]}):
+            with self.subTest(data=bad), self.assertRaises(ValueError):
+                export_findings_csv(bad)
+
+    def test_quoted_newlines_cannot_become_new_csv_records(self):
+        local_result = {
+            "schema_version": "0.2",
+            "findings": [{
+                "rule": "test", "path": "\n =SUM(1+1).php", "severity": "low",
+                "line": 1, "confidence": "review_required"
+            }],
+            "php_configuration": {"config_indicators": []},
+        }
+        csv_data = export_findings_csv(local_result)
+        rows = list(csv.DictReader(io.StringIO(csv_data)))
+        self.assertEqual(len(rows), 1)
+        self.assertTrue(rows[0]["path"].startswith("'"))
+
+
+if __name__ == "__main__":
+    unittest.main()

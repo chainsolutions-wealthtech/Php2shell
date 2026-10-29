@@ -1,0 +1,196 @@
+"""Tests use fake official GitHub responses; never contact the public API."""
+from copy import deepcopy
+import json
+import socket
+import subprocess
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+from urllib.error import HTTPError
+
+from app.advisory_fetch import (
+    _NoRedirects, _read_bounded_response, fetch_curated_php_advisory,
+)
+
+_GHSA = "GHSA-w8hw-w9fx-j79w"
+_CVE = "CVE-2026-109618"
+_ENDPOINT = "https://api.github.com/advisories/" + _GHSA
+
+
+class _Response:
+    status = 200
+
+    def __init__(self, doc=None, *, raw=None, headers=None):
+        self.raw = (json.dumps(doc).encode("utf-8") if raw is None else raw)
+        self.headers = {"Content-Type": "application/json"}
+        if headers is not None:
+            self.headers.update(headers)
+        self.read_calls = []
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, kind, exc, tb):
+        return False
+
+    def read(self, size):
+        self.read_calls.append(size)
+        return self.raw[:size]
+
+
+class _Opener:
+    def __init__(self, response=None, error=None):
+        self.response = response
+        self.error = error
+        self.requests = []
+
+    def open(self, request, timeout=None):
+        self.requests.append((request, timeout))
+        if self.error:
+            raise self.error
+        return self.response
+
+
+def _advisory():
+    return {
+        "ghsa_id": _GHSA,
+        "cve_id": _CVE,
+        "url": _ENDPOINT,
+        "html_url": "https://github.com/advisories/" + _GHSA,
+        "severity": "critical",
+        "type": "reviewed",
+        "published_at": "2026-10-21T08:00:00Z",
+        "updated_at": "2026-10-27T15:00:00Z",
+        "withdrawn_at": None,
+        "summary": "Text not intended for the public report: SENSITIVE_NOT_COPIED",
+        "description": "Text not intended for the public report",
+    }
+
+
+class AdvisoryFetcherTests(unittest.TestCase):
+    def fetch(self, document=None, *, response=None):
+        fake = _Opener(response or _Response(document if document is not None else _advisory()))
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("network")):
+            result = fetch_curated_php_advisory(_GHSA, "2026-10-28", opener=fake)
+        return result, fake
+
+    def test_known_official_ghsa_yields_read_only_evidence(self):
+        result, fake = self.fetch()
+        self.assertEqual(result["ghsa"], _GHSA)
+        self.assertEqual(result["cve"], _CVE)
+        self.assertEqual(result["request_endpoint"], _ENDPOINT)
+        self.assertTrue(result["network_request_performed"])
+        self.assertEqual(result["proposed_action"], "REVIEW_UPSTREAM_METADATA_ONLY")
+        self.assertEqual(result["metadata_drift_fields"], [])
+        self.assertFalse(result["canonical_catalog_modified"])
+        self.assertTrue(result["independent_upstream_reverification_required"])
+        self.assertEqual(result["asset_applicability"], "insufficient_evidence")
+        self.assertEqual(len(result["raw_response_sha256"]), 64)
+        self.assertNotIn("SENSITIVE_NOT_COPIED", json.dumps(result))
+        self.assertEqual(len(fake.requests), 1)
+        request, timeout = fake.requests[0]
+        self.assertEqual(request.full_url, _ENDPOINT)
+        self.assertEqual(request.get_method(), "GET")
+        self.assertEqual(timeout, 8.0)
+        self.assertEqual(fake.response.read_calls, [128001])
+
+    def test_catalogue_identity_allowlist_checked_before_network(self):
+        for ghsa in (
+            "", "GHSA-aaaa-bbbb-cccc", "GHSA-w8hw-w9fx-j79w?q=x",
+            "https://api.github.com/advisories/" + _GHSA, None,
+        ):
+            with self.subTest(ghsa=ghsa):
+                opener = _Opener(_Response(_advisory()))
+                with self.assertRaises(ValueError):
+                    fetch_curated_php_advisory(ghsa, "2026-10-28", opener=opener)
+                self.assertEqual(opener.requests, [])
+
+    def test_mismatched_cve_ghsa_or_api_url_rejected(self):
+        for key, value in (
+            ("ghsa_id", "GHSA-aaaa-bbbb-cccc"),
+            ("cve_id", "CVE-2026-999999"),
+            ("html_url", "https://github.com.example/advisories/" + _GHSA),
+            ("url", "https://github.com/not-the-official-endpoint"),
+        ):
+            doc = deepcopy(_advisory())
+            doc[key] = value
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                self.fetch(doc)
+
+    def test_withdrawn_and_unreviewed_are_review_blocks(self):
+        doc = _advisory()
+        doc["withdrawn_at"] = "2026-10-27T20:00:00Z"
+        doc["type"] = "unreviewed"
+        doc["severity"] = "high"
+        result, _ = self.fetch(doc)
+        self.assertTrue(result["upstream_withdrawn"])
+        self.assertEqual(result["metadata_drift_fields"],
+                         ["severity", "review_status", "withdrawn"])
+        self.assertEqual(result["proposed_action"], "BLOCK_FOR_INDEPENDENT_REVIEW")
+
+    def test_unexpected_status_content_type_and_size_refused(self):
+        for response in (
+            _Response(_advisory(), headers={"Content-Type": "text/html"}),
+            _Response(_advisory(), headers={"Content-Length": "128001"}),
+            _Response(raw=b"x" * 128001),
+            _Response(raw=b"{invalid"),
+        ):
+            with self.subTest(response=response), self.assertRaises(ValueError):
+                self.fetch(response=response)
+        non200 = _Response(_advisory())
+        non200.status = 302
+        with self.assertRaises(ValueError):
+            self.fetch(response=non200)
+
+    def test_http_redirect_is_not_followed_and_network_errors_sanitized(self):
+        self.assertIsNone(_NoRedirects().redirect_request(
+            request=None, fp=None, code=302, msg="redirect",
+            headers={"location": "https://example.invalid"}, newurl="https://example.invalid",
+        ))
+        fake = _Opener(error=HTTPError(
+            _ENDPOINT, 302, "Moved", {"Location": "https://internal.invalid"}, None
+        ))
+        with self.assertRaisesRegex(ValueError, "failed or was rejected") as cm:
+            fetch_curated_php_advisory(_GHSA, "2026-10-28", opener=fake)
+        self.assertNotIn("internal.invalid", str(cm.exception))
+
+    def test_future_invalid_and_inverted_upstream_dates_rejected(self):
+        bad_docs = []
+        a = _advisory()
+        a["updated_at"] = "2026-10-29T00:00:00Z"
+        bad_docs.append(a)
+        a = _advisory()
+        a["published_at"] = "2026-10-28T00:00:00Z"
+        a["updated_at"] = "2026-10-27T00:00:00Z"
+        bad_docs.append(a)
+        a = _advisory()
+        a["updated_at"] = "2026-10-27T00:00:00+02:00"
+        bad_docs.append(a)
+        a = _advisory()
+        a["withdrawn_at"] = "2026-10-29T00:00:00Z"
+        bad_docs.append(a)
+        for doc in bad_docs:
+            with self.subTest(doc=doc), self.assertRaises(ValueError):
+                self.fetch(doc)
+        for observed in ("invalid", "2026-02-30", "2026-10-27Z", None):
+            with self.subTest(date=observed), self.assertRaises(ValueError):
+                fetch_curated_php_advisory(_GHSA, observed, opener=_Opener())
+
+    def test_cli_does_not_fetch_without_explicit_opt_in(self):
+        proc = subprocess.run([
+            sys.executable, "-m", "app.cli", "fetch-official-advisory",
+            "--ghsa", _GHSA, "--as-of", "2026-10-28"
+        ], capture_output=True, text=True)
+        self.assertNotEqual(proc.returncode, 0)
+        self.assertIn("--permit-official-network", proc.stderr)
+        # Legacy no-network catalog command remains operational.
+        result = subprocess.run(
+            [sys.executable, "-m", "app.cli", "audit-catalog", "--as-of", "2026-10-28"],
+            capture_output=True, text=True, check=True
+        )
+        self.assertEqual(json.loads(result.stdout)["asset_applicability"], "insufficient_evidence")
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -209,5 +209,21 @@ class PatchPacketVerifierTests(unittest.TestCase):
         self.assertTrue(changed)
 
 
+    def test_invalid_nofollow_flags_fail_closed_before_open(self):
+        """An ineffective flag must never authorize reading a local review packet."""
+        packet_path = self.root / "packet.json"
+        packet_path.write_text(json.dumps(self.packet), encoding="utf-8")
+        for invalid_flag in (0, -1, True, "not-an-integer"):
+            with self.subTest(invalid_flag=repr(invalid_flag)):
+                with patch("app.patch_packet_verifier.os.O_NOFOLLOW",
+                           invalid_flag, create=True):
+                    with patch("app.patch_packet_verifier.os.open",
+                               side_effect=AssertionError("must not open")):
+                        with self.assertRaisesRegex(ValueError, "unsupported"):
+                            load_and_verify_local_review_packet(
+                                packet_path, self.root, "2026-10-28", self.evidence,
+                            )
+
+
 if __name__ == "__main__":
     unittest.main()

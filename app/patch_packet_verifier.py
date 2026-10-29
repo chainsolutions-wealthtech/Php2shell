@@ -74,7 +74,8 @@ def _read_bounded_regular_packet(path):
     mutable filesystem or a proof of the caller's identity/mandate.
     """
     nofollow = getattr(os, "O_NOFOLLOW", None)
-    if nofollow is None:
+    # A missing, zero, negative or non-integer flag cannot prevent symlink following.
+    if type(nofollow) is not int or nofollow <= 0:
         raise ValueError("Secure local packet opening unsupported")
     flags = (os.O_RDONLY | nofollow | getattr(os, "O_CLOEXEC", 0)
              | getattr(os, "O_NONBLOCK", 0))

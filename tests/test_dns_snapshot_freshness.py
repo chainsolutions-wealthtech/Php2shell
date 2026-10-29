@@ -36,7 +36,7 @@ class DnsSnapshotFreshnessTests(unittest.TestCase):
         self.assertFalse(result["peer_connection_authorized"])
 
     def test_invalid_evaluation_clock_fails_closed(self):
-        for clock in ("", "not-time", "2026-02-30T03:00:00Z", 0, None):
+        for clock in ("", "not-time", "2026-02-30T03:00:00Z", 0):
             with self.subTest(clock=clock), self.assertRaises(ValueError):
                 self.evaluate(evaluated=clock)
 

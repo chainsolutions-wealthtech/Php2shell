@@ -58,5 +58,23 @@ class DnsSnapshotFreshnessTests(unittest.TestCase):
         self.assertNotIn("snapshot_freshness_checked", result)
 
 
+    def test_boolean_ttl_is_rejected_not_treated_as_one_second(self):
+        with self.assertRaises(ValueError):
+            self.evaluate(ttl=True)
+
+    def test_fractional_ttl_is_rejected(self):
+        with self.assertRaises(ValueError):
+            self.evaluate(ttl=1.5)
+
+    def test_zero_age_is_fresh_but_exact_ttl_is_expired(self):
+        self.assertTrue(self.evaluate(evaluated="2026-10-28T03:00:00Z")["supplied_snapshot_within_ttl"])
+        self.assertFalse(self.evaluate(evaluated="2026-10-28T03:01:00Z")["supplied_snapshot_within_ttl"])
+
+    def test_malformed_observation_clock_fails_closed(self):
+        with self.assertRaises(ValueError):
+            self.evaluate(observed="2026-10-28T03:00:00+01:00")
+
+
+
 if __name__ == "__main__":
     unittest.main()

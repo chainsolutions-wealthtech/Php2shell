@@ -22,6 +22,10 @@ class SelectorTests(unittest.TestCase):
         self.assertTrue(all(item["execution_authorized"] is False for item in result))
         self.assertTrue(all(item["decision"] == "READ_ONLY_CANDIDATE" for item in result))
 
+    def test_review_blocked_root_not_admissible(self):
+        result = module.select_candidates(self.registry, {"verified_done": {}})
+        self.assertNotIn("P2S-WF-G01", {item["id"] for item in result})
+
     def test_wrong_root_rejected(self):
         doc = dict(self.registry, continuity_id="another-root")
         with self.assertRaises(ValueError):

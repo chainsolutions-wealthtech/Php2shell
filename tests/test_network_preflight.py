@@ -122,5 +122,29 @@ class NetworkPreflightTests(unittest.TestCase):
         self.assertTrue(root["base_path_scope_enforced"])
 
 
+    def test_offline_redirect_cycle_back_to_start_is_rejected(self):
+        with self.assertRaises(ValueError):
+            check_same_origin_redirects(
+                "https://example.com/start",
+                ["https://example.com/next", "https://example.com/start"],
+            )
+
+    def test_offline_redirect_duplicate_hop_is_rejected(self):
+        with self.assertRaises(ValueError):
+            check_same_origin_redirects(
+                "https://example.com/start",
+                ["https://example.com/next", "https://example.com/next"],
+            )
+
+    def test_offline_redirect_unique_hops_remain_compatible(self):
+        result = check_same_origin_redirects(
+            "https://example.com/start",
+            ["https://example.com/next", "https://example.com/final"],
+        )
+        self.assertEqual(result["redirects_previewed"], 2)
+        self.assertFalse(result["authorized_to_crawl"])
+        self.assertFalse(result["network_requests_made"])
+
+
 if __name__ == "__main__":
     unittest.main()

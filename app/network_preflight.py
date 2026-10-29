@@ -24,14 +24,14 @@ def _timestamp(value):
 
 
 def check_public_address_answers(hostname, answers, observed_at_utc,
-                                 ttl_seconds=60):
+                                 ttl_seconds=60, evaluated_at_utc=None):
     """Classify *supplied* A/AAAA records with an all-public policy.
 
     The caller's records are untrusted, and this does not confirm the actual
     resolved DNS chain, TLS peer or intended server. If one address is not
     globally routable the snapshot is rejected as a whole.
     """
-    _timestamp(observed_at_utc)
+    observed = _timestamp(observed_at_utc)
     if (not isinstance(hostname, str)
             or not re.fullmatch(r"[A-Za-z0-9.-]{1,253}", hostname)):
         raise ValueError("Invalid DNS hostname")
@@ -43,6 +43,12 @@ def check_public_address_answers(hostname, answers, observed_at_utc,
         raise ValueError("Invalid TTL policy bound")
     if not isinstance(answers, list) or not 1 <= len(answers) <= _MAX_ANSWERS:
         raise ValueError("Expected 1..32 supplied A/AAAA answers")
+    # Optional offline freshness comparison. Both timestamps are supplied by
+    # the caller: this is NOT a trusted clock or a runtime DNS attestation.
+    fresh = None
+    if evaluated_at_utc is not None:
+        age = (_timestamp(evaluated_at_utc) - observed).total_seconds()
+        fresh = 0 <= age < ttl_seconds
     accepted, blocked = [], []
     seen = set()
     for value in answers:
@@ -70,7 +76,7 @@ def check_public_address_answers(hostname, answers, observed_at_utc,
             blocked.append(rendered)
         else:
             accepted.append(rendered)
-    return {
+    report = {
         "schema_version": "0.2",
         "evaluation_type": "OFFLINE_DNS_ANSWER_PREFLIGHT_NOT_PEER_VALIDATION",
         "hostname": host,
@@ -79,14 +85,15 @@ def check_public_address_answers(hostname, answers, observed_at_utc,
         "all_supplied_addresses_globally_routable": not blocked,
         "public_ip_count": len(accepted),
         "blocked_ip_count": len(blocked),
-        "candidate_public_addresses": accepted if not blocked else [],
+        "candidate_public_addresses": accepted if not blocked and fresh is not False else [],
         "network_requests_made": False,
         "dns_answers_authenticated": False,
         "cname_chain_verified": False,
         "address_pinned_to_connection": False,
         "peer_connection_authorized": False,
         "blockers": (
-            ["NON_GLOBAL_OR_MAPPED_IP_IN_DNS_SNAPSHOT"] if blocked else []
+            (["NON_GLOBAL_OR_MAPPED_IP_IN_DNS_SNAPSHOT"] if blocked else [])
+            + (["STALE_OR_FUTURE_DNS_SNAPSHOT"] if fresh is False else [])
         ),
         "limitations": (
             "Untrusted supplied DNS answers only. Re-resolve CNAME/A/AAAA at "
@@ -95,6 +102,10 @@ def check_public_address_answers(hostname, answers, observed_at_utc,
             "A clean sample cannot grant network admission."
         ),
     }
+    if fresh is not None:
+        report["snapshot_freshness_checked"] = True
+        report["supplied_snapshot_within_ttl"] = fresh
+    return report
 
 
 def _inside_base_path(path, base_path):

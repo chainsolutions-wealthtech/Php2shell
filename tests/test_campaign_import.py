@@ -28,7 +28,10 @@ class CampaignImportTests(unittest.TestCase):
             self.assertEqual(result["duplicates_removed"], 1)
             self.assertEqual(result["targets"][0]["hostname"], "demo.example")
             self.assertEqual(result["targets"][1]["scope"], "owned_source")
-            self.assertTrue(result["targets"][1]["source_access_allowed"])
+            # An operator's P2 declaration is not a verified source mandate.
+            self.assertTrue(result["targets"][1]["mandate_reference_supplied"])
+            self.assertFalse(result["targets"][1]["authorization_verified"])
+            self.assertFalse(result["targets"][1]["source_access_allowed"])
             self.assertEqual(result["mode"], "offline_inventory_only")
 
     def test_csv_campaign_explicit_p2_authorization_declaration(self):

@@ -77,3 +77,5 @@ Ces documents constituent des **preuves d'investigation ajoutées à l'archive**
 **État de l'objectif historique intégral : `IN_PROGRESS`.** Les preuves absentes et les limites de validité restent visibles ; aucune CI verte, fiche de commit ou réussite DNS/TLS n'atteste à elle seule une application déployée.
 
 - [Vérification complémentaire des deux blobs sans patch](evidence/2026-10-30-empty-blob-verification-001.md) : `app/__init__.py` et `auth_tests/__init__.py` lus aux SHA historiques, contenu vide et blob SHA identique aux dossiers archivés ; les deux exceptions de la tranche 002 sont ainsi levées, sans changer son état historique initial.
+
+- [Contrôle des patchs — tranche 003](evidence/2026-10-30-patch-content-verification-003.md) : 14 SHA supplémentaires et 26 patchs exacts. **Cumul à cette vérification : 45/363 dossiers individuellement contrôlés, 97/97 patchs exposés identiques, 2/2 blobs sans patch contrôlés ; 318 dossiers du snapshot encore à vérifier**, sans compter les commits postérieurs au snapshot.

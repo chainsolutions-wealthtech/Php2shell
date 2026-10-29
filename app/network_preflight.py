@@ -139,6 +139,11 @@ def check_same_origin_redirects(start_url, destinations, max_hops=5,
     if not isinstance(destinations, list) or len(destinations) > max_hops:
         raise ValueError("Redirect chain exceeds configured limit")
     validated = []
+    # This is only an offline preview. Refuse repeated normalized URLs
+    # (including a hop back to the start) to prevent a declared cycle from
+    # being treated as a useful finite redirect plan. Runtime workers must
+    # independently enforce their own hop, time and network budgets.
+    seen_urls = {first["normalized_url"]}
     for location in destinations:
         next_page = preview_url_scope(location)
         if next_page["hostname"] != first["hostname"]:
@@ -147,7 +152,11 @@ def check_same_origin_redirects(start_url, destinations, max_hops=5,
                 and not _inside_base_path(
                     next_page["base_path"], allowed_base_path)):
             raise ValueError("Redirect outside declared base path")
-        validated.append(next_page["normalized_url"])
+        normalized = next_page["normalized_url"]
+        if normalized in seen_urls:
+            raise ValueError("Repeated or cyclic redirect URL")
+        seen_urls.add(normalized)
+        validated.append(normalized)
     return {
         "schema_version": "0.2",
         "evaluation_type": "OFFLINE_REDIRECT_CHAIN_PREVIEW_NOT_HTTP_FOLLOW",

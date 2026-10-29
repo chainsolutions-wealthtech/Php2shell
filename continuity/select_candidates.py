@@ -52,7 +52,9 @@ def select_candidates(document: dict, evidence: dict) -> list[dict]:
             raise ValueError("unsubstantiated completion")
     candidates = []
     for task in packages:
-        if task.get("gate") != SAFE_GATE or task.get("status") == COMPLETE:
+        # A pending review is a blocker, not an admissible READ_ONLY job.
+        # Unknown and completed statuses must also fail closed.
+        if task.get("gate") != SAFE_GATE or task.get("status") != "PLANNED_NOT_ADMITTED":
             continue
         if any(dep not in verified for dep in task["depends_on"]):
             continue

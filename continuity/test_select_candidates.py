@@ -47,5 +47,34 @@ class SelectorTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             module.select_candidates(doc, {})
 
+
+    def test_forged_dependency_evidence_sha_rejected(self):
+        record = {
+            "head_sha": "not-a-git-sha",
+            "ci_url": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40960376137",
+            "checkpoint_url": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5#issuecomment-6507828949",
+        }
+        with self.assertRaises(ValueError):
+            module.select_candidates(self.registry, {"verified_done": {"P2S-WF-G01": record}})
+
+    def test_foreign_ci_evidence_rejected(self):
+        record = {
+            "head_sha": "a" * 40,
+            "ci_url": "https://github.com/other-org/other-repo/actions/runs/123",
+            "checkpoint_url": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5#issuecomment-6507828949",
+        }
+        with self.assertRaises(ValueError):
+            module.select_candidates(self.registry, {"verified_done": {"P2S-WF-G01": record}})
+
+    def test_noncanonical_checkpoint_reference_rejected(self):
+        record = {
+            "head_sha": "a" * 40,
+            "ci_url": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40960376137",
+            "checkpoint_url": "https://example.com/unverified-checkpoint",
+        }
+        with self.assertRaises(ValueError):
+            module.select_candidates(self.registry, {"verified_done": {"P2S-WF-G01": record}})
+
+
 if __name__ == "__main__":
     unittest.main()

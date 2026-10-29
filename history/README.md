@@ -57,3 +57,5 @@ Chaque fiche détaillée doit contenir : `event_id`, date/heure UTC exacte ou fe
 ## Première fiche probatoire rédigée
 
 - [P2S-EVT-053 — vérification hors ligne de fraîcheur DNS, RED→GREEN, 251 tests et limites](events/P2S-EVT-053.md). Cette fiche a été ajoutée après le squelette initial de la PR #7. Les autres fiches restent à construire individuellement, sans les présenter comme achevées.
+
+- [P2S-EVT-055 — déclaration P2 non vérifiée, horodatages de claims, RED→GREEN et CI exact-SHA](events/P2S-EVT-055.md). Deux tranches défensives sur PR #2 et PR #6 ; aucune admission P2 ni claim runtime.

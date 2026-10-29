@@ -53,3 +53,7 @@ Chaque fiche détaillée doit contenir : `event_id`, date/heure UTC exacte ou fe
 - Distinguer travail sur PHP2SHELL, développement MCP et utilisation des ressources MCP/S1/Plesk/GitHub ; les claims sont non transférables.
 - Aucun raccourci : l'arbre et l'index servent uniquement à **naviguer vers les preuves et descriptions intégrales**, jamais à remplacer ces descriptions.
 - Reconstitution progressive et vérifiable : **ce premier commit crée la structure, pas encore l'intégralité des centaines de pages envisagées**.
+
+## Première fiche probatoire rédigée
+
+- [P2S-EVT-053 — vérification hors ligne de fraîcheur DNS, RED→GREEN, 251 tests et limites](events/P2S-EVT-053.md). Cette fiche a été ajoutée après le squelette initial de la PR #7. Les autres fiches restent à construire individuellement, sans les présenter comme achevées.

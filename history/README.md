@@ -64,3 +64,14 @@ Chaque fiche détaillée doit contenir : `event_id`, date/heure UTC exacte ou fe
 - [P2S-EVT-056 — fusion gouvernée PR #2 vers PR #3 sans force](events/P2S-EVT-056.md) : comparaison des arbres Git, deux parents, CI exacte et limites S1.
 
 - [P2S-CP-20261029-044 — checkpoint de fusion PR #2→#3](checkpoints/P2S-CP-20261029-044.md) : commentaire canonique #6510381410 reproduit intégralement, quatre workflows PR #3 et rollback documentés.
+
+## Preuves individuelles complémentaires — 30 octobre 2026
+
+Ces documents constituent des **preuves d'investigation ajoutées à l'archive**, pas un remplacement des fiches détaillées ni une déclaration de fin de reconstruction.
+
+- [Contrôle des patchs — tranche 001](evidence/2026-10-30-patch-content-verification-001.md) : trois SHA, six patchs comparés à l'identique.
+- [Contrôle des patchs — tranche 002](evidence/2026-10-30-patch-content-verification-002.md) : 28 SHA supplémentaires, 65 patchs textuels comparés à l'identique, deux entrées de fichiers sans patch GitHub à contrôler séparément. **Cumul : 31/363 SHA du snapshot ; 71/71 patchs exposés et comparés ; 332 dossiers restant à vérifier individuellement.**
+- [Six jobs GitHub Actions et leurs journaux](evidence/actions/2026-10-30-job-log-verification-001.md) : fondation V0.1, redirections RED→GREEN, P2, convergence S1 et DNS/TLS/HTTPS historiques, avec limites de portée.
+- [Frontière du snapshot et sept branches](evidence/2026-10-30-post-snapshot-branch-reconciliation.md) : quatre branches ont avancé depuis les SHA de référence ; les 363 SHA du snapshot ne couvrent pas automatiquement les commits postérieurs.
+
+**État de l'objectif historique intégral : `IN_PROGRESS`.** Les preuves absentes et les limites de validité restent visibles ; aucune CI verte, fiche de commit ou réussite DNS/TLS n'atteste à elle seule une application déployée.

@@ -1,0 +1,59 @@
+# Arbre hiérarchique des faits, décisions et preuves
+
+**Racine :** `PHP2SHELL-CONT-20261027-ROOT-01` — [issue #5](https://github.com/chainsolutions-wealthtech/Php2shell/issues/5)
+
+```text
+PHP2SHELL–PHPPATCH (programme directeur intégral)
+│
+├─ 2026-10-22..26 : genèse / faits rétrospectifs P2S-EVT-001+
+│  ├─ besoin défensif PHP ; prototype, dépôt et V0.1
+│  ├─ PHP2SHELL (audit) / PHPPATCH (remédiation)
+│  └─ conception multi-versions, lots et contraintes d'autorisation
+│
+├─ 2026-10-27 : ancrage canonique
+│  ├─ issue #5 / root continuity_id
+│  ├─ checkpoints #001..#009 (horaires UTC à vérifier individuellement)
+│  ├─ PR #6 / fichiers de continuité
+│  └─ PR #1 (V0.1), #2 (V0.2/V0.3), #3 (S1) : travaux distincts
+│
+├─ 2026-10-28 : construction et validation
+│  ├─ checkpoints #010..#038 + addenda (dates à vérifier dans l'issue)
+│  ├─ analyse PHP, Composer, avis, CLI, API et parcours utilisateur
+│  ├─ PHPPATCH : propositions, preuves, validation, non-régression
+│  ├─ S1 : préparatifs ≠ déploiement de l'application
+│  └─ gouvernance : HEAD, CI, revue, claims, autorisations
+│
+├─ 2026-10-29 : poursuite
+│  ├─ checkpoint #039 : 245 tests applicatifs au jalon attesté
+│  ├─ P2S-DEC-024 / P2S-EVT-049 : validation technique documentée
+│  ├─ P2S-EVT-050 : sélecteur en lecture seule
+│  ├─ P2S-EVT-051 : séparation des scopes de claims
+│  ├─ P2S-EVT-052 / checkpoint #040 : contrôles et tests de continuité
+│  └─ historique intégral : branche documentaire dédiée (présente PR)
+│
+├─ Structure normative transverse
+│  ├─ V0.1 → V0.2 → V0.3 → V0.4 → V1.0
+│  ├─ 6 lots ; 32 exigences REQ-001..032
+│  ├─ 61 WP du DAG : work_packages[].id / depends_on
+│  ├─ P2S-NEXT-001 : action prioritaire tant que non résolue
+│  └─ décisions et checkpoints : append-only
+│
+└─ Autorités et ressources NON INTERCHANGEABLES
+   ├─ PHP2SHELL : claims WP du projet
+   ├─ Patricked-code/MCP : claims de développement MCP
+   └─ MCP/S1/Plesk/GitHub : permissions et claims de ressources
+```
+
+Cet arbre est **un plan de classement**, pas une chronologie probatoire complète. Les dates et rattachements détaillés de chaque checkpoint, commit, PR et CI seront inscrits dans les fiches dédiées après recoupement avec leurs sources primaires.
+
+## Relations de preuve à suivre pour chaque nœud
+
+`mandat → décision → WP/REQ → branche → commit exact → tests/CI → checkpoint → état et prochaine action`.
+
+Une relation inconnue est explicitement `NOT_VERIFIED` ; aucune relation ne doit être déduite d'une simple proximité de date.
+
+## Sources de référence
+
+- [Issue #5 et commentaires](https://github.com/chainsolutions-wealthtech/Php2shell/issues/5)
+- [PR #1](https://github.com/chainsolutions-wealthtech/Php2shell/pull/1), [PR #2](https://github.com/chainsolutions-wealthtech/Php2shell/pull/2), [PR #3](https://github.com/chainsolutions-wealthtech/Php2shell/pull/3), [PR #6](https://github.com/chainsolutions-wealthtech/Php2shell/pull/6)
+- [Journal événementiel](../continuity/EVENT_LOG.md), [registre des décisions](../continuity/DECISIONS_LOG.md), [registre des WP](../continuity/WORK_PACKAGES.json).

@@ -75,3 +75,5 @@ Ces documents constituent des **preuves d'investigation ajoutées à l'archive**
 - [Frontière du snapshot et sept branches](evidence/2026-10-30-post-snapshot-branch-reconciliation.md) : quatre branches ont avancé depuis les SHA de référence ; les 363 SHA du snapshot ne couvrent pas automatiquement les commits postérieurs.
 
 **État de l'objectif historique intégral : `IN_PROGRESS`.** Les preuves absentes et les limites de validité restent visibles ; aucune CI verte, fiche de commit ou réussite DNS/TLS n'atteste à elle seule une application déployée.
+
+- [Vérification complémentaire des deux blobs sans patch](evidence/2026-10-30-empty-blob-verification-001.md) : `app/__init__.py` et `auth_tests/__init__.py` lus aux SHA historiques, contenu vide et blob SHA identique aux dossiers archivés ; les deux exceptions de la tranche 002 sont ainsi levées, sans changer son état historique initial.

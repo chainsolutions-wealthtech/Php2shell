@@ -40,5 +40,5 @@ La deuxième opération de la séquence retrouvée est le [commit a8600e6f](http
 **Événement associé :** `P2S-EVT-001` (rattachement historique de la fondation, à confronter à la fiche événementielle complète).  
 **Décision associée :** `P2S-DEC-001` (documentée postérieurement).  
 **REQ/WP :** attribution individuelle `NOT_VERIFIED` pour cette étape, les registres de WP étant postérieurs.  
-**Source de rapprochement :** [EVENT_LOG](../../../continuity/EVENT_LOG.md), [DECISIONS_LOG](../../../continuity/DECISIONS_LOG.md) sur branche de continuité.  
+**Source de rapprochement :** [EVENT_LOG](../../../../continuity/EVENT_LOG.md), [DECISIONS_LOG](../../../../continuity/DECISIONS_LOG.md) sur branche de continuité.  
 **État documentaire :** fiche de commit ouverte à la traçabilité, pas certification d'un déploiement ou d'une totalité d'actions.

@@ -97,3 +97,16 @@ Les informations historiques restent utiles mais ne doivent **jamais** être pr�
 6. **Traçabilité** : après un jalon matériel, ajouter un événement distinct `P2S-EVT-xxx`, actualiser `CURRENT_STATE` et `NEXT_ACTION`, publier un checkpoint non redondant dans l'issue #5 avec SHA/CI/preuves/rollback ; préserver `P2S-EVT-048` et l'unique `P2S-NEXT-001` jusqu'à décision attestée.
 
 **États distincts :** `PLANNED`, `ADMITTED`, `IMPLEMENTED`, `TESTED`, `CI_GREEN`, `SELF_REVIEWED`, `INDEPENDENT_APPROVED`, `BLOCKED_REVIEW`, `MERGED`, `DEPLOYED`, `VERIFIED_DONE`. Ne jamais promouvoir un WP au seul motif d'une documentation ou d'un test partiel.
+
+## Séparation des claims MCP / PHP2SHELL–PHPPATCH — P2S-EVT-051 (29/10/2026)
+
+**continuity_id: `PHP2SHELL-CONT-20261027-ROOT-01`.** Les claims ne sont jamais interchangeables entre autorités.
+
+- **Claim de développement MCP** : travail sur `Patricked-code/MCP` (code, API, bridge, orchestration). Il ne donne ni ownership d'un WP PHP2SHELL, ni autorisation de modifier son dépôt.
+- **Claim de travail PHP2SHELL–PHPPATCH** : ownership borné d'un des 61 WP, sur des fichiers/branches/PR du dépôt `chainsolutions-wealthtech/Php2shell`, selon la gouvernance propre au projet. Il ne donne aucun droit sur le code MCP ni sur S1.
+- **Claim d'exploitation d'une ressource partagée** : mandat distinct du propriétaire de la ressource (MCP, S1/Plesk, GitHub, production) lorsque le WP doit y agir. Il ne remplace pas le claim de projet.
+- **Opération traversant les frontières** : exiger cumulativement l'admission du WP PHP2SHELL, l'absence de collision dans le projet, et l'autorisation/claim de la ressource externe concernée ; vérifier leur identité, durée, scope et révocation. Aucun héritage implicite.
+- **Sélecteur `select_candidates.py`** : son résultat `READ_ONLY_CANDIDATE` est une proposition sans claim ni assignation ; aucune promotion `ADMITTED` ou `RUNNING` sans contrôle séparé des autorités concernées.
+- **Traçabilité** : chaque checkpoint distingue `project_work_package`, `project_claim` (ou `NOT_ATTESTED`), `external_resource_claim` (ou `NOT_REQUIRED`/`NOT_ATTESTED`), `actor`, `scope`, `head_sha`, `tests`, `ci`, `result`. Ne pas appeler un claim MCP générique « claim PHP2SHELL ».
+
+Cette règle est additive ; aucune nouvelle file d'orchestration ou autorité concurrente n'est créée.

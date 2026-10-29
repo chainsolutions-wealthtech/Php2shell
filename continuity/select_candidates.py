@@ -5,11 +5,21 @@ This module never acquires claims, executes work, writes GitHub or authorizes S1
 from __future__ import annotations
 import argparse
 import json
+import re
 from pathlib import Path
 
 CONTINUITY_ID = "PHP2SHELL-CONT-20261027-ROOT-01"
 SAFE_GATE = "READ_ONLY"
 COMPLETE = "VERIFIED_DONE"
+# Syntactic checks only: a plausible link is NOT an authenticated CI result,
+# an independently approved review, or a valid work-package claim.
+_SHA = re.compile(r"[a-f0-9]{40}\Z")
+_CI_URL = re.compile(
+    r"https://github\.com/chainsolutions-wealthtech/Php2shell/actions/runs/[1-9][0-9]*\Z"
+)
+_CHECKPOINT_URL = re.compile(
+    r"https://github\.com/chainsolutions-wealthtech/Php2shell/issues/5#issuecomment-[1-9][0-9]*\Z"
+)
 
 def select_candidates(document: dict, evidence: dict) -> list[dict]:
     if document.get("continuity_id") != CONTINUITY_ID:
@@ -46,9 +56,13 @@ def select_candidates(document: dict, evidence: dict) -> list[dict]:
     if not isinstance(verified, dict):
         raise ValueError("invalid verified evidence")
     for key, record in verified.items():
-        if key not in by_id or not isinstance(record, dict) or not (
-            record.get("head_sha") and record.get("ci_url") and record.get("checkpoint_url")
-        ):
+        if (key not in by_id or not isinstance(record, dict)
+                or not isinstance(record.get("head_sha"), str)
+                or not _SHA.fullmatch(record["head_sha"])
+                or not isinstance(record.get("ci_url"), str)
+                or not _CI_URL.fullmatch(record["ci_url"])
+                or not isinstance(record.get("checkpoint_url"), str)
+                or not _CHECKPOINT_URL.fullmatch(record["checkpoint_url"])):
             raise ValueError("unsubstantiated completion")
     candidates = []
     for task in packages:

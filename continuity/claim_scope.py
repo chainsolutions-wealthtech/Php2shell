@@ -1,0 +1,111 @@
+"""Project/MCP resource claim scope preflight (never a claim issuer or authorization).
+
+This module deliberately validates only the *shape and scope* of supplied
+claims. A caller must still verify authenticity, live ownership, revocation,
+and locks with the appropriate authority before executing any action.
+"""
+from __future__ import annotations
+
+from datetime import datetime, timezone
+import re
+
+ROOT = "PHP2SHELL-CONT-20261027-ROOT-01"
+PROJECT = "chainsolutions-wealthtech/Php2shell"
+SHA_RE = re.compile(r"^[a-f0-9]{40}$")
+WP_RE = re.compile(r"^P2S-WF-[A-Z][0-9]{2}$")
+
+
+def _utc(value: str) -> datetime:
+    if not isinstance(value, str):
+        raise ValueError("timestamp must be a string")
+    dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if dt.tzinfo is None:
+        raise ValueError("timestamp must include timezone")
+    return dt.astimezone(timezone.utc)
+
+
+def inspect_claim_scope(*, wp_id: str, actor: str, branch: str,
+                        head_sha: str, observed_at: str,
+                        project_claim: dict | None,
+                        external_resource: str | None = None,
+                        resource_claim: dict | None = None) -> dict:
+    """Report mismatches without granting ownership or execution rights.
+
+    The three claim categories are intentionally non-interchangeable:
+    PROJECT_WP, MCP_DEVELOPMENT, EXTERNAL_RESOURCE.
+    """
+    errors: list[str] = []
+    try:
+        now = _utc(observed_at)
+    except (TypeError, ValueError):
+        errors.append("INVALID_OBSERVATION_TIME")
+        now = None
+
+    if not isinstance(wp_id, str) or not WP_RE.fullmatch(wp_id):
+        errors.append("INVALID_PROJECT_WP")
+    if not isinstance(actor, str) or not actor.strip():
+        errors.append("MISSING_ACTOR")
+    if not isinstance(branch, str) or not branch.strip():
+        errors.append("MISSING_BRANCH")
+    if not isinstance(head_sha, str) or not SHA_RE.fullmatch(head_sha):
+        errors.append("INVALID_HEAD_SHA")
+
+    def check(claim: dict | None, kind: str, authority: str,
+              resource: str | None = None) -> None:
+        prefix = "PROJECT" if kind == "PROJECT_WP" else "RESOURCE"
+        if not isinstance(claim, dict):
+            errors.append(prefix + "_CLAIM_NOT_ATTESTED")
+            return
+        expected = {
+            "kind": kind, "authority": authority, "continuity_id": ROOT,
+            "work_package": wp_id, "actor": actor, "branch": branch,
+            "head_sha": head_sha,
+        }
+        if resource is not None:
+            expected["resource"] = resource
+        for key, value in expected.items():
+            if claim.get(key) != value:
+                errors.append(prefix + "_CLAIM_SCOPE_" + key.upper())
+        if not isinstance(claim.get("claim_id"), str) or not claim["claim_id"].strip():
+            errors.append(prefix + "_CLAIM_MISSING_ID")
+        try:
+            expiry = _utc(claim.get("expires_at"))
+            if now is not None and expiry <= now:
+                errors.append(prefix + "_CLAIM_EXPIRED")
+        except (TypeError, ValueError):
+            errors.append(prefix + "_CLAIM_INVALID_EXPIRY")
+
+    check(project_claim, "PROJECT_WP", PROJECT)
+    if external_resource is None:
+        if resource_claim is not None:
+            errors.append("UNEXPECTED_EXTERNAL_RESOURCE_CLAIM")
+    elif not isinstance(external_resource, str) or not external_resource.strip():
+        errors.append("INVALID_EXTERNAL_RESOURCE")
+    else:
+        # External-resource authority must be explicitly declared by the caller
+        # and checked independently against its real owner. Never infer it from
+        # the project claim or from the resource name.
+        if not isinstance(resource_claim, dict) or not isinstance(
+            resource_claim.get("authority"), str
+        ) or not resource_claim["authority"].strip():
+            errors.append("RESOURCE_AUTHORITY_NOT_ATTESTED")
+        else:
+            check(resource_claim, "EXTERNAL_RESOURCE",
+                  resource_claim["authority"], external_resource)
+
+    return {
+        "continuity_id": ROOT,
+        "project_work_package": wp_id,
+        "project_claim": "SCOPE_MATCH" if not any(
+            e.startswith("PROJECT_") for e in errors) else "NOT_ATTESTED",
+        "external_resource_claim": (
+            "NOT_REQUIRED" if external_resource is None else
+            "SCOPE_MATCH" if not any(
+                e.startswith("RESOURCE_") for e in errors) else "NOT_ATTESTED"
+        ),
+        "scope_consistent": not errors,
+        "errors": errors,
+        "authority_verified": False,
+        "execution_authorized": False,
+        "next_gate": "LIVE_AUTHORITY_AND_LOCK_VERIFICATION",
+    }

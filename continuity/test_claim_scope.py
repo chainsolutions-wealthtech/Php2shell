@@ -107,6 +107,25 @@ class ClaimScopeTests(unittest.TestCase):
         result = check(resource_claim=resource_claim())
         self.assertIn("UNEXPECTED_EXTERNAL_RESOURCE_CLAIM", result["errors"])
 
+    def test_future_issued_project_claim_is_rejected(self):
+        result = check(project_claim=project_claim(issued_at="2026-10-29T20:00:00Z"))
+        self.assertIn("PROJECT_CLAIM_FUTURE_ISSUED", result["errors"])
+        self.assertFalse(result["scope_consistent"])
+
+    def test_invalid_issued_at_is_rejected(self):
+        result = check(project_claim=project_claim(issued_at="not-a-time"))
+        self.assertIn("PROJECT_CLAIM_INVALID_ISSUED_AT", result["errors"])
+
+    def test_claim_expiry_before_issuance_is_rejected(self):
+        result = check(project_claim=project_claim(issued_at="2026-10-29T21:00:00Z"))
+        self.assertIn("PROJECT_CLAIM_INVALID_INTERVAL", result["errors"])
+
+    def test_external_resource_claim_future_issuance_is_rejected(self):
+        result = check(external_resource="S1:php2shell", resource_claim=resource_claim(
+            issued_at="2026-10-29T21:00:00Z"))
+        self.assertIn("RESOURCE_CLAIM_FUTURE_ISSUED", result["errors"])
+        self.assertFalse(result["execution_authorized"])
+
     def test_invalid_head_rejected(self):
         self.assertIn("INVALID_HEAD_SHA", check(head_sha="bad")["errors"])
 

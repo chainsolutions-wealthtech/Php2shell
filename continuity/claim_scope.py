@@ -68,12 +68,26 @@ def inspect_claim_scope(*, wp_id: str, actor: str, branch: str,
                 errors.append(prefix + "_CLAIM_SCOPE_" + key.upper())
         if not isinstance(claim.get("claim_id"), str) or not claim["claim_id"].strip():
             errors.append(prefix + "_CLAIM_MISSING_ID")
+        expiry = None
         try:
             expiry = _utc(claim.get("expires_at"))
             if now is not None and expiry <= now:
                 errors.append(prefix + "_CLAIM_EXPIRED")
         except (TypeError, ValueError):
             errors.append(prefix + "_CLAIM_INVALID_EXPIRY")
+        # Optional issuer-supplied issuance time is untrusted metadata, not
+        # proof of signing, authority, ownership, revocation or lock status.
+        # If present it must be well-formed, nonfuture and precede expiry.
+        if "issued_at" in claim:
+            try:
+                issued = _utc(claim["issued_at"])
+            except (TypeError, ValueError):
+                errors.append(prefix + "_CLAIM_INVALID_ISSUED_AT")
+            else:
+                if now is not None and issued > now:
+                    errors.append(prefix + "_CLAIM_FUTURE_ISSUED")
+                if expiry is not None and issued >= expiry:
+                    errors.append(prefix + "_CLAIM_INVALID_INTERVAL")
 
     check(project_claim, "PROJECT_WP", PROJECT)
     if external_resource is None:

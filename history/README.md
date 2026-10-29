@@ -62,3 +62,5 @@ Chaque fiche détaillée doit contenir : `event_id`, date/heure UTC exacte ou fe
 
 - [P2S-EVT-054 — cycles de redirection et preuves DAG](events/P2S-EVT-054.md), [checkpoint #042](checkpoints/P2S-CP-20261029-042.md), [checkpoint #043](checkpoints/P2S-CP-20261029-043.md) : sources canoniques archivées sans raccourci.
 - [P2S-EVT-056 — fusion gouvernée PR #2 vers PR #3 sans force](events/P2S-EVT-056.md) : comparaison des arbres Git, deux parents, CI exacte et limites S1.
+
+- [P2S-CP-20261029-044 — checkpoint de fusion PR #2→#3](checkpoints/P2S-CP-20261029-044.md) : commentaire canonique #6510381410 reproduit intégralement, quatre workflows PR #3 et rollback documentés.

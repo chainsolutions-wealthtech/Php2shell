@@ -53,9 +53,17 @@ def evaluate(version):
     return result
 
 def inventory(targets):
-    """No network activity; classify declared assets only."""
+    """Classify declarations without elevating unverified P2 source access.
+
+    A nonempty user-supplied evidence reference is NOT an authenticated
+    mandate, ownership proof, project claim, or resource authorization.
+    Only a separate governed verifier may grant source access. This offline
+    inventory has no such verifier and must therefore always fail closed.
+    """
     return [{'hostname': t.hostname, 'scope': t.scope.value,
-             'source_access_allowed': t.scope == Scope.OWNED} for t in targets]
+             'mandate_reference_supplied': bool(t.evidence),
+             'authorization_verified': False,
+             'source_access_allowed': False} for t in targets]
 
 def load_targets(path):
     with open(path, encoding='utf-8') as f:

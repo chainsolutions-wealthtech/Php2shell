@@ -1,0 +1,24 @@
+# Fiche probatoire individuelle — 7dc1bb80eba5d5bd0de048c9fd5e46fb27d4da58
+
+**Continuity ID :** `PHP2SHELL-CONT-20261027-ROOT-01`
+**Date UTC :** 2026-10-28T00:37:23Z
+**Auteur :** Wealthtechinnovations ; **committer :** Wealthtechinnovations
+**Diff primaire SHA :** [commit exact](https://github.com/chainsolutions-wealthtech/Php2shell/commit/7dc1bb80eba5d5bd0de048c9fd5e46fb27d4da58)
+**Parent(s) :** `4c289b926d62b85e302a37cc30f705225dc05c68`
+**Branche(s) observées :** `docs/canonical-continuity-20261027`, `docs/integral-chronological-history-20261029`
+
+## Message du commit
+
+```text
+docs(continuity): reflect sourced CVE snapshot implementation without claiming live feed or asset applicability
+```
+
+## Runs CI reliés à ce SHA
+
+- [40609930125](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40609930125) — tests, push, completed/success, 2026-10-28T00:37:25Z, tentative 1
+- [40609935734](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40609935734) — tests, pull_request, completed/success, 2026-10-28T00:37:28Z, tentative 1
+
+## Éléments restant non attestés
+
+Liste des fichiers du diff et examen patch ligne à ligne : non vérifiés dans cette fiche ; le lien SHA permet leur inspection primaire. Les résultats CI ci-dessus ne remplacent ni les logs de jobs, ni un rapport de non-régression complet. Identité P1/P2, claim WP, droits externes, CI d'autres SHA, déploiement et rollback : NOT_VERIFIED.
+

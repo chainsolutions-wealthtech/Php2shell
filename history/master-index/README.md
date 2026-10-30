@@ -53,3 +53,10 @@ Les objets issus de fichiers de la PR #7 documentent la présence de fiches, san
 5. Si une relation manque, la classer `NOT_VERIFIED` ; ne jamais affirmer une opération déployée à partir du simple journal.
 
 Les matrices reflètent les instantanés documentés, et non un état runtime actuel garanti. Les liens planifiés n'attestent ni achèvement ni admission. Aucun nouveau moteur, claim, ou workflow récurrent n'a été créé.
+
+
+### Compléments de provenance (sans promotion de statut)
+
+- [Matrice des mentions explicites entre événements, décisions, commentaires, WP et REQ](matrices/MATRIX_DOCUMENTED_CROSS_REFERENCES.json) : liens textuels **non assimilés à des réalisations** ; distincts des 5 582 relations structurées.
+- [Justificatifs des dates documentaires retrouvées](matrices/MATRIX_DATE_PROVENANCE.json) : ajout de dates au jour près depuis les logs et fiches historiques ; horaires non inventés.
+- Les tableaux [chronologiques](matrices/MATRIX_WORK_CHRONOLOGY.json) et [par jour](matrices/MATRIX_CHRONOLOGY_DAY_INDEX.json) intègrent les dates recoupées et conservent les commentaires non datés comme `UNKNOWN`.

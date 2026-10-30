@@ -46,5 +46,11 @@
     "OBSERVED_IN_GITHUB_AT_RECHECK": "PR metadata verified at reading",
     "REPORTED_IN_CANONICAL_LOG": "log cites object; not proof of completion",
     "TEXTUAL_MENTION_ONLY": "mere mention not semantic proof"
+  },
+  "additional_textual_cross_reference_matrix": {
+    "path": "matrices/MATRIX_DOCUMENTED_CROSS_REFERENCES.json",
+    "count": 213,
+    "evidence": "TEXTUAL_MENTION_ONLY",
+    "included_in_total_relations": false
   }
 }

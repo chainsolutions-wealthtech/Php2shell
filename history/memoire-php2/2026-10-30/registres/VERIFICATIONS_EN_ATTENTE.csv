@@ -1,0 +1,14 @@
+﻿verification;etat_source;source_line;source_type;verification_externe
+Identifier l'origine et l'ordre chronologique des commits présents sur les branches;"Inventaire Git effectué sur les branches initiales ; nouvelle PR #7 identifiée séparément";375;document_fourni;non_effectuee_dans_cette_operation
+Ouvrir individuellement chaque commit et contrôler parents, fichiers, ajouts et suppressions;Partiel;376;document_fourni;non_effectuee_dans_cette_operation
+Vérifier toutes les CI et leurs journaux au SHA exact, y compris les échecs RED;Partiel;377;document_fourni;non_effectuee_dans_cette_operation
+Recenser les 52 événements canoniques et leur ordre;Effectué dans le registre;378;document_fourni;non_effectuee_dans_cette_operation
+Recenser les 24 décisions canoniques et leur ordre;Effectué dans le registre;379;document_fourni;non_effectuee_dans_cette_operation
+Recenser les 61 work packages, leurs versions, dépendances et statuts;Effectué dans le registre;380;document_fourni;non_effectuee_dans_cette_operation
+Recenser les 40 checkpoints numérotés et les addenda de l'issue #5;Effectué au niveau des entrées retrouvées;381;document_fourni;non_effectuee_dans_cette_operation
+Vérifier chaque checkpoint contre les commits, CI et opérations réellement exécutées;Partiel;382;document_fourni;non_effectuee_dans_cette_operation
+Vérifier indépendamment les opérations DNS, Plesk, Docker et S1 historiques;"Non exhaustif ; certaines preuves proviennent de checkpoints rétrospectifs";383;document_fourni;non_effectuee_dans_cette_operation
+Réconcilier les décisions prises dans les conversations avant leur publication sur GitHub;Non exhaustif;384;document_fourni;non_effectuee_dans_cette_operation
+Vérifier les claims, mandats, approbations et droits exacts à chaque date historique;Non exhaustif;385;document_fourni;non_effectuee_dans_cette_operation
+Constituer les fiches d'action individuelles avec avant/après, incidents, corrections et rollback;À compléter;386;document_fourni;non_effectuee_dans_cette_operation
+Attester la correspondance de chaque WP avec des preuves d'exécution et critères d'acceptation complets;Non réalisé intégralement;387;document_fourni;non_effectuee_dans_cette_operation

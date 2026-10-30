@@ -79,3 +79,10 @@ Ces documents constituent des **preuves d'investigation ajoutées à l'archive**
 - [Vérification complémentaire des deux blobs sans patch](evidence/2026-10-30-empty-blob-verification-001.md) : `app/__init__.py` et `auth_tests/__init__.py` lus aux SHA historiques, contenu vide et blob SHA identique aux dossiers archivés ; les deux exceptions de la tranche 002 sont ainsi levées, sans changer son état historique initial.
 
 - [Contrôle des patchs — tranche 003](evidence/2026-10-30-patch-content-verification-003.md) : 14 SHA supplémentaires et 26 patchs exacts. **Cumul à cette vérification : 45/363 dossiers individuellement contrôlés, 97/97 patchs exposés identiques, 2/2 blobs sans patch contrôlés ; 318 dossiers du snapshot encore à vérifier**, sans compter les commits postérieurs au snapshot.
+
+
+## Memoire PHP2 — photographie historique reçue le 30 octobre 2026
+
+- [Index de la photographie « Memoire PHP2 »](memoire-php2/2026-10-30/README.md) — source transmise par l'utilisateur, registre JSON complet, 52 événements / 24 décisions / 61 WP / 40 checkpoints tels qu'ils étaient **rapportés dans ce document**.
+- Les enregistrements sont rangés sous `history/memoire-php2/2026-10-30/` pour conserver **une source datée, non substitutive**, sans écraser les fiches, les événements postérieurs, les 363 dossiers de diff ni les preuves CI actuelles.
+- **Priorité probatoire :** GitHub exact SHA, CI exact run, preuves serveur, registres natifs et commentaires canoniques ; la mémoire utilisateur est une source secondaire de reconstitution, pas une admission ou preuve de déploiement.

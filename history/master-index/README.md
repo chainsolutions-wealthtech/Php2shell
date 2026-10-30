@@ -29,3 +29,27 @@
 Les sources `history/evidence/git/commit-inventory-all-branches.json` et `history/evidence/actions/workflow-runs-snapshot.json` sont **datées du 29 octobre** : les commits/runs ajoutés après leur cutoff ne sont pas ici déclarés inventoriés. Les commentaires de l'issue #5 et PR #7 ont été relus durant la préparation. Les `CHECK_SUITE` sont des références associées aux runs, non une confirmation de jobs/logs audités.
 
 Les objets issus de fichiers de la PR #7 documentent la présence de fiches, sans affirmer la validation de leurs contenus. Les tâches `PLANNED_NOT_ADMITTED` restent telles quelles. Le registre n'opère aucun claim, merge, scan ou déploiement.
+
+
+## Navigation des matrices transversales
+
+- [Répertoire des 2 738 identifiants](MASTER_IDENTIFIERS_REGISTRY.json) et détails [par catégorie](details/)
+- [Registre maître des relations sourcées](MASTER_RELATIONSHIPS_REGISTRY.json) — 5 582 liens observés/rapportés ou déclarés, avec séparation des preuves
+- [Matrice des dépendances et exigences](matrices/DEPENDENCIES.json)
+- [Matrice des liens Git et historique des branches](matrices/GIT_LINEAGE.json)
+- [Matrice des corrélations CI↔commits](matrices/CI_CORRELATION/RUN_TARGETS_SHA.json) et index des autres liens CI dans le registre des relations
+- [Corrélations multidimensionnelles par exigence et commit](matrices/MATRIX_CORRELATIONS.json)
+- [Matrice de continuité événements↔décisions↔checkpoints↔commentaires](matrices/MATRIX_CONTINUITY.json)
+- [Matrice d'activités, tâches et actions](matrices/MATRIX_ACTIVITIES_TASKS_ACTIONS.json) : 61 WP et contrats, non confondus avec réalisation
+- [Chronologie d'activités complète du snapshot](matrices/MATRIX_WORK_CHRONOLOGY.json) : commits, runs, décisions, événements, checkpoints, commentaires
+- [Index chronologique par jour](matrices/MATRIX_CHRONOLOGY_DAY_INDEX.json)
+- [Relations encore non vérifiées](matrices/MATRIX_UNVERIFIED_RELATIONS.json)
+
+### Mode de recherche d'un identifiant
+1. Rechercher `TYPE:ID` dans `MASTER_IDENTIFIERS_REGISTRY.json`.
+2. Ouvrir `details/TYPE.json`, y retrouver la clé et la source primaire.
+3. Lire `MASTER_RELATIONSHIPS_REGISTRY.json` et la matrice correspondant à sa famille.
+4. Lire `MATRIX_WORK_CHRONOLOGY.json` et la matrice d'activités si l'objet représente une décision, tâche, action ou exécution.
+5. Si une relation manque, la classer `NOT_VERIFIED` ; ne jamais affirmer une opération déployée à partir du simple journal.
+
+Les matrices reflètent les instantanés documentés, et non un état runtime actuel garanti. Les liens planifiés n'attestent ni achèvement ni admission. Aucun nouveau moteur, claim, ou workflow récurrent n'a été créé.

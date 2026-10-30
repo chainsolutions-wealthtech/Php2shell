@@ -1,0 +1,38 @@
+{
+  "schema": "php2shell-master-validation-report-v1",
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "source_head_verified": "ae818cae47aef21acbe87400db2742b42e29ac06",
+  "validation_mode": "CONNECTOR_READBACK_AND_IN_MEMORY_STRUCTURAL_ASSERTIONS",
+  "structural_status": "PASS",
+  "counts": {
+    "nodes": 2738,
+    "unique_node_keys": 2738,
+    "typed_shards": 16,
+    "edges": 5582,
+    "unique_edge_signatures": 5582,
+    "work_packages": 61,
+    "requirements": 32,
+    "commit_correlations": 363,
+    "events": 56,
+    "decisions": 24,
+    "checkpoints": 44,
+    "chronology_entries": 1583,
+    "unknown_date_entries": 76,
+    "unresolved_missing_targets": 8
+  },
+  "checks": {
+    "registry_uniqueness": true,
+    "master_directory_consistency": true,
+    "relation_endpoints_indexed": true,
+    "relation_signatures_unique": true,
+    "work_dependency_graph_acyclic": true,
+    "chronology_keys_indexed": true
+  },
+  "errors": [],
+  "warnings": [
+    "Unlinked post-snapshot SHA / non-master endpoints: 8",
+    "Activities without reliable timestamp: 76",
+    "Individual commit patch review and CI job logs are not audited by structural validation."
+  ],
+  "limits": "PASS indicates internal structure and GitHub readback of stored files, not proof of program completion, independent code security, S1 deployment or all CI jobs reviewed."
+}

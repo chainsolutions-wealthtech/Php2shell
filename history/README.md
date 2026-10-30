@@ -86,3 +86,9 @@ Ces documents constituent des **preuves d'investigation ajoutées à l'archive**
 - [Index de la photographie « Memoire PHP2 »](memoire-php2/2026-10-30/README.md) — source transmise par l'utilisateur, registre JSON complet, 52 événements / 24 décisions / 61 WP / 40 checkpoints tels qu'ils étaient **rapportés dans ce document**.
 - Les enregistrements sont rangés sous `history/memoire-php2/2026-10-30/` pour conserver **une source datée, non substitutive**, sans écraser les fiches, les événements postérieurs, les 363 dossiers de diff ni les preuves CI actuelles.
 - **Priorité probatoire :** GitHub exact SHA, CI exact run, preuves serveur, registres natifs et commentaires canoniques ; la mémoire utilisateur est une source secondaire de reconstitution, pas une admission ou preuve de déploiement.
+
+
+## Point d'entrée transversal — registre maître des identifiants (30 octobre 2026)
+
+- [Registre maître et index transversal](master-index/README.md) : objets typés, identifiants GitHub, SHA, exécutions CI, workflow/check suites et références canoniques ; les matrices relationnelles s'y rattachent.
+- Les instantanés du 29 octobre et leurs limites sont conservés, sans remplacement des fiches de preuve déjà présentes.

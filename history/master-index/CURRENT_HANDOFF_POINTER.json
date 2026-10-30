@@ -1,0 +1,24 @@
+{
+  "schema": "php2shell-handoff-pointer-v1",
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "canonical_issue": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5",
+  "latest_documentary_checkpoint_id": "P2S-CP-20261030-045",
+  "latest_documentary_checkpoint_url": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5#issuecomment-6512668570",
+  "archive_pr": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/7",
+  "archive_branch": "docs/integral-chronological-history-20261029",
+  "observed_head": "ed6342aa5bfaef4a551e58ff2889073d1b531349",
+  "observed_date": "2026-10-30",
+  "root_manifest": "history/master-index/CANONICAL_CONTINUITY_MANIFEST.json",
+  "master_ids": "history/master-index/MASTER_IDENTIFIERS_REGISTRY.json",
+  "master_relations": "history/master-index/MASTER_RELATIONSHIPS_REGISTRY.json",
+  "delta_index": "history/master-index/POST_SNAPSHOT_REFERENCE_DELTA.json",
+  "activity_ledger": "history/master-index/CONTINUITY_ACTIVITY_LEDGER.jsonl",
+  "business_next_action_at_source": "P2S-NEXT-001",
+  "business_next_verified_runtime": "NOT_VERIFIED",
+  "last_direct_checks": {
+    "pr7_state": "open",
+    "pr7_merged": false,
+    "pr7_draft": true
+  },
+  "note": "This is a dated handoff pointer, not an updated live state. Read latest issue comments and PR HEAD again."
+}

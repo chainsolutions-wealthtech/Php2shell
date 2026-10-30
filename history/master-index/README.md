@@ -74,3 +74,13 @@ Les matrices reflètent les instantanés documentés, et non un état runtime ac
 - Les deux registres `MASTER_IDENTIFIERS_REGISTRY.json` et `MASTER_RELATIONSHIPS_REGISTRY.json` partagent la même racine et pointent vers ce manifeste ; les instantanés et 61 WP ne sont pas des autorisations runtime.
 
 **Priorité métier préservée :** `P2S-NEXT-001` tant qu'un changement attesté n'apparaît pas dans l'issue #5 et les registres actualisés. Les nouvelles conversations doivent d'abord recontrôler les HEAD et le dernier checkpoint.
+
+
+## Dernier point de reprise documentaire indexé (30 octobre 2026)
+
+- [Checkpoint canonique `P2S-CP-20261030-045`](https://github.com/chainsolutions-wealthtech/Php2shell/issues/5#issuecomment-6512668570) sur l'issue #5.
+- [Pointeur de reprise](CURRENT_HANDOFF_POINTER.json) : dernier HEAD **observé**, priorité métier et chemins de réconciliation.
+- [Delta d'identifiants postérieurs au snapshot historique](POST_SNAPSHOT_REFERENCE_DELTA.json) : nouvelles références sourcées **sans modifier les 2 738 objets de l'ancien instantané**.
+- [Journal append-only](CONTINUITY_ACTIVITY_LEDGER.jsonl) : précontrôle, commit réellement publié et checkpoint. Ces enregistrements sont des traces, pas des locks ni des tâches exécutées automatiquement.
+
+**Reprise :** toujours réinterroger GitHub avant de considérer le pointeur comme actuel. Tout nouvel identifiant vérifié peut être ajouté par un delta suivant, sans détruire les snapshots antérieurs.

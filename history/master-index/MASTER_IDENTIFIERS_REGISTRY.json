@@ -2792,6 +2792,8 @@
     "routing_graph": "CONTINUITY_ROUTING_GRAPH.json",
     "traceability_ledger": "CONTINUITY_ACTIVITY_LEDGER.jsonl",
     "authority_issue": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5",
-    "snapshot_not_live": true
+    "snapshot_not_live": true,
+    "post_snapshot_reference_delta": "POST_SNAPSHOT_REFERENCE_DELTA.json",
+    "current_handoff_pointer": "CURRENT_HANDOFF_POINTER.json"
   }
 }

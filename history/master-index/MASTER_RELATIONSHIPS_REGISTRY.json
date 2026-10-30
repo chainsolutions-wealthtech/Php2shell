@@ -52,5 +52,16 @@
     "count": 213,
     "evidence": "TEXTUAL_MENTION_ONLY",
     "included_in_total_relations": false
+  },
+  "canonical_continuity_router": {
+    "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+    "canonical_root_key": "CONTINUITY:PHP2SHELL-CONT-20261027-ROOT-01",
+    "canonical_manifest": "CANONICAL_CONTINUITY_MANIFEST.json",
+    "rejoin_entry": "JOIN_THIS_PROJECT.md",
+    "governance": "NO_COLLISION_REJOIN_PROTOCOL.md",
+    "routing_graph": "CONTINUITY_ROUTING_GRAPH.json",
+    "traceability_ledger": "CONTINUITY_ACTIVITY_LEDGER.jsonl",
+    "authority_issue": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5",
+    "snapshot_not_live": true
   }
 }

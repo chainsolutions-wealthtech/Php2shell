@@ -60,3 +60,17 @@ Les matrices reflètent les instantanés documentés, et non un état runtime ac
 - [Matrice des mentions explicites entre événements, décisions, commentaires, WP et REQ](matrices/MATRIX_DOCUMENTED_CROSS_REFERENCES.json) : liens textuels **non assimilés à des réalisations** ; distincts des 5 582 relations structurées.
 - [Justificatifs des dates documentaires retrouvées](matrices/MATRIX_DATE_PROVENANCE.json) : ajout de dates au jour près depuis les logs et fiches historiques ; horaires non inventés.
 - Les tableaux [chronologiques](matrices/MATRIX_WORK_CHRONOLOGY.json) et [par jour](matrices/MATRIX_CHRONOLOGY_DAY_INDEX.json) intègrent les dates recoupées et conservent les commentaires non datés comme `UNKNOWN`.
+
+
+<!-- PHP2SHELL-MASTER-ROOT-ROUTING-V1 -->
+## Raccordement canonique de toutes les mémoires, matrices et conversations (30 octobre 2026)
+
+**Une seule continuité racine :** `PHP2SHELL-CONT-20261027-ROOT-01` ; [issue canonique #5](https://github.com/chainsolutions-wealthtech/Php2shell/issues/5). **Pas de nouvel ID de continuité.**
+
+- [Routage canonique JSON](https://github.com/chainsolutions-wealthtech/Php2shell/blob/docs/integral-chronological-history-20261029/history/master-index/CANONICAL_CONTINUITY_MANIFEST.json) (registre unique des autorités, alias, registres et frontières de preuve).
+- [Rejoindre le projet depuis une nouvelle conversation](https://github.com/chainsolutions-wealthtech/Php2shell/blob/docs/integral-chronological-history-20261029/history/master-index/JOIN_THIS_PROJECT.md) : lecture, réconciliation, prochaine action, traces de reprise.
+- [Protocole anti-collision](https://github.com/chainsolutions-wealthtech/Php2shell/blob/docs/integral-chronological-history-20261029/history/master-index/NO_COLLISION_REJOIN_PROTOCOL.md) et [contrat JSON](https://github.com/chainsolutions-wealthtech/Php2shell/blob/docs/integral-chronological-history-20261029/history/master-index/REJOIN_PROTOCOL.json) : préflight HEAD, claims réels, gate, admission, écriture sans force, contrôle exact-SHA et checkpoint.
+- [Arbre des relations de routage](https://github.com/chainsolutions-wealthtech/Php2shell/blob/docs/integral-chronological-history-20261029/history/master-index/CONTINUITY_ROUTING_GRAPH.json) et [journal append-only](https://github.com/chainsolutions-wealthtech/Php2shell/blob/docs/integral-chronological-history-20261029/history/master-index/CONTINUITY_ACTIVITY_LEDGER.jsonl).
+- Les deux registres `MASTER_IDENTIFIERS_REGISTRY.json` et `MASTER_RELATIONSHIPS_REGISTRY.json` partagent la même racine et pointent vers ce manifeste ; les instantanés et 61 WP ne sont pas des autorisations runtime.
+
+**Priorité métier préservée :** `P2S-NEXT-001` tant qu'un changement attesté n'apparaît pas dans l'issue #5 et les registres actualisés. Les nouvelles conversations doivent d'abord recontrôler les HEAD et le dernier checkpoint.

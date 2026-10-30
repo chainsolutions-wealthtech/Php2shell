@@ -1,0 +1,122 @@
+{
+  "schema": "php2shell-rejoin-gated-protocol-v1",
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "scope": "PHP2SHELL ONLY",
+  "gate_order": [
+    "DISCOVER",
+    "READ_CANONICAL",
+    "RECONCILE_LIVE",
+    "MAP_CURRENT_ACTIVITY",
+    "DETECT_DUPLICATES",
+    "CHECK_MANDATE",
+    "VERIFY_CLAIMS_AND_LOCKS",
+    "PLAN_MINIMAL_DELTA",
+    "WRITE_EXACT_HEAD",
+    "VERIFY_RESULTS",
+    "APPEND_CHECKPOINT",
+    "HANDOFF"
+  ],
+  "gates": {
+    "DISCOVER": {
+      "reads": [
+        "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5",
+        "https://github.com/chainsolutions-wealthtech/Php2shell/pull/7"
+      ],
+      "requirement": "Use only this root continuity ID and original PR/work lanes."
+    },
+    "READ_CANONICAL": {
+      "reads": [
+        "00_START_HERE.md",
+        "continuity/HANDOFF.md",
+        "continuity/PROTOCOL.md",
+        "continuity/NEXT_ACTION.md",
+        "history/master-index/CANONICAL_CONTINUITY_MANIFEST.json",
+        "history/master-index/MASTER_IDENTIFIERS_REGISTRY.json",
+        "history/master-index/MASTER_RELATIONSHIPS_REGISTRY.json"
+      ]
+    },
+    "RECONCILE_LIVE": {
+      "reads": [
+        "GitHub current refs/PR reviews/CI/issue comments",
+        "if infrastructure: authorized MCP inventory and S1 observations"
+      ],
+      "requirement": "Snapshots are not live truth; record observed HEAD/UTC when available."
+    },
+    "MAP_CURRENT_ACTIVITY": {
+      "reads": [
+        "history/master-index/matrices/MATRIX_ACTIVITIES_TASKS_ACTIONS.json",
+        "history/master-index/matrices/MATRIX_WORK_CHRONOLOGY.json"
+      ],
+      "requirement": "Identify WPs, dependencies, next action, ongoing claims, branch owners and resources."
+    },
+    "DETECT_DUPLICATES": {
+      "requirement": "No new PR/branch/issue/scheduler if existing authority suffices. No duplicated simultaneous writers on branch, file, server or work package."
+    },
+    "CHECK_MANDATE": {
+      "requirement": "Explicit user mandate must cover every mutation and resource; documentation does not authorize active scan, patch or deploy."
+    },
+    "VERIFY_CLAIMS_AND_LOCKS": {
+      "requirement": "Check existing external MCP claims/locks when relevant; if unavailable, do not claim a lock and avoid conflicting concurrent write. Resource claims not inherited across repos."
+    },
+    "PLAN_MINIMAL_DELTA": {
+      "requirement": "Append-only documentation when possible; preserve exact existing scope, acceptance and non-regression."
+    },
+    "WRITE_EXACT_HEAD": {
+      "requirement": "Fetch latest branch SHA immediately before write. Create commit with latest parent and update branch with expected_sha + force:false; on stale lease stop, re-read and reconcile."
+    },
+    "VERIFY_RESULTS": {
+      "requirement": "Read new HEAD/files and relevant CI by exact SHA; distinguish structural validation, code security, runtime status."
+    },
+    "APPEND_CHECKPOINT": {
+      "requirement": "Publish checkpoint in issue #5, link PR #7, record operation evidence and unresolved gaps. Do not erase prior checkpoints."
+    },
+    "HANDOFF": {
+      "requirement": "Provide current root ID, issue, PR, head observed, done/not done, next action and missing evidence for new chat."
+    }
+  },
+  "state_machine": {
+    "states": [
+      "DISCOVERED",
+      "RECONCILED",
+      "ADMITTED",
+      "WRITTEN",
+      "VALIDATED",
+      "CHECKPOINTED",
+      "BLOCKED"
+    ],
+    "no_auto_transition": true
+  },
+  "collision_policy": {
+    "readonly_parallelism": true,
+    "concurrent_writes_without_verified_claim": false,
+    "force_push": false,
+    "parallel_prs_different_resources_only_after_reconciliation": true,
+    "unattested_runtime_claim": "BLOCKED"
+  },
+  "scope_claims": [
+    "PHP2SHELL_WORK_PACKAGE",
+    "MCP_DEVELOPMENT_DISTINCT",
+    "EXTERNAL_RESOURCE_ACCESS_DISTINCT"
+  ],
+  "priority": "P2S-NEXT-001 remains business next until changed by canonical evidence; documentary recording does not close it.",
+  "security": "Public repository: never publish secrets, tokens, personal data, private customer code or raw sensitive logs.",
+  "session_schema": {
+    "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+    "operation_reference": "an existing PR/issue/comment or unique documentary operation key (not a second continuity ID)",
+    "actor": "agent or human",
+    "mandate": "explicit authority",
+    "resource_scope": "repo/branch/files; MCP/S1 if separately authorized",
+    "head_before": "exact SHA",
+    "head_after": "exact SHA or unchanged",
+    "pr": "URL",
+    "claims": "verified claims or NOT_VERIFIED",
+    "lock": "verified or NOT_HELD",
+    "actions": "attempted/completed separated",
+    "ci_runs": "exact sha URLs and conclusions",
+    "evidence": "links and sources",
+    "unknowns": "gaps",
+    "business_next": "P2S-NEXT-001 or latest verified authority",
+    "rollback": "reference",
+    "timestamp_utc": "exact verified or date-only"
+  }
+}

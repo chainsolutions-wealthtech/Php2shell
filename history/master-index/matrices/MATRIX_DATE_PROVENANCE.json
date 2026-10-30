@@ -3,8 +3,8 @@
   "source_head": "58b82a152666f4de6a0a16ba9c712c97d1971c32",
   "source_time_precision": "DATE_ONLY",
   "original_unknown": 76,
-  "recovered_date_only": 19,
-  "remaining_unknown": 57,
+  "recovered_date_only": 20,
+  "remaining_unknown": 56,
   "records": [
     {
       "key": "DECISION:P2S-DEC-016",
@@ -101,6 +101,12 @@
       "date": "2026-10-29",
       "source": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/58b82a152666f4de6a0a16ba9c712c97d1971c32/continuity/EVENT_LOG.md",
       "evidence": "REPORTED_IN_DOCUMENT_NOT_INFERRED_FROM_NEARBY_COMMIT"
+    },
+    {
+      "key": "EVENT:P2S-EVT-053",
+      "date": "2026-10-29",
+      "source": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/e2fe00683fc9c20a07b089bfee41a83a12b4be8b/history/events/P2S-EVT-053.md",
+      "evidence": "DATE_EXPLICIT_IN_INDIVIDUAL_EVENT_FICHE"
     },
     {
       "key": "EVENT:P2S-EVT-054",

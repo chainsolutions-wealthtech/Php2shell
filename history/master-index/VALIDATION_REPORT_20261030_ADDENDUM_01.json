@@ -1,0 +1,18 @@
+{
+  "schema": "php2shell-validation-addendum-v1",
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "preflight_head": "e2fe00683fc9c20a07b089bfee41a83a12b4be8b",
+  "structural_status": "PASS",
+  "checks": {
+    "original_master_count": 2738,
+    "structured_relationships": 5582,
+    "explicit_documentary_crossrefs": 213,
+    "timeline_entries": 1583,
+    "document_dates_recovered": 20,
+    "unknown_time_entries": 56,
+    "unknown_entries_are_comments": true,
+    "all_crossref_endpoints_in_master": true,
+    "chronology_includes_all_source_records": true
+  },
+  "scope_limit": "Readback structural checks only. Unknown comment dates preserved; no fresh actual runtime/S1 or all CI job logs verified."
+}

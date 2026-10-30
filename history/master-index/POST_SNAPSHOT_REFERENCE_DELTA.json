@@ -1,0 +1,151 @@
+{
+  "schema": "php2shell-post-snapshot-index-delta-v1",
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "base_index": "history/master-index/MASTER_IDENTIFIERS_REGISTRY.json",
+  "base_source_head": "bed7c218d71743c4175b6b95f43a788105f966a2",
+  "base_total": 2738,
+  "observed_until_head": "ed6342aa5bfaef4a551e58ff2889073d1b531349",
+  "observed_date": "2026-10-30",
+  "coverage": "SELECTED_VERIFIED_POST_SNAPSHOT_DOCUMENTARY_REFERENCES_NOT_ALL_REPO_HISTORY",
+  "count": 17,
+  "items": [
+    {
+      "key": "COMMIT:c46ab644c5d1697235acb78b218edcf281c8c1c0",
+      "type": "COMMIT",
+      "id": "c46ab644c5d1697235acb78b218edcf281c8c1c0",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/c46ab644c5d1697235acb78b218edcf281c8c1c0",
+      "description": "Memoire PHP2 archive",
+      "verification": "OBSERVED_IN_CONNECTOR_WRITE_AND_READBACK"
+    },
+    {
+      "key": "COMMIT:512c13e7b654a90f1eaf96bdb88e637620e34806",
+      "type": "COMMIT",
+      "id": "512c13e7b654a90f1eaf96bdb88e637620e34806",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/512c13e7b654a90f1eaf96bdb88e637620e34806",
+      "description": "source byte fidelity",
+      "verification": "OBSERVED_IN_CONNECTOR_WRITE_AND_READBACK"
+    },
+    {
+      "key": "COMMIT:bed7c218d71743c4175b6b95f43a788105f966a2",
+      "type": "COMMIT",
+      "id": "bed7c218d71743c4175b6b95f43a788105f966a2",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/bed7c218d71743c4175b6b95f43a788105f966a2",
+      "description": "source CRLF identity",
+      "verification": "OBSERVED_IN_CONNECTOR_WRITE_AND_READBACK"
+    },
+    {
+      "key": "COMMIT:e886d6b929214c5738337b569ed0afc8e8eae886",
+      "type": "COMMIT",
+      "id": "e886d6b929214c5738337b569ed0afc8e8eae886",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/e886d6b929214c5738337b569ed0afc8e8eae886",
+      "description": "master index 2738 items",
+      "verification": "OBSERVED_IN_CONNECTOR_WRITE_AND_READBACK"
+    },
+    {
+      "key": "COMMIT:cd7ef56bd3b064b3e8d781d9403b8483f0d360b5",
+      "type": "COMMIT",
+      "id": "cd7ef56bd3b064b3e8d781d9403b8483f0d360b5",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/cd7ef56bd3b064b3e8d781d9403b8483f0d360b5",
+      "description": "master sharding",
+      "verification": "OBSERVED_IN_CONNECTOR_WRITE_AND_READBACK"
+    },
+    {
+      "key": "COMMIT:63dc656e66e074bcd6ec2c57dfcd764bff42fcad",
+      "type": "COMMIT",
+      "id": "63dc656e66e074bcd6ec2c57dfcd764bff42fcad",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/63dc656e66e074bcd6ec2c57dfcd764bff42fcad",
+      "description": "relation matrices",
+      "verification": "OBSERVED_IN_CONNECTOR_WRITE_AND_READBACK"
+    },
+    {
+      "key": "COMMIT:ae818cae47aef21acbe87400db2742b42e29ac06",
+      "type": "COMMIT",
+      "id": "ae818cae47aef21acbe87400db2742b42e29ac06",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/ae818cae47aef21acbe87400db2742b42e29ac06",
+      "description": "activity chronology",
+      "verification": "OBSERVED_IN_CONNECTOR_WRITE_AND_READBACK"
+    },
+    {
+      "key": "COMMIT:58b82a152666f4de6a0a16ba9c712c97d1971c32",
+      "type": "COMMIT",
+      "id": "58b82a152666f4de6a0a16ba9c712c97d1971c32",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/58b82a152666f4de6a0a16ba9c712c97d1971c32",
+      "description": "readback validation",
+      "verification": "OBSERVED_IN_CONNECTOR_WRITE_AND_READBACK"
+    },
+    {
+      "key": "COMMIT:e2fe00683fc9c20a07b089bfee41a83a12b4be8b",
+      "type": "COMMIT",
+      "id": "e2fe00683fc9c20a07b089bfee41a83a12b4be8b",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/e2fe00683fc9c20a07b089bfee41a83a12b4be8b",
+      "description": "cross-reference enrichment",
+      "verification": "OBSERVED_IN_CONNECTOR_WRITE_AND_READBACK"
+    },
+    {
+      "key": "COMMIT:2a8183a2441f88a7dc579a95304e46521b0c0d7c",
+      "type": "COMMIT",
+      "id": "2a8183a2441f88a7dc579a95304e46521b0c0d7c",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/2a8183a2441f88a7dc579a95304e46521b0c0d7c",
+      "description": "dated evidence addendum",
+      "verification": "OBSERVED_IN_CONNECTOR_WRITE_AND_READBACK"
+    },
+    {
+      "key": "COMMIT:ef0719aabb26d1a9ecc783b61adcc5336e7462e4",
+      "type": "COMMIT",
+      "id": "ef0719aabb26d1a9ecc783b61adcc5336e7462e4",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/ef0719aabb26d1a9ecc783b61adcc5336e7462e4",
+      "description": "ROOT router",
+      "verification": "OBSERVED_IN_CONNECTOR_WRITE_AND_READBACK"
+    },
+    {
+      "key": "COMMIT:ed6342aa5bfaef4a551e58ff2889073d1b531349",
+      "type": "COMMIT",
+      "id": "ed6342aa5bfaef4a551e58ff2889073d1b531349",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/ed6342aa5bfaef4a551e58ff2889073d1b531349",
+      "description": "ROOT router publication receipt",
+      "verification": "OBSERVED_IN_CONNECTOR_WRITE_AND_READBACK"
+    },
+    {
+      "key": "COMMENT:6511960899",
+      "type": "COMMENT",
+      "id": "6511960899",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5#issuecomment-6511960899",
+      "description": "Canonical documentary continuation comment",
+      "verification": "OBSERVED_IN_GITHUB_POST_WRITE"
+    },
+    {
+      "key": "COMMENT:6511966842",
+      "type": "COMMENT",
+      "id": "6511966842",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/7#issuecomment-6511966842",
+      "description": "Canonical documentary continuation comment",
+      "verification": "OBSERVED_IN_GITHUB_POST_WRITE"
+    },
+    {
+      "key": "COMMENT:6512668570",
+      "type": "COMMENT",
+      "id": "6512668570",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5#issuecomment-6512668570",
+      "description": "Canonical documentary continuation comment",
+      "verification": "OBSERVED_IN_GITHUB_POST_WRITE"
+    },
+    {
+      "key": "CHECKPOINT:P2S-CP-20261030-045",
+      "type": "CHECKPOINT",
+      "id": "P2S-CP-20261030-045",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5#issuecomment-6512668570",
+      "description": "Single-root routing checkpoint on issue #5",
+      "verification": "OBSERVED_IN_GITHUB"
+    },
+    {
+      "key": "OPERATION:P2S-DOC-20261030-ROOT-ROUTING-01",
+      "type": "OPERATION",
+      "id": "P2S-DOC-20261030-ROOT-ROUTING-01",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/ed6342aa5bfaef4a551e58ff2889073d1b531349/history/master-index/CONTINUITY_ACTIVITY_LEDGER.jsonl",
+      "description": "Documentary router publication operation, not a new continuity ID",
+      "verification": "DOCUMENTARY_LOGGED"
+    }
+  ],
+  "checkpoint": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5#issuecomment-6512668570",
+  "policy": "Do not rewrite historical 2738-ID snapshot. New verified IDs are append-only documentary additions; every conversation must recheck live GitHub."
+}

@@ -1,0 +1,140 @@
+{
+  "schema": "php2shell-unresolved-relations-v1",
+  "master_head": "cd7ef56bd3b064b3e8d781d9403b8483f0d360b5",
+  "missing_targets": [
+    {
+      "from": "RUN:40954209229",
+      "to": "COMMIT:38fd827cdf8e8623a930628732c2144e496ae035",
+      "relation": "RUN_TARGETS_SHA"
+    },
+    {
+      "from": "RUN:40954218917",
+      "to": "COMMIT:38fd827cdf8e8623a930628732c2144e496ae035",
+      "relation": "RUN_TARGETS_SHA"
+    },
+    {
+      "from": "RUN:40954455307",
+      "to": "COMMIT:9967392bcae2367acf11698dd55650b328b7e50b",
+      "relation": "RUN_TARGETS_SHA"
+    },
+    {
+      "from": "RUN:40954464841",
+      "to": "COMMIT:9967392bcae2367acf11698dd55650b328b7e50b",
+      "relation": "RUN_TARGETS_SHA"
+    },
+    {
+      "from": "PR:2",
+      "to": "COMMIT:0c7e999f73f36a98c6c40c676b0d8ec15b47e950",
+      "relation": "PR_HEAD_SHA_AT_RECHECK"
+    },
+    {
+      "from": "PR:3",
+      "to": "COMMIT:94af4f1b35655c2ba04a41157a08f191ceea4330",
+      "relation": "PR_HEAD_SHA_AT_RECHECK"
+    },
+    {
+      "from": "PR:6",
+      "to": "COMMIT:e83afa76dcb7a91b47bf1a1ff4a7c8d0d6df3f1d",
+      "relation": "PR_HEAD_SHA_AT_RECHECK"
+    },
+    {
+      "from": "PR:7",
+      "to": "COMMIT:cd7ef56bd3b064b3e8d781d9403b8483f0d360b5",
+      "relation": "PR_HEAD_SHA_AT_RECHECK"
+    }
+  ],
+  "user_source_verification_gaps": [
+    {
+      "verification": "Identifier l'origine et l'ordre chronologique des commits présents sur les branches",
+      "etat_source": "Inventaire Git effectué sur les branches initiales ; nouvelle PR #7 identifiée séparément",
+      "source_line": 375,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    },
+    {
+      "verification": "Ouvrir individuellement chaque commit et contrôler parents, fichiers, ajouts et suppressions",
+      "etat_source": "Partiel",
+      "source_line": 376,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    },
+    {
+      "verification": "Vérifier toutes les CI et leurs journaux au SHA exact, y compris les échecs RED",
+      "etat_source": "Partiel",
+      "source_line": 377,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    },
+    {
+      "verification": "Recenser les 52 événements canoniques et leur ordre",
+      "etat_source": "Effectué dans le registre",
+      "source_line": 378,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    },
+    {
+      "verification": "Recenser les 24 décisions canoniques et leur ordre",
+      "etat_source": "Effectué dans le registre",
+      "source_line": 379,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    },
+    {
+      "verification": "Recenser les 61 work packages, leurs versions, dépendances et statuts",
+      "etat_source": "Effectué dans le registre",
+      "source_line": 380,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    },
+    {
+      "verification": "Recenser les 40 checkpoints numérotés et les addenda de l'issue #5",
+      "etat_source": "Effectué au niveau des entrées retrouvées",
+      "source_line": 381,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    },
+    {
+      "verification": "Vérifier chaque checkpoint contre les commits, CI et opérations réellement exécutées",
+      "etat_source": "Partiel",
+      "source_line": 382,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    },
+    {
+      "verification": "Vérifier indépendamment les opérations DNS, Plesk, Docker et S1 historiques",
+      "etat_source": "Non exhaustif ; certaines preuves proviennent de checkpoints rétrospectifs",
+      "source_line": 383,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    },
+    {
+      "verification": "Réconcilier les décisions prises dans les conversations avant leur publication sur GitHub",
+      "etat_source": "Non exhaustif",
+      "source_line": 384,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    },
+    {
+      "verification": "Vérifier les claims, mandats, approbations et droits exacts à chaque date historique",
+      "etat_source": "Non exhaustif",
+      "source_line": 385,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    },
+    {
+      "verification": "Constituer les fiches d'action individuelles avec avant/après, incidents, corrections et rollback",
+      "etat_source": "À compléter",
+      "source_line": 386,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    },
+    {
+      "verification": "Attester la correspondance de chaque WP avec des preuves d'exécution et critères d'acceptation complets",
+      "etat_source": "Non réalisé intégralement",
+      "source_line": 387,
+      "source_type": "document_fourni",
+      "verification_externe": "non_effectuee_dans_cette_operation"
+    }
+  ],
+  "warning": "Unindexed latest PR SHA remain to reconcile. No link without indexed endpoints."
+}

@@ -1,0 +1,669 @@
+{
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "records": [
+    {
+      "key": "issue4",
+      "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/4",
+      "content": {
+        "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/4",
+        "repository_url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell",
+        "labels_url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/4/labels{/name}",
+        "comments_url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/4/comments",
+        "events_url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/4/events",
+        "html_url": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/4",
+        "id": 6068638291,
+        "node_id": "I_kwDOVTw-BM8AAAABabgSUw",
+        "number": 4,
+        "title": "[S1] Déploiement gouverné PHP2SHELL + PHPPATCH : prérequis et preuves d'admission",
+        "user": {
+          "login": "Wealthtechinnovations",
+          "id": 94637590,
+          "node_id": "U_kgDOBaQOFg",
+          "avatar_url": "https://avatars.githubusercontent.com/u/94637590?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/Wealthtechinnovations",
+          "html_url": "https://github.com/Wealthtechinnovations",
+          "followers_url": "https://api.github.com/users/Wealthtechinnovations/followers",
+          "following_url": "https://api.github.com/users/Wealthtechinnovations/following{/other_user}",
+          "gists_url": "https://api.github.com/users/Wealthtechinnovations/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/Wealthtechinnovations/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/Wealthtechinnovations/subscriptions",
+          "organizations_url": "https://api.github.com/users/Wealthtechinnovations/orgs",
+          "repos_url": "https://api.github.com/users/Wealthtechinnovations/repos",
+          "events_url": "https://api.github.com/users/Wealthtechinnovations/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/Wealthtechinnovations/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "labels": [],
+        "state": "open",
+        "locked": false,
+        "assignees": [],
+        "milestone": null,
+        "comments": 1,
+        "created_at": "2026-10-27T22:13:00Z",
+        "updated_at": "2026-10-27T23:42:51Z",
+        "closed_at": null,
+        "assignee": null,
+        "author_association": "MEMBER",
+        "issue_field_values": [],
+        "type": null,
+        "active_lock_reason": null,
+        "sub_issues_summary": {
+          "total": 0,
+          "completed": 0,
+          "percent_completed": 0
+        },
+        "issue_dependencies_summary": {
+          "blocked_by": 0,
+          "total_blocked_by": 0,
+          "blocking": 0,
+          "total_blocking": 0
+        },
+        "body": "## Mission opérationnelle — S1 / deux vhosts (27 octobre 2026)\n\n**Objectif** : préparer sans duplication d'architecture le déploiement futur des interfaces PHP2SHELL et PHPPATCH sous la souscription `wealthtechinnovations.com` sur S1.\n\n### Preuves actuelles\n- Plesk : deux répertoires d'hébergement + deux répertoires système existants (observation MCP S1, réconciliation rafraîchie).\n- DNS : 4 serveurs autoritaires IONOS retournent **212.227.212.33** pour `php2shell` et `phppatch`; anciens AAAA de parking supprimés; MX IONOS présents.\n- S1 direct IP + SNI : HTTPS 200 / HTTP→HTTPS 301 pour les deux, certificats Let's Encrypt valides jusque janvier 2027.\n- Les pages observées sont des pages Plesk, pas les interfaces PHP2SHELL.\n- Contrôles en lecture seule : PR #3 / `.github/workflows/s1-readiness.yml`.\n- Un appel `curl` par hostname **depuis S1** signalait encore des erreurs DNS/TLS; ne pas considérer cet incident clos sans tests de résolution locale `getent/dig/resolv.conf` et inspection des caches pertinents.\n\n### Travail restant, ordre gouverné\n- [ ] PR #1 V0.1 revue/fusionnée, SHA et CI vérifiés.\n- [ ] PR #2 V0.2 revue/fusionnée (détection lexicale, pas d'AST, pas de CVE validée).\n- [ ] PR #3 S1 readiness revue/fusionnée.\n- [ ] Fonctionnalités applicatives **encore absentes** : UI/API authentifiées, RBAC, audit, bornage des mandats de scan et de remédiation.\n- [ ] Lire / réutiliser les mécanismes `Patricked-code/MCP` existants — issue #349 (provisionnement gouverné) — sans modifier directement le serveur ni créer un second gateway.\n- [ ] Mandat MCP dédié **scopé** aux deux nouveaux vhosts S1, avec preuve d'autorisation, identités/claims/locks, accès Plesk read-only et GitHub App autorisée; ajouter des outils bornés si nécessaire via PR MCP indépendante, sans collision avec Regulatory.\n- [ ] Prévoir sauvegardes, rollback, port local, santé HTTP, secrets hors dépôt public, moindre privilège, HTTPS/TLS, journal d'audit et recette E2E.\n- [ ] Validation indépendante sécurité et approbation avant production.\n- [ ] Ne pas publier ni activer les opérations de remédiation avant authentification et validation humaine.\n\n### Règles\nAucune écriture sur `main` hors PR, pas de Codex/Copilot, pas de requêtes intrusives sur des tiers, aucune purge de fichiers Plesk, aucun déploiement factice déclaré « terminé ». Réutiliser `GitHub → MCP → S1` et isoler strictement les autorités des dépôts MCP, GRT et PHP2SHELL.\n\n**Statut :** PLANNED / BLOCKED_ON_APP_AND_GOVERNED_ADAPTER. Aucune exécution runtime S1 réclamée par cette issue.",
+        "closed_by": null,
+        "reactions": {
+          "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/4/reactions",
+          "total_count": 0,
+          "+1": 0,
+          "-1": 0,
+          "laugh": 0,
+          "hooray": 0,
+          "confused": 0,
+          "heart": 0,
+          "rocket": 0,
+          "eyes": 0
+        },
+        "timeline_url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/4/timeline",
+        "performed_via_github_app": {
+          "id": 1144995,
+          "client_id": "Iv23liVemv8A9if9v0F2",
+          "slug": "chatgpt-codex-connector",
+          "node_id": "A_kwHOAOQ6Gs4AEXij",
+          "owner": {
+            "login": "openai",
+            "id": 14957082,
+            "node_id": "MDEyOk9yZ2FuaXphdGlvbjE0OTU3MDgy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/14957082?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/openai",
+            "html_url": "https://github.com/openai",
+            "followers_url": "https://api.github.com/users/openai/followers",
+            "following_url": "https://api.github.com/users/openai/following{/other_user}",
+            "gists_url": "https://api.github.com/users/openai/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/openai/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/openai/subscriptions",
+            "organizations_url": "https://api.github.com/users/openai/orgs",
+            "repos_url": "https://api.github.com/users/openai/repos",
+            "events_url": "https://api.github.com/users/openai/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/openai/received_events",
+            "type": "Organization",
+            "user_view_type": "public",
+            "site_admin": false
+          },
+          "name": "ChatGPT Codex Connector",
+          "description": "Bring ChatGPT and Codex to your GitHub repositories.",
+          "external_url": "https://www.chatgpt.com",
+          "html_url": "https://github.com/apps/chatgpt-codex-connector",
+          "created_at": "2025-02-14T01:37:05Z",
+          "updated_at": "2026-09-23T18:52:59Z",
+          "permissions": {
+            "actions": "write",
+            "checks": "read",
+            "contents": "write",
+            "emails": "read",
+            "issues": "write",
+            "metadata": "read",
+            "pull_requests": "write",
+            "statuses": "read",
+            "workflows": "write"
+          },
+          "events": [
+            "check_run",
+            "check_suite",
+            "commit_comment",
+            "issues",
+            "issue_comment",
+            "pull_request",
+            "pull_request_review",
+            "pull_request_review_comment",
+            "pull_request_review_thread",
+            "repository",
+            "status",
+            "sub_issues"
+          ]
+        },
+        "state_reason": null,
+        "pinned_comment": null
+      }
+    },
+    {
+      "key": "issue4comments",
+      "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/4/comments?per_page=100&page=1",
+      "content": [
+        {
+          "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/comments/6456350078",
+          "html_url": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/4#issuecomment-6456350078",
+          "issue_url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/4",
+          "id": 6456350078,
+          "node_id": "IC_kwDOVTw-BM8AAAABgNQVfg",
+          "user": {
+            "login": "Wealthtechinnovations",
+            "id": 94637590,
+            "node_id": "U_kgDOBaQOFg",
+            "avatar_url": "https://avatars.githubusercontent.com/u/94637590?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/Wealthtechinnovations",
+            "html_url": "https://github.com/Wealthtechinnovations",
+            "followers_url": "https://api.github.com/users/Wealthtechinnovations/followers",
+            "following_url": "https://api.github.com/users/Wealthtechinnovations/following{/other_user}",
+            "gists_url": "https://api.github.com/users/Wealthtechinnovations/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/Wealthtechinnovations/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/Wealthtechinnovations/subscriptions",
+            "organizations_url": "https://api.github.com/users/Wealthtechinnovations/orgs",
+            "repos_url": "https://api.github.com/users/Wealthtechinnovations/repos",
+            "events_url": "https://api.github.com/users/Wealthtechinnovations/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/Wealthtechinnovations/received_events",
+            "type": "User",
+            "user_view_type": "public",
+            "site_admin": false
+          },
+          "created_at": "2026-10-27T23:42:51Z",
+          "updated_at": "2026-10-27T23:42:51Z",
+          "body": "## Attestation S1 — DNS/HTTPS local OK ; installation applicative toujours bloquée (28/10/2026)\n\n**Observation directe S1** via MCP réconcilié : les deux sous-domaines sont présents dans les répertoires Plesk/système et les sondes `curl -I --max-time 15 https://<hôte>` exécutées depuis S1 ont désormais toutes deux `exit 0 / HTTP 200` (27/10/2026, 23:42 UTC). Apache retourne `X-Powered-By: PleskLin` et `Content-Length: 464` pour chaque domaine. Cela correspond encore aux **pages d'attente Plesk**, non aux applications.\n\n- `php2shell.wealthtechinnovations.com` : HTTPS 200 depuis S1, 464 octets.\n- `phppatch.wealthtechinnovations.com` : HTTPS 200 depuis S1, 464 octets.\n- S1 `docker ps` : seulement `wealthtech_mcp_ssh_bridge` healthy ; aucun conteneur PHP2SHELL ou PHPPATCH.\n- Disque S1 : 77 Go, 53 Go utilisés, **21 Go libres / 72 %** ; dimensionnement mémoire/ports/base avant staging à vérifier.\n- Les erreurs historiques locales `curl (6)` et `curl (35)` ne se reproduisent plus au dernier contrôle ; **aucune preuve d'une purge explicite du cache DNS** et aucune explication rétrospective confirmée.\n\n**Verrou technique réel à traiter par autorité MCP :** `mcp__wealthtech_ssh_bridge__get_write_tools_context` annonce `free_shell=false`, `run_command_s1=false`, et uniquement des cibles d'écriture bornées pour d'autres projets. Aucun outil approuvé n'est disponible pour provisionner/déployer les deux nouveaux vhosts. Il faut concevoir une PR MCP dédiée, bornée à ces deux hôtes, sans détourner `legacy_vhost` ni SadiaAF, sans installer un gateway parallèle et sans écriture directe sur S1.\n\n**État GitHub et non-régression** : PR #1 correctifs HEAD `c17f0931...`, PR #2 imports multi-formats HEAD `8c70d5f...` et PR #3 synchronisée HEAD `5ce8f4e...`, CI vertes. Avant installation : API/frontend réellement construits, auth/RBAC, images Docker isolées, revue, pipeline exact SHA, sauvegardes, staging, tests E2E et rollback.\n\n**AUCUNE installation ni modification de configuration Plesk réalisée par ce commentaire.**",
+          "author_association": "MEMBER",
+          "pin": null,
+          "reactions": {
+            "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/comments/6456350078/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+          },
+          "performed_via_github_app": {
+            "id": 1144995,
+            "client_id": "Iv23liVemv8A9if9v0F2",
+            "slug": "chatgpt-codex-connector",
+            "node_id": "A_kwHOAOQ6Gs4AEXij",
+            "owner": {
+              "login": "openai",
+              "id": 14957082,
+              "node_id": "MDEyOk9yZ2FuaXphdGlvbjE0OTU3MDgy",
+              "avatar_url": "https://avatars.githubusercontent.com/u/14957082?v=4",
+              "gravatar_id": "",
+              "url": "https://api.github.com/users/openai",
+              "html_url": "https://github.com/openai",
+              "followers_url": "https://api.github.com/users/openai/followers",
+              "following_url": "https://api.github.com/users/openai/following{/other_user}",
+              "gists_url": "https://api.github.com/users/openai/gists{/gist_id}",
+              "starred_url": "https://api.github.com/users/openai/starred{/owner}{/repo}",
+              "subscriptions_url": "https://api.github.com/users/openai/subscriptions",
+              "organizations_url": "https://api.github.com/users/openai/orgs",
+              "repos_url": "https://api.github.com/users/openai/repos",
+              "events_url": "https://api.github.com/users/openai/events{/privacy}",
+              "received_events_url": "https://api.github.com/users/openai/received_events",
+              "type": "Organization",
+              "user_view_type": "public",
+              "site_admin": false
+            },
+            "name": "ChatGPT Codex Connector",
+            "description": "Bring ChatGPT and Codex to your GitHub repositories.",
+            "external_url": "https://www.chatgpt.com",
+            "html_url": "https://github.com/apps/chatgpt-codex-connector",
+            "created_at": "2025-02-14T01:37:05Z",
+            "updated_at": "2026-09-23T18:52:59Z",
+            "permissions": {
+              "actions": "write",
+              "checks": "read",
+              "contents": "write",
+              "emails": "read",
+              "issues": "write",
+              "metadata": "read",
+              "pull_requests": "write",
+              "statuses": "read",
+              "workflows": "write"
+            },
+            "events": [
+              "check_run",
+              "check_suite",
+              "commit_comment",
+              "issues",
+              "issue_comment",
+              "pull_request",
+              "pull_request_review",
+              "pull_request_review_comment",
+              "pull_request_review_thread",
+              "repository",
+              "status",
+              "sub_issues"
+            ]
+          },
+          "minimized": null
+        }
+      ],
+      "length": 1
+    },
+    {
+      "key": "pr1issue-comments",
+      "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/1/comments?per_page=100&page=1",
+      "content": [
+        {
+          "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/comments/6346169387",
+          "html_url": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/1#issuecomment-6346169387",
+          "issue_url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/1",
+          "id": 6346169387,
+          "node_id": "IC_kwDOVTw-BM8AAAABekLcKw",
+          "user": {
+            "login": "chatgpt-codex-connector[bot]",
+            "id": 199175422,
+            "node_id": "BOT_kgDOC98s_g",
+            "avatar_url": "https://avatars.githubusercontent.com/in/1144995?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D",
+            "html_url": "https://github.com/apps/chatgpt-codex-connector",
+            "followers_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/followers",
+            "following_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/following{/other_user}",
+            "gists_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/subscriptions",
+            "organizations_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/orgs",
+            "repos_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/repos",
+            "events_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/received_events",
+            "type": "Bot",
+            "user_view_type": "public",
+            "site_admin": false
+          },
+          "created_at": "2026-10-22T16:46:55Z",
+          "updated_at": "2026-10-27T23:33:36Z",
+          "body": "<!-- codex-pull-request-review-summary -->\n<!-- codex-review-state:v1 {\"code_review\":{\"commit_sha\":\"c17f0931db2cae659e4301585b0bf3db9078ca09\",\"has_any_findings\":false,\"has_unresolved_findings\":false,\"status\":\"completed\"},\"security_review\":{\"commit_sha\":null,\"has_any_findings\":null,\"has_unresolved_findings\":null,\"status\":null}} -->\n\n## Codex Review Summary\n\nThis comment shows the latest Codex review activity on this pull request.\n\n| Review | Status | Commit | Review trigger |\n| --- | --- | --- | --- |\n| 📝 **Code Review** | ✅ **Completed** <relative-time datetime=\"2026-10-27T23:33:35.347996Z\">2026-10-27T23:33:35.347996Z</relative-time> | `c17f093` | New commits |\n\n\n\n<details> <summary>ℹ️ About Codex in GitHub</summary>\n<br/>\n\n[Your team has set up Codex to review pull requests in this repo](https://chatgpt.com/codex/cloud/settings/general). Reviews are triggered when you\n- Open a pull request for review\n- Mark a draft as ready\n- Comment \"@codex review\" or \"@codex security review\".\n\nCodex reacts with 👀 while any review is running, comments if it has suggestions, and reacts with 👍 once all reviews finish with no findings.\n\n</details>",
+          "author_association": "NONE",
+          "reactions": {
+            "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/comments/6346169387/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+          },
+          "performed_via_github_app": {
+            "id": 1144995,
+            "client_id": "Iv23liVemv8A9if9v0F2",
+            "slug": "chatgpt-codex-connector",
+            "node_id": "A_kwHOAOQ6Gs4AEXij",
+            "owner": {
+              "login": "openai",
+              "id": 14957082,
+              "node_id": "MDEyOk9yZ2FuaXphdGlvbjE0OTU3MDgy",
+              "avatar_url": "https://avatars.githubusercontent.com/u/14957082?v=4",
+              "gravatar_id": "",
+              "url": "https://api.github.com/users/openai",
+              "html_url": "https://github.com/openai",
+              "followers_url": "https://api.github.com/users/openai/followers",
+              "following_url": "https://api.github.com/users/openai/following{/other_user}",
+              "gists_url": "https://api.github.com/users/openai/gists{/gist_id}",
+              "starred_url": "https://api.github.com/users/openai/starred{/owner}{/repo}",
+              "subscriptions_url": "https://api.github.com/users/openai/subscriptions",
+              "organizations_url": "https://api.github.com/users/openai/orgs",
+              "repos_url": "https://api.github.com/users/openai/repos",
+              "events_url": "https://api.github.com/users/openai/events{/privacy}",
+              "received_events_url": "https://api.github.com/users/openai/received_events",
+              "type": "Organization",
+              "user_view_type": "public",
+              "site_admin": false
+            },
+            "name": "ChatGPT Codex Connector",
+            "description": "Bring ChatGPT and Codex to your GitHub repositories.",
+            "external_url": "https://www.chatgpt.com",
+            "html_url": "https://github.com/apps/chatgpt-codex-connector",
+            "created_at": "2025-02-14T01:37:05Z",
+            "updated_at": "2026-09-23T18:52:59Z",
+            "permissions": {
+              "actions": "write",
+              "checks": "read",
+              "contents": "write",
+              "emails": "read",
+              "issues": "write",
+              "metadata": "read",
+              "pull_requests": "write",
+              "statuses": "read",
+              "workflows": "write"
+            },
+            "events": [
+              "check_run",
+              "check_suite",
+              "commit_comment",
+              "issues",
+              "issue_comment",
+              "pull_request",
+              "pull_request_review",
+              "pull_request_review_comment",
+              "pull_request_review_thread",
+              "repository",
+              "status",
+              "sub_issues"
+            ]
+          },
+          "minimized": null
+        }
+      ],
+      "length": 1
+    },
+    {
+      "key": "pr1reviews",
+      "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/1/reviews?per_page=100&page=1",
+      "content": [
+        {
+          "id": 5617791865,
+          "node_id": "PRR_kwDOVTw-BM8AAAABTtizeQ",
+          "user": {
+            "login": "chatgpt-codex-connector[bot]",
+            "id": 199175422,
+            "node_id": "BOT_kgDOC98s_g",
+            "avatar_url": "https://avatars.githubusercontent.com/in/1144995?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D",
+            "html_url": "https://github.com/apps/chatgpt-codex-connector",
+            "followers_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/followers",
+            "following_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/following{/other_user}",
+            "gists_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/subscriptions",
+            "organizations_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/orgs",
+            "repos_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/repos",
+            "events_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/received_events",
+            "type": "Bot",
+            "user_view_type": "public",
+            "site_admin": false
+          },
+          "body": "<!-- codex-review-receipt:v1 -->\n\n\n### 💡 Codex Review\n\nHere are some automated review suggestions for this pull request.\n\n**Reviewed commit:** `26287b66cc`\n    \n\n<details> <summary>ℹ️ About Codex in GitHub</summary>\n<br/>\n\n[Your team has set up Codex to review pull requests in this repo](https://chatgpt.com/codex/cloud/settings/general). Reviews are triggered when you\n- Open a pull request for review\n- Mark a draft as ready\n- Comment \"@codex review\".\n\nIf Codex has suggestions, it will comment; otherwise it will react with 👍.\n\n\n\n\nCodex can also answer questions or update the PR. Try commenting \"@codex address that feedback\".\n            \n</details>",
+          "state": "COMMENTED",
+          "html_url": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/1#pullrequestreview-5617791865",
+          "pull_request_url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/1",
+          "author_association": "NONE",
+          "_links": {
+            "html": {
+              "href": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/1#pullrequestreview-5617791865"
+            },
+            "pull_request": {
+              "href": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/1"
+            }
+          },
+          "is_copilot_code_review": false,
+          "copilot_code_review_effort": null,
+          "submitted_at": "2026-10-22T16:51:03Z",
+          "commit_id": "26287b66ccd6087955ac587d08ff3ca49d340fd8"
+        }
+      ],
+      "length": 1
+    },
+    {
+      "key": "pr1review-comments",
+      "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/1/comments?per_page=100&page=1",
+      "content": [
+        {
+          "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/comments/4351080444",
+          "pull_request_review_id": 5617791865,
+          "id": 4351080444,
+          "node_id": "PRRC_kwDOVTw-BM8AAAABA1g3_A",
+          "diff_hunk": "@@ -1 +1,90 @@\n-# Php2shell\n\\ No newline at end of file\n+# PHP2SHELL\n+\n+**Prototype défensif de gestion des risques PHP — version 0.1.**\n+\n+PHP2SHELL est un projet visant à inventorier des actifs PHP autorisés, rapprocher des versions déclarées d'avis de sécurité, produire des constats vérifiables et, dans des versions futures, proposer des correctifs soumis à revue humaine.\n+\n+> **État actuel : prototype local, sans réseau.** La V0.1 ne découvre pas les technologies des sites web, ne télécharge pas leur code, n'exploite aucune faille, ne modifie aucun système et ne déploie aucun patch. Un indicateur de version ne prouve jamais qu'un système est vulnérable.\n+\n+## Démarrage rapide\n+\n+**Prérequis :** Python 3.10+ (3.13 utilisé par la CI). Aucune dépendance Python externe.\n+\n+```bash\n+git clone https://github.com/chainsolutions-wealthtech/Php2shell.git\n+cd Php2shell\n+python -m unittest discover -s tests -v\n+python -m app.cli inventory --file lab/targets.json\n+python -m app.cli check-version --php 8.3.34\n+```\n+\n+Sur Windows, utiliser `py -m ...` si `python` n'est pas disponible.\n+\n+## Commandes\n+\n+| Commande | Résultat |\n+| --- | --- |\n+| `python -m app.cli inventory --file lab/targets.json` | Affiche l'inventaire JSON des cibles **déclarées**, sans requête réseau |\n+| `python -m app.cli check-version --php 8.3.34` | Compare une version PHP fournie à des seuils d'exemple, sans attester l'exploitabilité |\n+| `python -m unittest discover -s tests -v` | Lance les tests de non-régression |\n+| `docker build -t php2shell .` | Construit l'image CLI (Docker requis) |\n+| `docker run --rm php2shell` | Affiche l'inventaire fictif intégré |\n+| `docker compose --profile lab build` | Construit la fixture PHP facultative, sans la démarrer |\n+\n+**Exemple d'inventaire** (`lab/targets.json`) :\n+\n+```json\n+[\n+  {\"hostname\": \"portail-demo.example\", \"scope\": \"owned_source\", \"evidence\": \"fictional-local-lab\"},\n+  {\"hostname\": \"public-demo.example\", \"scope\": \"public_metadata\"}\n+]\n+```\n+\n+- `public_metadata` : uniquement les informations déjà déclarées. Aucun accès au code source.\n+- `owned_source` : une preuve d'autorisation non vide est obligatoire. Ce champ est **déclaratif**, non une vérification d'identité; la V0.1 ne lit toujours pas le code source.\n+- `hostname` : nom DNS, sans schéma, port ni chemin.",
+          "path": "README.md",
+          "commit_id": "c17f0931db2cae659e4301585b0bf3db9078ca09",
+          "original_commit_id": "26287b66ccd6087955ac587d08ff3ca49d340fd8",
+          "user": {
+            "login": "chatgpt-codex-connector[bot]",
+            "id": 199175422,
+            "node_id": "BOT_kgDOC98s_g",
+            "avatar_url": "https://avatars.githubusercontent.com/in/1144995?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D",
+            "html_url": "https://github.com/apps/chatgpt-codex-connector",
+            "followers_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/followers",
+            "following_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/following{/other_user}",
+            "gists_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/subscriptions",
+            "organizations_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/orgs",
+            "repos_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/repos",
+            "events_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/received_events",
+            "type": "Bot",
+            "user_view_type": "public",
+            "site_admin": false
+          },
+          "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Validate each DNS label before calling the value a hostname**\n\nThis new contract says `hostname` is a DNS name, but `Target.__post_init__` only checks the first and last character of the entire string. Inputs such as `ok.-bad.example`, `ok.bad-.example`, and labels longer than 63 characters are therefore accepted and emitted in the inventory despite being invalid DNS hostnames. Either validate every label and its length or document the field as a looser identifier.\n\nUseful? React with 👍 / 👎.\n\n<!-- codex-code-review-finding:v1 -->",
+          "created_at": "2026-10-22T16:51:04Z",
+          "updated_at": "2026-10-22T16:51:04Z",
+          "html_url": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/1#discussion_r4351080444",
+          "pull_request_url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/1",
+          "_links": {
+            "self": {
+              "href": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/comments/4351080444"
+            },
+            "html": {
+              "href": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/1#discussion_r4351080444"
+            },
+            "pull_request": {
+              "href": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/1"
+            }
+          },
+          "reactions": {
+            "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/comments/4351080444/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+          },
+          "start_line": null,
+          "original_start_line": null,
+          "start_side": null,
+          "line": 45,
+          "original_line": 45,
+          "side": "RIGHT",
+          "author_association": "NONE",
+          "original_position": 47,
+          "position": 47,
+          "subject_type": "line",
+          "is_copilot_code_review": false,
+          "copilot_code_review_sources": []
+        },
+        {
+          "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/comments/4351080456",
+          "pull_request_review_id": 5617791865,
+          "id": 4351080456,
+          "node_id": "PRRC_kwDOVTw-BM8AAAABA1g4CA",
+          "diff_hunk": "@@ -0,0 +1,47 @@\n+import json\n+import tempfile\n+import unittest\n+from pathlib import Path\n+\n+from app.core import Scope, Target, evaluate, load_targets, parse_version\n+\n+class HardeningTests(unittest.TestCase):\n+    def test_invalid_version_suffix(self):\n+        for value in ('8.3.34-ubuntu', '8.3', '8.3.34.1', '', ' 8.3.34'):\n+            with self.subTest(value=value):\n+                with self.assertRaises(ValueError):\n+                    parse_version(value)\n+\n+    def test_hostname_normalization(self):\n+        self.assertEqual(Target('DEMO.EXAMPLE', Scope.PUBLIC).hostname, 'demo.example')\n+\n+    def test_hostname_rejects_url(self):\n+        for value in ('https://demo.example', 'demo.example:443', 'a..b', '-bad.example'):\n+            with self.subTest(value=value):\n+                with self.assertRaises(ValueError):\n+                    Target(value, Scope.PUBLIC)\n+\n+    def test_inventory_malformed_json(self):\n+        with tempfile.TemporaryDirectory() as d:\n+            path = Path(d) / 'targets.json'\n+            path.write_text('{bad', encoding='utf-8')\n+            with self.assertRaises(json.JSONDecodeError):\n+                load_targets(path)\n+\n+    def test_inventory_must_be_list(self):\n+        with tempfile.TemporaryDirectory() as d:\n+            path = Path(d) / 'targets.json'\n+            path.write_text('{}', encoding='utf-8')\n+            with self.assertRaises(ValueError):\n+                load_targets(path)\n+\n+    def test_scope_rejects_unknown(self):\n+        with self.assertRaises(ValueError):\n+            Scope('unauthorized')\n+\n+    def test_reference_fix_not_proof(self):\n+        result = evaluate('8.3.34')\n+        self.assertTrue(all('verify vendor backports' in x['note'] for x in result))",
+          "path": "tests/test_hardening.py",
+          "commit_id": "c17f0931db2cae659e4301585b0bf3db9078ca09",
+          "original_commit_id": "26287b66ccd6087955ac587d08ff3ca49d340fd8",
+          "user": {
+            "login": "chatgpt-codex-connector[bot]",
+            "id": 199175422,
+            "node_id": "BOT_kgDOC98s_g",
+            "avatar_url": "https://avatars.githubusercontent.com/in/1144995?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D",
+            "html_url": "https://github.com/apps/chatgpt-codex-connector",
+            "followers_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/followers",
+            "following_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/following{/other_user}",
+            "gists_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/subscriptions",
+            "organizations_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/orgs",
+            "repos_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/repos",
+            "events_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/received_events",
+            "type": "Bot",
+            "user_view_type": "public",
+            "site_admin": false
+          },
+          "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Require a nonempty result before checking advisory notes**\n\nIf `evaluate()` regresses to returning an empty list, `all(...)` evaluates to `True`, so this new hardening test still passes even though the CLI emits no advisory or cautionary note at all. Assert that the result is nonempty—or verify the expected advisory count or IDs—before checking every note.\n\nUseful? React with 👍 / 👎.\n\n<!-- codex-code-review-finding:v1 -->",
+          "created_at": "2026-10-22T16:51:04Z",
+          "updated_at": "2026-10-22T16:51:04Z",
+          "html_url": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/1#discussion_r4351080456",
+          "pull_request_url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/1",
+          "_links": {
+            "self": {
+              "href": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/comments/4351080456"
+            },
+            "html": {
+              "href": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/1#discussion_r4351080456"
+            },
+            "pull_request": {
+              "href": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/1"
+            }
+          },
+          "reactions": {
+            "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/comments/4351080456/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+          },
+          "start_line": 58,
+          "original_start_line": 43,
+          "start_side": "RIGHT",
+          "line": 60,
+          "original_line": 44,
+          "side": "RIGHT",
+          "author_association": "NONE",
+          "original_position": 44,
+          "position": 60,
+          "subject_type": "line",
+          "is_copilot_code_review": false,
+          "copilot_code_review_sources": []
+        },
+        {
+          "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/comments/4351080464",
+          "pull_request_review_id": 5617791865,
+          "id": 4351080464,
+          "node_id": "PRRC_kwDOVTw-BM8AAAABA1g4EA",
+          "diff_hunk": "@@ -0,0 +1,27 @@\n+# Guide d'utilisation\n+\n+## Installation\n+Installer Python 3.10 ou plus récent et cloner le dépôt. Aucun `pip install` n'est nécessaire. Depuis la racine du dépôt, exécuter `python -m unittest discover -s tests -v`.\n+\n+## Inventaire fictif\n+`python -m app.cli inventory --file lab/targets.json`\n+\n+Le fichier doit être un tableau JSON d'objets ayant `hostname` et `scope`, avec `evidence` non vide pour `owned_source`. Les domaines `.example` sont fictifs. Une entrée invalide déclenche une erreur et le programme s'arrête; il ne tente aucune connexion.\n+\n+## Comparaison de version\n+`python -m app.cli check-version --php 8.3.34`\n+\n+La version doit suivre exactement le format numérique `majeure.mineure.correctif`. Les statuts retournés sont `below_reference_fix`, `at_or_above_reference_fix` et `review_vendor_support`. **Ces statuts ne sont pas des diagnostics de vulnérabilité.** Les seuils d'exemple ne sont pas validés.\n+\n+## Docker\n+`docker build -t php2shell .` puis `docker run --rm php2shell` pour le CLI. `docker compose --profile lab build` construit la fixture PHP, sans publication de port. Le Dockerfile de fixture utilise `php:8.3-cli` et **ne reproduit pas** un environnement PHP 8.3.34 vulnérable.",
+          "path": "docs/USAGE.md",
+          "commit_id": "0201b4bfdf0a6261616f9c51470ed7cbed394e57",
+          "original_commit_id": "26287b66ccd6087955ac587d08ff3ca49d340fd8",
+          "user": {
+            "login": "chatgpt-codex-connector[bot]",
+            "id": 199175422,
+            "node_id": "BOT_kgDOC98s_g",
+            "avatar_url": "https://avatars.githubusercontent.com/in/1144995?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D",
+            "html_url": "https://github.com/apps/chatgpt-codex-connector",
+            "followers_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/followers",
+            "following_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/following{/other_user}",
+            "gists_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/subscriptions",
+            "organizations_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/orgs",
+            "repos_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/repos",
+            "events_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/chatgpt-codex-connector%5Bbot%5D/received_events",
+            "type": "Bot",
+            "user_view_type": "public",
+            "site_admin": false
+          },
+          "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Avoid guaranteeing the patch version of a floating image tag**\n\nWhen the mutable `php:8.3-cli` tag resolves to—or a local cache retains—PHP 8.3.34, this fixture does run that exact runtime, contrary to the new assurance here. Because the minor-version tag does not select a fixed patch release, either pin and verify a specific image digest/version or tell users to inspect `php -v` instead of claiming that 8.3.34 cannot be reproduced.\n\nUseful? React with 👍 / 👎.\n\n<!-- codex-code-review-finding:v1 -->",
+          "created_at": "2026-10-22T16:51:04Z",
+          "updated_at": "2026-10-22T16:51:04Z",
+          "html_url": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/1#discussion_r4351080464",
+          "pull_request_url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/1",
+          "_links": {
+            "self": {
+              "href": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/comments/4351080464"
+            },
+            "html": {
+              "href": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/1#discussion_r4351080464"
+            },
+            "pull_request": {
+              "href": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/1"
+            }
+          },
+          "reactions": {
+            "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/comments/4351080464/reactions",
+            "total_count": 0,
+            "+1": 0,
+            "-1": 0,
+            "laugh": 0,
+            "hooray": 0,
+            "confused": 0,
+            "heart": 0,
+            "rocket": 0,
+            "eyes": 0
+          },
+          "start_line": null,
+          "original_start_line": null,
+          "start_side": null,
+          "line": null,
+          "original_line": 17,
+          "side": "RIGHT",
+          "author_association": "NONE",
+          "original_position": 17,
+          "position": 1,
+          "subject_type": "line",
+          "is_copilot_code_review": false,
+          "copilot_code_review_sources": []
+        }
+      ],
+      "length": 3
+    },
+    {
+      "key": "pr2issue-comments",
+      "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/2/comments?per_page=100&page=1",
+      "content": [],
+      "length": 0
+    },
+    {
+      "key": "pr2reviews",
+      "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/2/reviews?per_page=100&page=1",
+      "content": [],
+      "length": 0
+    },
+    {
+      "key": "pr2review-comments",
+      "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/2/comments?per_page=100&page=1",
+      "content": [],
+      "length": 0
+    },
+    {
+      "key": "pr3issue-comments",
+      "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/issues/3/comments?per_page=100&page=1",
+      "content": [],
+      "length": 0
+    },
+    {
+      "key": "pr3reviews",
+      "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/3/reviews?per_page=100&page=1",
+      "content": [],
+      "length": 0
+    },
+    {
+      "key": "pr3review-comments",
+      "url": "https://api.github.com/repos/chainsolutions-wealthtech/Php2shell/pulls/3/comments?per_page=100&page=1",
+      "content": [],
+      "length": 0
+    }
+  ],
+  "errors": []
+}

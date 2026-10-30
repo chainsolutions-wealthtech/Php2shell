@@ -1,0 +1,165 @@
+{
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "pr": 1,
+  "created_at": "2026-10-22T16:45:18Z",
+  "updated_at": "2026-10-27T23:34:29Z",
+  "source": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/1",
+  "head_sha": "c17f0931db2cae659e4301585b0bf3db9078ca09",
+  "base_sha": "a9d799b008fc65ed5745745bc4ef09e8b889aabe",
+  "state": "open",
+  "draft": false,
+  "merged": false,
+  "description": "## Objet\nDocumenter le projet, son fonctionnement, l'installation, les commandes, Docker, la CI, la gouvernance et les limites de sécurité.\n\n## Changements\n- README complet en français avec commandes reproductibles et avertissements CVE\n- Guides architecture, utilisation, sécurité et feuille de route\n- Gouvernance clarifiée, indépendante des dépôts MCP/GRT\n- 7 tests additionnels sur entrées malformées, normalisation, portées et interprétation\n\n## Sécurité\nAucun scan distant, exploitation, accès à des systèmes tiers ni patch déployé. Les seuils CVE restent des données de démonstration non validées.\n\n## Validation\nCI V0.1 sur main déjà réussie (run 39816182850). CI de cette PR à vérifier avant fusion. Aucun changement du moteur de production.\n\n## Rollback\nRevert du commit de documentation et de tests si nécessaire. Ne pas fusionner sans contrôle des checks.",
+  "reported_commits": 7,
+  "observed_commits": 7,
+  "reported_files": 9,
+  "observed_files": 9,
+  "commits": [
+    {
+      "sha": "bcc102ed5ba53bfab82067a1bcf3634817c4c87f",
+      "date": "2026-10-22T16:45:03Z",
+      "message": "docs(test): complete French usage, architecture, security and hardening coverage",
+      "parents": [
+        "a9d799b008fc65ed5745745bc4ef09e8b889aabe"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/bcc102ed5ba53bfab82067a1bcf3634817c4c87f"
+    },
+    {
+      "sha": "9968b3b7d15432d8e705d5aea0447f25a9c00dad",
+      "date": "2026-10-22T16:47:33Z",
+      "message": "docs: specify governed MCP access via OIDC, HTTPS and SSH fallback",
+      "parents": [
+        "bcc102ed5ba53bfab82067a1bcf3634817c4c87f"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/9968b3b7d15432d8e705d5aea0447f25a9c00dad"
+    },
+    {
+      "sha": "26287b66ccd6087955ac587d08ff3ca49d340fd8",
+      "date": "2026-10-22T16:47:40Z",
+      "message": "docs: link MCP access design from project overview",
+      "parents": [
+        "9968b3b7d15432d8e705d5aea0447f25a9c00dad"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/26287b66ccd6087955ac587d08ff3ca49d340fd8"
+    },
+    {
+      "sha": "baa6c59074c376d305430e43367e0227fe8ea0ba",
+      "date": "2026-10-27T23:31:59Z",
+      "message": "fix(v0.1): validate DNS hostname label syntax and length independently",
+      "parents": [
+        "26287b66ccd6087955ac587d08ff3ca49d340fd8"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/baa6c59074c376d305430e43367e0227fe8ea0ba"
+    },
+    {
+      "sha": "0201b4bfdf0a6261616f9c51470ed7cbed394e57",
+      "date": "2026-10-27T23:32:16Z",
+      "message": "test(v0.1): assert nonempty advisory notes and DNS-label boundary regressions",
+      "parents": [
+        "baa6c59074c376d305430e43367e0227fe8ea0ba"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/0201b4bfdf0a6261616f9c51470ed7cbed394e57"
+    },
+    {
+      "sha": "06baa28443253b4667abd563da411bd645958f19",
+      "date": "2026-10-27T23:32:29Z",
+      "message": "docs(v0.1): explain floating PHP Docker tag and require runtime verification",
+      "parents": [
+        "0201b4bfdf0a6261616f9c51470ed7cbed394e57"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/06baa28443253b4667abd563da411bd645958f19"
+    },
+    {
+      "sha": "c17f0931db2cae659e4301585b0bf3db9078ca09",
+      "date": "2026-10-27T23:32:44Z",
+      "message": "docs(v0.1): use verified Compose service lab for PHP runtime introspection",
+      "parents": [
+        "06baa28443253b4667abd563da411bd645958f19"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/c17f0931db2cae659e4301585b0bf3db9078ca09"
+    }
+  ],
+  "files": [
+    {
+      "filename": "README.md",
+      "status": "modified",
+      "additions": 90,
+      "deletions": 1,
+      "changes": 91,
+      "patch": "@@ -1 +1,90 @@\n-# Php2shell\n\\ No newline at end of file\n+# PHP2SHELL\n+\n+**Prototype défensif de gestion des risques PHP — version 0.1.**\n+\n+PHP2SHELL est un projet visant à inventorier des actifs PHP autorisés, rapprocher des versions déclarées d'avis de sécurité, produire des constats vérifiables et, dans des versions futures, proposer des correctifs soumis à revue humaine.\n+\n+> **État actuel : prototype local, sans réseau.** La V0.1 ne découvre pas les technologies des sites web, ne télécharge pas leur code, n'exploite aucune faille, ne modifie aucun système et ne déploie aucun patch. Un indicateur de version ne prouve jamais qu'un système est vulnérable.\n+\n+## Démarrage rapide\n+\n+**Prérequis :** Python 3.10+ (3.13 utilisé par la CI). Aucune dépendance Python externe.\n+\n+```bash\n+git clone https://github.com/chainsolutions-wealthtech/Php2shell.git\n+cd Php2shell\n+python -m unittest discover -s tests -v\n+python -m app.cli inventory --file lab/targets.json\n+python -m app.cli check-version --php 8.3.34\n+```\n+\n+Sur Windows, utiliser `py -m ...` si `python` n'est pas disponible.\n+\n+## Commandes\n+\n+| Commande | Résultat |\n+| --- | --- |\n+| `python -m app.cli inventory --file lab/targets.json` | Affiche l'inventaire JSON des cibles **déclarées**, sans requête réseau |\n+| `python -m app.cli check-version --php 8.3.34` | Compare une version PHP fournie à des seuils d'exemple, sans attester l'exploitabilité |\n+| `python -m unittest discover -s tests -v` | Lance les tests de non-régression |\n+| `docker build -t php2shell .` | Construit l'image CLI (Docker requis) |\n+| `docker run --rm php2shell` | Affiche l'inventaire fictif intégré |\n+| `docker compose --profile lab build` | Construit la fixture PHP facultative, sans la démarrer |\n+\n+**Exemple d'inventaire** (`lab/targets.json`) :\n+\n+```json\n+[\n+  {\"hostname\": \"portail-demo.example\", \"scope\": \"owned_source\", \"evidence\": \"fictional-local-lab\"},\n+  {\"hostname\": \"public-demo.example\", \"scope\": \"public_metadata\"}\n+]\n+```\n+\n+- `public_metadata` : uniquement les informations déjà déclarées. Aucun accès au code source.\n+- `owned_source` : une preuve d'autorisation non vide est obligatoire. Ce champ est **déclaratif**, non une vérification d'identité; la V0.1 ne lit toujours pas le code source.\n+- `hostname` : nom DNS, sans schéma, port ni chemin.\n+\n+La sortie est du JSON sur la sortie standard. Le programme ne crée aucun fichier de rapport et n'effectue aucun appel réseau.\n+\n+## Comprendre le diagnostic de version\n+\n+`below_reference_fix` signifie uniquement que la version indiquée est inférieure au seuil configuré dans le prototype. `at_or_above_reference_fix` signifie l'inverse. `review_vendor_support` indique qu'aucun seuil n'est configuré pour la branche.\n+\n+**Les références CVE-2026-109618 et CVE-2026-109619 ainsi que les versions correctives codées dans `app/core.py` sont des données d'exemple non validées contre les avis officiels.** Ne pas les utiliser pour déclarer une vulnérabilité réelle ni prescrire un correctif. Les distributions peuvent appliquer des rétroportages.\n+\n+## Organisation du dépôt\n+\n+```text\n+app/                    CLI et moteur hors ligne\n+tests/                  Tests unitaires\n+lab/                    Cibles fictives et fixture PHP non exposée\n+docs/ARCHITECTURE.md    Architecture, flux et composants\n+docs/USAGE.md           Guide d'utilisation et interprétation\n+docs/SECURITY.md        Modèle de menace, limites et autorisations\n+docs/GOVERNANCE.md      Contrôles de changement\n+docs/ROADMAP.md         Plan de développement\n+.github/workflows/ci.yml  Tests automatiques\n+Dockerfile              Image CLI\n+docker-compose.yml      Fixture facultative isolée\n+```\n+\n+## Accès futur au serveur MCP\n+\n+L'architecture prévue distingue GitHub App, OIDC GitHub Actions, OAuth/OIDC MCP HTTPS et SSH de secours. Aucun accès serveur n'est configuré en V0.1. Voir [le plan d'accès MCP gouverné](docs/MCP_ACCESS.md).\n+\n+## Sécurité, gouvernance et contributions\n+\n+Toute analyse de code ou correction future exige une autorisation vérifiable du propriétaire, une portée explicite, des tests, une validation humaine et un plan de retour arrière. Ne jamais soumettre de secrets ni de données sensibles. Consulter [Sécurité](docs/SECURITY.md), [Gouvernance](docs/GOVERNANCE.md) et [Architecture](docs/ARCHITECTURE.md).\n+\n+## Feuille de route\n+\n+1. Vérifier les avis officiels et leur provenance, supprimer les seuils non sourcés.\n+2. Introduire un inventaire versionné et des rapports JSON avec horodatage et traçabilité.\n+3. Ajouter une analyse **locale** de dépôts explicitement autorisés.\n+4. Proposer des correctifs sous forme de diff, sans application automatique.\n+5. Ajouter une validation CI, une approbation humaine et un mécanisme de rollback.\n+6. Étudier une API, une interface web et des agents déployables avec permissions minimales.\n+\n+Voir [la feuille de route complète](docs/ROADMAP.md).\n+\n+**Statut :** V0.1 expérimentale. Aucune garantie de détection exhaustive ou de remédiation.",
+      "blob_url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/c17f0931db2cae659e4301585b0bf3db9078ca09/README.md"
+    },
+    {
+      "filename": "app/core.py",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 1,
+      "changes": 8,
+      "patch": "@@ -16,7 +16,13 @@ class Target:\n \n     def __post_init__(self):\n         host = self.hostname.strip().lower()\n-        if not re.fullmatch(r'[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?', host) or '..' in host:\n+        # Validate each DNS label independently, not merely the whole name.\n+        # Total length <= 253, each ASCII label 1..63 chars, no leading or\n+        # trailing hyphen. This intentionally rejects URLs and IDN Unicode:\n+        # callers must first convert authorized IDNs to ASCII/Punycode.\n+        if (not host or len(host) > 253 or\n+                any(not re.fullmatch(r'[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?', label)\n+                    for label in host.split('.'))):\n             raise ValueError('Invalid hostname')\n         object.__setattr__(self, 'hostname', host)\n         if self.scope == Scope.OWNED and not self.evidence.strip():",
+      "blob_url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/c17f0931db2cae659e4301585b0bf3db9078ca09/app%2Fcore.py"
+    },
+    {
+      "filename": "docs/ARCHITECTURE.md",
+      "status": "added",
+      "additions": 23,
+      "deletions": 0,
+      "changes": 23,
+      "patch": "@@ -0,0 +1,23 @@\n+# Architecture PHP2SHELL\n+\n+## Objectif\n+Réduire les risques PHP dans les actifs autorisés, de la qualification des versions jusqu'à une remédiation gouvernée. Le prototype actuel n'effectue que des opérations déterministes hors ligne.\n+\n+## Flux V0.1\n+1. L'opérateur fournit un fichier JSON local ou une version PHP.\n+2. `app/cli.py` analyse les arguments.\n+3. `app/core.py` valide les noms d'hôte et les portées ou compare les versions.\n+4. Le résultat est écrit en JSON sur stdout. Aucun stockage ni trafic réseau.\n+\n+## Modules\n+- `Target` : validation d'un nom DNS et de la preuve déclarative en portée `owned_source`.\n+- `load_targets` : chargement de la liste JSON.\n+- `inventory` : restitution de la portée, sans découverte de sites.\n+- `parse_version` / `evaluate` : comparaison de versions, avec données de démonstration non certifiées.\n+- `tests/` : tests de comportement et de rejet d'entrées.\n+\n+## Frontières de confiance\n+Les fichiers d'inventaire sont non fiables : ne jamais y interpréter de commandes ou d'URL. La preuve d'autorisation est une simple chaîne, pas un jeton de privilège. Aucun processus distant, scanner réseau ou moteur de patch n'existe dans cette version.\n+\n+## Architecture cible (non implémentée)\n+Registre d'actifs et mandats -> catalogue d'avis sourcés -> analyseurs locaux autorisés -> moteur de propositions de patch -> banc de tests -> approbation humaine -> déploiement contrôlé -> audit et rollback. Chaque transition nécessitera des preuves et des permissions minimales.",
+      "blob_url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/c17f0931db2cae659e4301585b0bf3db9078ca09/docs%2FARCHITECTURE.md"
+    },
+    {
+      "filename": "docs/GOVERNANCE.md",
+      "status": "modified",
+      "additions": 15,
+      "deletions": 2,
+      "changes": 17,
+      "patch": "@@ -1,3 +1,16 @@\n-# Governance and non-regression\n+# Gouvernance et non-régression\n \n-No code changes to third-party systems. No remote active tests in v0.1. Public assets are metadata-only. Ownership must be evidenced for source-level operations. Any future patch requires a reviewed diff, tests, explicit approval, rollback plan and audit trail. CI has read-only GitHub permissions. No secrets in repository. Treat remote headers as untrusted; do not infer vulnerability solely from a technology fingerprint.\n+## Autorités\n+Le dépôt `chainsolutions-wealthtech/Php2shell` est indépendant des dépôts MCP/GRT. Ne pas confondre leurs permissions ni leurs règles d'administration.\n+\n+## Cycle de changement\n+1. Lire README, architecture, sécurité, tests et état GitHub.\n+2. Créer une branche dédiée à partir du HEAD vérifié.\n+3. Limiter le diff au mandat; ne pas modifier de sites tiers.\n+4. Exécuter les tests, vérifier la CI et analyser le diff.\n+5. Publier une PR avec justification, risques et plan de rollback.\n+6. Faire approuver avant fusion si les règles du dépôt le requièrent.\n+7. Enregistrer les résultats et prochaines actions dans la PR.\n+\n+## Limites\n+Pas de tests actifs sur sites tiers, pas de collecte de code distant, pas d'exploitation ni de patch distant en V0.1. Les avis CVE de démonstration ne sont pas des renseignements de sécurité validés. La CI utilise des permissions GitHub minimales. Aucun secret dans Git.",
+      "blob_url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/c17f0931db2cae659e4301585b0bf3db9078ca09/docs%2FGOVERNANCE.md"
+    },
+    {
+      "filename": "docs/MCP_ACCESS.md",
+      "status": "added",
+      "additions": 41,
+      "deletions": 0,
+      "changes": 41,
+      "patch": "@@ -0,0 +1,41 @@\n+# Accès gouverné au serveur MCP — architecture cible\n+\n+**Statut : spécification uniquement, non déployée.** Ce document ne donne aucune autorisation d'accès à un serveur et ne configure aucun secret.\n+\n+## Objectif\n+Permettre à PHP2SHELL, pour des actifs possédés ou explicitement autorisés, de demander une opération limitée sur un serveur MCP avec audit, reprise et retour arrière. Le dépôt PHP2SHELL reste indépendant de la gouvernance du dépôt Patricked-code/MCP.\n+\n+## Ordre des transports et de l'authentification\n+1. **OIDC de GitHub Actions** : un workflow de dépôt approuvé demande un jeton OIDC de courte durée (`id-token: write` uniquement pour le job concerné). Une passerelle de confiance vérifie obligatoirement l'émetteur, l'audience, le dépôt, la référence Git, l'environnement, l'expiration et la signature. Elle échange ensuite ce jeton contre une autorisation serveur **à portée limitée**. Aucun accès n'est acquis avant validation de la politique côté serveur.\n+2. **MCP HTTPS OAuth/OIDC** : si le serveur MCP expose une authentification OAuth/OIDC standard, utiliser un client dédié, le flux de connexion supporté et des jetons à courte durée de vie. La GitHub App ne remplace pas ce client.\n+3. **Fallback SSH** : exclusivement sur serveur appartenant à l'opérateur ou mandaté, avec clé/certificat SSH de courte durée, hôte épinglé dans `known_hosts`, compte non privilégié, commandes autorisées explicitement et journaux d'audit. Pas de `StrictHostKeyChecking=no`, pas de clé privée en dépôt, pas de SSH Bridge obligatoire.\n+4. **Repli en lecture seule** : si aucune méthode n'est autorisée, générer un rapport et demander une validation humaine. Ne pas contourner les contrôles.\n+\n+## Séparation des autorités\n+- L'installation GitHub App `145098929` autorise des opérations GitHub selon ses permissions. Elle **ne constitue pas** un jeton serveur.\n+- Les permissions de GitHub Actions sont distinctes des permissions de la GitHub App.\n+- Le rôle d'une identité GitHub doit être mappé à un mandat serveur vérifié, jamais déduit du seul nom du dépôt.\n+- Aucun jeton, clé SSH ou secret n'est publié dans ce dépôt public.\n+\n+## Contrôles avant toute exécution\n+- Enregistrer l'actif, le propriétaire, la preuve d'autorisation, le mandat, l'action, la durée et la fenêtre d'intervention.\n+- Vérifier la branche/commit immuable, la CI, l'approbation indépendante et les règles d'environnement.\n+- Refuser les actions non listées, les destinations non autorisées et les commandes arbitraires.\n+- Commencer par `read-only`; réserver les modifications à un workflow distinct avec approbation explicite, sauvegarde et rollback.\n+- Journaliser identités, décisions, hash des artefacts et résultats sans exposer de secrets.\n+- Prévoir expiration, révocation, anti-rejeu, quotas, limitation réseau et procédure d'arrêt d'urgence.\n+\n+## Plan d'implémentation (non réalisé)\n+1. Inventorier en lecture seule les capacités réelles du serveur MCP, son fournisseur OIDC et les permissions de la GitHub App.\n+2. Rédiger une matrice `action × identité × actif × environnement`.\n+3. Déployer un **laboratoire fictif** de validation des claims OIDC et des refus d'accès.\n+4. Tester un appel MCP `ping` en lecture seule via HTTPS et identité autorisée.\n+5. Tester le fallback SSH sur une machine de laboratoire, avec restriction de commandes.\n+6. Mettre en place des workflows manuels `workflow_dispatch` à permissions minimales et environnement protégé.\n+7. Soumettre une revue de sécurité indépendante avant toute utilisation sur un serveur réel.\n+\n+## Critères de réussite\n+- OIDC fonctionne sans secret statique GitHub et refuse les claims incorrects.\n+- SSH refuse les hôtes non approuvés et toute commande hors allowlist.\n+- La perte de tous les canaux d'accès produit un **échec fermé**, pas une élévation de privilège.\n+- Chaque opération est attribuable à un mandat, un commit et une identité vérifiés.",
+      "blob_url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/c17f0931db2cae659e4301585b0bf3db9078ca09/docs%2FMCP_ACCESS.md"
+    },
+    {
+      "filename": "docs/ROADMAP.md",
+      "status": "added",
+      "additions": 34,
+      "deletions": 0,
+      "changes": 34,
+      "patch": "@@ -0,0 +1,34 @@\n+# Feuille de route\n+\n+## Phase 0 — Fondations (V0.1)\n+- [x] Dépôt public et CLI hors ligne\n+- [x] Inventaire déclaré et validation élémentaire\n+- [x] Tests unitaires et GitHub Actions\n+- [x] Documentation d'architecture, sécurité et usage\n+- [ ] Validation officielle et traçabilité des références CVE\n+\n+## Phase 1 — Fiabilisation\n+- [ ] Catalogue d'avis avec source, date, signature/empreinte, statut de vérification\n+- [ ] Tests de propriétés et de fichiers malformés\n+- [ ] Schéma JSON versionné, rapport JSON/CSV, journaux sans secrets\n+- [ ] Versions PHP non standard et correctifs rétroportés\n+\n+## Phase 2 — Analyse autorisée\n+- [ ] Import local de dépôts appartenant à l'opérateur\n+- [ ] Analyse statique non destructive et règles versionnées\n+- [ ] Registre de mandats et périmètres contrôlés\n+- [ ] Tests sur fixtures et jeux de données synthétiques\n+\n+## Phase 3 — Remédiation gouvernée\n+- [ ] Propositions de diff avec justification et tests\n+- [ ] Revue indépendante et validation humaine obligatoire\n+- [ ] Plan de sauvegarde et retour arrière\n+- [ ] Traçabilité complète des décisions et checkpoints\n+\n+## Phase 4 — Plateforme\n+- [ ] API, tableau de bord et files de tâches\n+- [ ] Agents à permissions minimales et identités stables\n+- [ ] Rapports PDF/JSON, métriques et supervision\n+- [ ] Déploiement progressif, audit de sécurité indépendant\n+\n+**Règle :** aucune étape future ne doit être présentée comme déjà implémentée.",
+      "blob_url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/c17f0931db2cae659e4301585b0bf3db9078ca09/docs%2FROADMAP.md"
+    },
+    {
+      "filename": "docs/SECURITY.md",
+      "status": "added",
+      "additions": 23,
+      "deletions": 0,
+      "changes": 23,
+      "patch": "@@ -0,0 +1,23 @@\n+# Sécurité et limites\n+\n+PHP2SHELL V0.1 est **strictement hors ligne**. Ne pas utiliser son résultat comme preuve qu'un système est vulnérable ou sûr.\n+\n+## Règles d'autorisation\n+- Actifs tiers : seules les données fournies par l'opérateur sont acceptées; aucune sonde, aucun accès au code.\n+- Actifs possédés : une portée et une autorisation explicites sont nécessaires avant toute analyse de code future.\n+- L'étiquette `owned_source` et le champ `evidence` ne constituent **pas** une vérification d'identité.\n+- Aucun exploit, aucune tentative de contournement, aucun patch appliqué à distance.\n+- Ne jamais placer de jetons, identifiants ou données confidentielles dans les fichiers suivis par Git.\n+\n+## Risques connus\n+1. **Faux positifs / faux négatifs :** comparaison de versions seule, rétroportages possibles.\n+2. **Sources CVE :** les données de démonstration du code doivent être remplacées par des avis authentifiés et vérifiés avant production.\n+3. **Entrées :** valider les noms DNS, le JSON, les versions; ne pas exécuter de chaînes fournies par l'utilisateur.\n+4. **Docker :** le lab est facultatif et ne publie pas de port; ne pas l'exposer sans revue.\n+5. **Dépendances :** vérifier les images de base et les actions CI, et épingler leurs empreintes avant un usage critique.\n+\n+## Signalement\n+Ouvrir une issue sans inclure d'informations exploitables sensibles, de secrets ou de détails sur des cibles réelles non autorisées. Pour les incidents critiques, utiliser un canal privé convenu avec les mainteneurs.\n+\n+## Critères pour une future remédiation\n+Mandat explicite, provenance de l'avis, diagnostic reproductible, diff limité, tests, approbation humaine, sauvegarde, rollback et journal d'audit.",
+      "blob_url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/c17f0931db2cae659e4301585b0bf3db9078ca09/docs%2FSECURITY.md"
+    },
+    {
+      "filename": "docs/USAGE.md",
+      "status": "added",
+      "additions": 27,
+      "deletions": 0,
+      "changes": 27,
+      "patch": "@@ -0,0 +1,27 @@\n+# Guide d'utilisation\n+\n+## Installation\n+Installer Python 3.10 ou plus récent et cloner le dépôt. Aucun `pip install` n'est nécessaire. Depuis la racine du dépôt, exécuter `python -m unittest discover -s tests -v`.\n+\n+## Inventaire fictif\n+`python -m app.cli inventory --file lab/targets.json`\n+\n+Le fichier doit être un tableau JSON d'objets ayant `hostname` et `scope`, avec `evidence` non vide pour `owned_source`. Les domaines `.example` sont fictifs. Une entrée invalide déclenche une erreur et le programme s'arrête; il ne tente aucune connexion.\n+\n+## Comparaison de version\n+`python -m app.cli check-version --php 8.3.34`\n+\n+La version doit suivre exactement le format numérique `majeure.mineure.correctif`. Les statuts retournés sont `below_reference_fix`, `at_or_above_reference_fix` et `review_vendor_support`. **Ces statuts ne sont pas des diagnostics de vulnérabilité.** Les seuils d'exemple ne sont pas validés.\n+\n+## Docker\n+`docker build -t php2shell .` puis `docker run --rm php2shell` pour le CLI. `docker compose --profile lab build` construit la fixture PHP, sans publication de port. Le Dockerfile de fixture utilise `php:8.3-cli`, **une étiquette mouvante qui ne garantit aucune version corrective précise**. Selon le registre ou le cache local, l'image peut correspondre à différentes versions correctives de PHP 8.3. Pour identifier la version réellement utilisée, exécuter `docker compose --profile lab run --rm lab php -v` uniquement sur le laboratoire local (vérifier le nom du service avec `docker compose config --services`). Pour un scénario de validation reproductible, épingler une image par digest et attester `php -v` ; ne jamais interpréter la construction de cette fixture comme une preuve d'absence de vulnérabilité.\n+\n+## CI\n+La workflow `.github/workflows/ci.yml` exécute les tests unitaires sur les pushes et pull requests. Elle n'a qu'un accès `contents: read`. Consulter l'onglet Actions du dépôt.\n+\n+## Limites et dépannage\n+- `No module named app` : lancer depuis la racine du dépôt.\n+- Erreur JSON : vérifier le format de `lab/targets.json`.\n+- `Expected numeric PHP version X.Y.Z` : retirer suffixes et caractères supplémentaires.\n+- `Owned-source scope requires authorization evidence` : fournir une preuve déclarative, puis faire vérifier l'autorisation hors de l'outil.\n+- Pas de découverte de PHP, pas de collecte HTTP, pas d'accès SSH, pas de correctif appliqué.",
+      "blob_url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/c17f0931db2cae659e4301585b0bf3db9078ca09/docs%2FUSAGE.md"
+    },
+    {
+      "filename": "tests/test_hardening.py",
+      "status": "added",
+      "additions": 63,
+      "deletions": 0,
+      "changes": 63,
+      "patch": "@@ -0,0 +1,63 @@\n+import json\n+import tempfile\n+import unittest\n+from pathlib import Path\n+\n+from app.core import Scope, Target, evaluate, load_targets, parse_version\n+\n+class HardeningTests(unittest.TestCase):\n+    def test_invalid_version_suffix(self):\n+        for value in ('8.3.34-ubuntu', '8.3', '8.3.34.1', '', ' 8.3.34'):\n+            with self.subTest(value=value):\n+                with self.assertRaises(ValueError):\n+                    parse_version(value)\n+\n+    def test_hostname_normalization(self):\n+        self.assertEqual(Target('DEMO.EXAMPLE', Scope.PUBLIC).hostname, 'demo.example')\n+\n+    def test_hostname_rejects_url(self):\n+        invalid = (\n+            'https://demo.example', 'demo.example:443', 'a..b',\n+            '-bad.example', 'ok.-bad.example', 'ok.bad-.example',\n+            'bad-.example', 'a' * 64 + '.example', 'ok.' + 'a' * 64,\n+            'example.', '.example', 'name_with_underscore.example',\n+            'hello/example', 'a' * 63 + '.' + 'b' * 63 + '.' +\n+            'c' * 63 + '.' + 'd' * 62,\n+        )\n+        for value in invalid:\n+            with self.subTest(value=value):\n+                with self.assertRaises(ValueError):\n+                    Target(value, Scope.PUBLIC)\n+\n+    def test_dns_label_length_boundaries(self):\n+        long_valid = '.'.join(['a' * 63, 'b' * 63, 'c' * 63, 'd' * 61])\n+        self.assertEqual(len(long_valid), 253)\n+        self.assertEqual(Target(long_valid, Scope.PUBLIC).hostname, long_valid)\n+        self.assertEqual(Target('a-b.example', Scope.PUBLIC).hostname, 'a-b.example')\n+        self.assertEqual(Target('LOCALHOST', Scope.PUBLIC).hostname, 'localhost')\n+\n+    def test_inventory_malformed_json(self):\n+        with tempfile.TemporaryDirectory() as d:\n+            path = Path(d) / 'targets.json'\n+            path.write_text('{bad', encoding='utf-8')\n+            with self.assertRaises(json.JSONDecodeError):\n+                load_targets(path)\n+\n+    def test_inventory_must_be_list(self):\n+        with tempfile.TemporaryDirectory() as d:\n+            path = Path(d) / 'targets.json'\n+            path.write_text('{}', encoding='utf-8')\n+            with self.assertRaises(ValueError):\n+                load_targets(path)\n+\n+    def test_scope_rejects_unknown(self):\n+        with self.assertRaises(ValueError):\n+            Scope('unauthorized')\n+\n+    def test_reference_fix_not_proof(self):\n+        result = evaluate('8.3.34')\n+        self.assertTrue(result, 'evaluate() must return at least one cautionary note')\n+        self.assertTrue(all('verify vendor backports' in x['note'] for x in result))\n+\n+if __name__ == '__main__':\n+    unittest.main()",
+      "blob_url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/c17f0931db2cae659e4301585b0bf3db9078ca09/tests%2Ftest_hardening.py"
+    }
+  ]
+}

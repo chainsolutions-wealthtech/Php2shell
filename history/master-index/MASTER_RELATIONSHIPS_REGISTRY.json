@@ -1,0 +1,69 @@
+{
+  "schema": "php2shell-relations-master-v1",
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "master_identifiers": "MASTER_IDENTIFIERS_REGISTRY.json",
+  "source_head": "cd7ef56bd3b064b3e8d781d9403b8483f0d360b5",
+  "total_relations": 5582,
+  "families": {
+    "DEPENDENCIES": {
+      "path": "matrices/DEPENDENCIES.json",
+      "count": 179
+    },
+    "GIT_LINEAGE": {
+      "path": "matrices/GIT_LINEAGE.json",
+      "count": 1100
+    },
+    "CI_CORRELATION": {
+      "subshards": {
+        "RUN_TARGETS_SHA": {
+          "path": "matrices/CI_CORRELATION/RUN_TARGETS_SHA.json",
+          "count": 1036
+        },
+        "RUN_USES_WORKFLOW": {
+          "path": "matrices/CI_CORRELATION/RUN_USES_WORKFLOW.json",
+          "count": 1040
+        },
+        "RUN_REFERENCES_CHECK_SUITE": {
+          "path": "matrices/CI_CORRELATION/RUN_REFERENCES_CHECK_SUITE.json",
+          "count": 1040
+        },
+        "RUN_BRANCH_AT_SNAPSHOT": {
+          "path": "matrices/CI_CORRELATION/RUN_BRANCH_AT_SNAPSHOT.json",
+          "count": 1040
+        }
+      },
+      "count": 4156
+    },
+    "DOCUMENTARY_LINKS": {
+      "path": "matrices/DOCUMENTARY_LINKS.json",
+      "count": 147
+    }
+  },
+  "missed_targets": 8,
+  "provenance_legend": {
+    "DECLARED_IN_PLANNING": "DAG declaration not execution",
+    "OBSERVED_IN_GITHUB_AT_SNAPSHOT": "historical REST snapshot only",
+    "OBSERVED_IN_GITHUB_AT_RECHECK": "PR metadata verified at reading",
+    "REPORTED_IN_CANONICAL_LOG": "log cites object; not proof of completion",
+    "TEXTUAL_MENTION_ONLY": "mere mention not semantic proof"
+  },
+  "additional_textual_cross_reference_matrix": {
+    "path": "matrices/MATRIX_DOCUMENTED_CROSS_REFERENCES.json",
+    "count": 213,
+    "evidence": "TEXTUAL_MENTION_ONLY",
+    "included_in_total_relations": false
+  },
+  "canonical_continuity_router": {
+    "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+    "canonical_root_key": "CONTINUITY:PHP2SHELL-CONT-20261027-ROOT-01",
+    "canonical_manifest": "CANONICAL_CONTINUITY_MANIFEST.json",
+    "rejoin_entry": "JOIN_THIS_PROJECT.md",
+    "governance": "NO_COLLISION_REJOIN_PROTOCOL.md",
+    "routing_graph": "CONTINUITY_ROUTING_GRAPH.json",
+    "traceability_ledger": "CONTINUITY_ACTIVITY_LEDGER.jsonl",
+    "authority_issue": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5",
+    "snapshot_not_live": true,
+    "post_snapshot_reference_delta": "POST_SNAPSHOT_REFERENCE_DELTA.json",
+    "current_handoff_pointer": "CURRENT_HANDOFF_POINTER.json"
+  }
+}

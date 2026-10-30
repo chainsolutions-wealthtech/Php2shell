@@ -1,0 +1,30 @@
+{
+  "schema": "php2shell-master-identifiers-v1",
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "source_head_sha": "bed7c218d71743c4175b6b95f43a788105f966a2",
+  "counts": {
+    "BRANCH": 7,
+    "CHECKPOINT": 44,
+    "CHECK_SUITE": 1040,
+    "COMMENT": 56,
+    "COMMIT": 363,
+    "CONTINUITY": 1,
+    "DECISION": 24,
+    "EVENT": 56,
+    "ISSUE": 2,
+    "MEMORY": 1,
+    "PR": 5,
+    "PROGRAM": 1,
+    "REQUIREMENT": 32,
+    "RUN": 1040,
+    "WORKFLOW": 5,
+    "WORK_PACKAGE": 61
+  },
+  "total": 2738,
+  "unverified_reconciliation": [
+    "post-snapshot commits",
+    "post-snapshot runs",
+    "individual CI jobs and log validation",
+    "server proof and runtime deployment"
+  ]
+}

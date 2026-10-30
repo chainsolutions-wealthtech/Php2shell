@@ -1,0 +1,434 @@
+{
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "pr": 3,
+  "created_at": "2026-10-27T22:11:50Z",
+  "updated_at": "2026-10-29T18:42:03Z",
+  "source": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/3",
+  "head_sha": "5ae7245e9aa4857aca3835546a9a46ebea969d1f",
+  "base_sha": "973f4dbb0fffbcf256b5813030f625204fc9fa53",
+  "state": "open",
+  "draft": true,
+  "merged": false,
+  "description": "## Périmètre\n- CI lecture seule : 4 serveurs DNS faisant autorité, IPv4 S1, contrôle AAAA, HTTPS/TLS par SNI, redirection HTTP→HTTPS, résolution publique informative\n- Runbook S1 : responsabilités distinctes des deux sous-domaines, état des vhosts, certificats, admission des PR #1/#2, sauvegarde et rollback, interdiction d'exposer les fonctions de patch sans authentification et revue\n\n## Sécurité\n- Aucun secret ni SSH, pas de commande serveur arbitraire\n- Ne change aucun vhost, aucune zone DNS et aucun déploiement\n- `main` inchangée ; branche basée sur V0.2 PR #2 (stacked PR)\n- Cette PR reste draft tant que la CI, les revues indépendantes et les prérequis applicatifs ne sont pas validés\n\n## Dépendances\n- PR #1 → PR #2 → présente PR\n- Le MCP ne dispose pas encore d'une capacité de déploiement PHP2SHELL autorisée ; nécessité d'un mandat MCP séparé et gouverné, sans créer de gateway parallèle\n- Les interfaces/API de production restent à développer ; le pipeline certifie uniquement la préparation réseau.",
+  "reported_commits": 39,
+  "observed_commits": 39,
+  "reported_files": 3,
+  "observed_files": 3,
+  "commits": [
+    {
+      "sha": "e31a3b1dbdd694ea19165977df31165275d522f5",
+      "date": "2026-10-27T22:10:37Z",
+      "message": "ci(s1): add read-only two-subdomain DNS, TLS and redirect preflight",
+      "parents": [
+        "2fad3bdeafca83a0977adf3820d5162ee775c67c"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/e31a3b1dbdd694ea19165977df31165275d522f5"
+    },
+    {
+      "sha": "33b0f5b96b380760fbba298d9584e22d4663e6fe",
+      "date": "2026-10-27T22:11:26Z",
+      "message": "docs(ops): codify S1 governance, two hostnames and explicit release safety gates",
+      "parents": [
+        "e31a3b1dbdd694ea19165977df31165275d522f5"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/33b0f5b96b380760fbba298d9584e22d4663e6fe"
+    },
+    {
+      "sha": "84fc090e08ca6e31e965c6bfab90f3556161e2d2",
+      "date": "2026-10-27T22:21:28Z",
+      "message": "docs(ops): add isolated Docker target topology for dual S1 hostnames and shared governed engine",
+      "parents": [
+        "33b0f5b96b380760fbba298d9584e22d4663e6fe"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/84fc090e08ca6e31e965c6bfab90f3556161e2d2"
+    },
+    {
+      "sha": "5ce8f4ed91068fa6cad3dbd8d7ad8d16116090fa",
+      "date": "2026-10-27T23:39:15Z",
+      "message": "merge(s1): sync latest validated V0.2 + V0.1 into downstream PR #3 (no rebase)",
+      "parents": [
+        "84fc090e08ca6e31e965c6bfab90f3556161e2d2",
+        "8c70d5f5af828588d87fd9c70a8a1b39d555de86"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/5ce8f4ed91068fa6cad3dbd8d7ad8d16116090fa"
+    },
+    {
+      "sha": "2d599f48958d54ceefa1454e01a37eb56d86c06d",
+      "date": "2026-10-27T23:44:50Z",
+      "message": "merge(s1): include validated V0.2 Composer lockfile analysis without rebasing downstream",
+      "parents": [
+        "5ce8f4ed91068fa6cad3dbd8d7ad8d16116090fa",
+        "664cf5cde8743713053f4799c24b7d05a074441f"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/2d599f48958d54ceefa1454e01a37eb56d86c06d"
+    },
+    {
+      "sha": "baf7dc9916e117f13ac3d9ce606f72a4e58d38d4",
+      "date": "2026-10-28T00:01:20Z",
+      "message": "merge(s1): reconcile current V0.2 PHP config audit and safe report export without rewriting PR #3",
+      "parents": [
+        "2d599f48958d54ceefa1454e01a37eb56d86c06d",
+        "47303c1eea0fc7d454ef5b73ac53d94e5c16875f"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/baf7dc9916e117f13ac3d9ce606f72a4e58d38d4"
+    },
+    {
+      "sha": "e12cb5054d2a7ac9db1829a5da4eb37e6de919f1",
+      "date": "2026-10-28T00:36:13Z",
+      "message": "merge(s1): carry tested sourced V0.2 PHP advisory snapshot and CLI into existing readiness PR #3",
+      "parents": [
+        "baf7dc9916e117f13ac3d9ce606f72a4e58d38d4",
+        "4848bff596977595e58b28db01eaebcd1a128e14"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/e12cb5054d2a7ac9db1829a5da4eb37e6de919f1"
+    },
+    {
+      "sha": "58a15991d4218d756f84acbe1d8b1687d4af8bdd",
+      "date": "2026-10-28T00:44:34Z",
+      "message": "merge(v0.2): carry verified offline catalog audit into S1 readiness stack",
+      "parents": [
+        "e12cb5054d2a7ac9db1829a5da4eb37e6de919f1",
+        "2d2d7abee3b33edcc86bb17975cbe8fa5c1c4390"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/58a15991d4218d756f84acbe1d8b1687d4af8bdd"
+    },
+    {
+      "sha": "318d60e33858be0447540fc08b42a3c14b1d23f0",
+      "date": "2026-10-28T00:52:04Z",
+      "message": "merge(s1): add guarded offline advisory update proposals from V0.2 to existing PR #3",
+      "parents": [
+        "58a15991d4218d756f84acbe1d8b1687d4af8bdd",
+        "bf8a8bad37cc370da15706ea5331cb927c666005"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/318d60e33858be0447540fc08b42a3c14b1d23f0"
+    },
+    {
+      "sha": "4461048c244b60907a0b92a714dc7a59b8add38a",
+      "date": "2026-10-28T00:54:15Z",
+      "message": "docs(s1): attest current downstream V0.2 catalog gate and superseded DNS incident without claiming deployment",
+      "parents": [
+        "318d60e33858be0447540fc08b42a3c14b1d23f0"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/4461048c244b60907a0b92a714dc7a59b8add38a"
+    },
+    {
+      "sha": "708d912ad19b54a4a9410084058d9114396d591c",
+      "date": "2026-10-28T01:07:52Z",
+      "message": "merge(s1): add bounded official PHP GHSA metadata collector from V0.2, no automatic deployment",
+      "parents": [
+        "4461048c244b60907a0b92a714dc7a59b8add38a",
+        "e02ac06fe715ac643313e4d1a0110d56129fb8d6"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/708d912ad19b54a4a9410084058d9114396d591c"
+    },
+    {
+      "sha": "199641477f9fbdb3cfdfcb6c98edcaa3f60b2020",
+      "date": "2026-10-28T01:17:17Z",
+      "message": "merge(s1): integrate non-authoritative PHP runtime evidence review into existing readiness branch",
+      "parents": [
+        "708d912ad19b54a4a9410084058d9114396d591c",
+        "424425116f54c353211aae554fc3866c242689b2"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/199641477f9fbdb3cfdfcb6c98edcaa3f60b2020"
+    },
+    {
+      "sha": "2d3d2c9107a5b2c9ac2fdfcc6239083bbba8211b",
+      "date": "2026-10-28T01:39:11Z",
+      "message": "merge(v0.2): carry safe runtime CSV report into S1 readiness branch",
+      "parents": [
+        "199641477f9fbdb3cfdfcb6c98edcaa3f60b2020",
+        "e5df6bb8761584716a60bab9067c880276b97b14"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/2d3d2c9107a5b2c9ac2fdfcc6239083bbba8211b"
+    },
+    {
+      "sha": "0a34021a6c81e615751fbee36b4fe29947b30d40",
+      "date": "2026-10-28T02:02:52Z",
+      "message": "merge(s1): synchronize validated offline audit dossier V0.2 without changing S1 readiness controls",
+      "parents": [
+        "2d3d2c9107a5b2c9ac2fdfcc6239083bbba8211b",
+        "183426ee7f17a0cea28e416e8cf5d6cd54df1ac9"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/0a34021a6c81e615751fbee36b4fe29947b30d40"
+    },
+    {
+      "sha": "3739323768ca9b59a87eabe3cd96730a238c0f86",
+      "date": "2026-10-28T02:08:07Z",
+      "message": "merge(s1): carry validated URL intake preview with explicit admission gates into existing readiness branch",
+      "parents": [
+        "0a34021a6c81e615751fbee36b4fe29947b30d40",
+        "4ded6646d57af4bb8f6ee11f4a7b73c828962d29"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/3739323768ca9b59a87eabe3cd96730a238c0f86"
+    },
+    {
+      "sha": "686e68980c5807ca84bcdf4ef1e8a2f046fe09f8",
+      "date": "2026-10-28T02:39:03Z",
+      "message": "merge(v0.2): reconcile offline PHPPATCH handoff into S1 readiness branch",
+      "parents": [
+        "3739323768ca9b59a87eabe3cd96730a238c0f86",
+        "fc277eb8b8f1a277a606826e48bbf673028f8449"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/686e68980c5807ca84bcdf4ef1e8a2f046fe09f8"
+    },
+    {
+      "sha": "a7d62aae30908533409cf7931f248ab2ae1a489b",
+      "date": "2026-10-28T03:38:56Z",
+      "message": "chore(s1): converge V0.2 PHPPATCH static preview into existing S1 readiness branch",
+      "parents": [
+        "686e68980c5807ca84bcdf4ef1e8a2f046fe09f8",
+        "daeca8bff5b776f497e7323e0ab92041b895347a"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/a7d62aae30908533409cf7931f248ab2ae1a489b"
+    },
+    {
+      "sha": "11edd0e4b4ca30931d425f26f37ce91e3ee83e42",
+      "date": "2026-10-28T04:38:30Z",
+      "message": "merge(v0.2): carry offline DNS/path preflight hardening into S1 readiness",
+      "parents": [
+        "a7d62aae30908533409cf7931f248ab2ae1a489b",
+        "fa1332b0d48c9147ce03f48ba3b3783fe623f3c4"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/11edd0e4b4ca30931d425f26f37ce91e3ee83e42"
+    },
+    {
+      "sha": "440cdc91920ed3e1ed60639e040f082202d48984",
+      "date": "2026-10-28T04:45:50Z",
+      "message": "merge(s1): carry tested loopback-only FastAPI contract without changing existing S1 readiness",
+      "parents": [
+        "11edd0e4b4ca30931d425f26f37ce91e3ee83e42",
+        "bc08f66a89ebfbc243b73455cc7771238237428e"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/440cdc91920ed3e1ed60639e040f082202d48984"
+    },
+    {
+      "sha": "6fd0cd9aa5cf3be2e47f779e4ba1d167df35ffd0",
+      "date": "2026-10-28T04:49:34Z",
+      "message": "merge(s1): include tested read-only PHPPATCH ini diff proposal with unchanged S1 controls",
+      "parents": [
+        "440cdc91920ed3e1ed60639e040f082202d48984",
+        "ac0b35588c950d675fe89c70fbc8d434c0594d20"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/6fd0cd9aa5cf3be2e47f779e4ba1d167df35ffd0"
+    },
+    {
+      "sha": "fdc1e87c009eca22a294cc1bfe4b558648df9b77",
+      "date": "2026-10-28T05:04:45Z",
+      "message": "merge(ops): carry V0.2 ASGI actual-body guard into S1 draft without rewriting S1 work",
+      "parents": [
+        "6fd0cd9aa5cf3be2e47f779e4ba1d167df35ffd0",
+        "227915fda5379200232ec6a2a968351512fb9153"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/fdc1e87c009eca22a294cc1bfe4b558648df9b77"
+    },
+    {
+      "sha": "3bccdf0b4d776ba399621debbdc48488685e5eb6",
+      "date": "2026-10-28T05:09:18Z",
+      "message": "merge(ops): preserve S1 preflight while adding offline PHPPATCH ini ambiguity guard",
+      "parents": [
+        "fdc1e87c009eca22a294cc1bfe4b558648df9b77",
+        "6a41ef5c15ef78af95afa0aeda3561fd5c33dd8c"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/3bccdf0b4d776ba399621debbdc48488685e5eb6"
+    },
+    {
+      "sha": "2da277bbdb0784f2fe73f69ac0db7b96407a7a71",
+      "date": "2026-10-28T05:16:31Z",
+      "message": "merge(ops): admit non-executing P1/P2 gate contract while preserving S1 readiness",
+      "parents": [
+        "3bccdf0b4d776ba399621debbdc48488685e5eb6",
+        "2e270c92048ee9725d9d3b3cba3d2d6ec10d2b97"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/2da277bbdb0784f2fe73f69ac0db7b96407a7a71"
+    },
+    {
+      "sha": "c22ac964e1cbb71d880e8ef828cf7bd96d485960",
+      "date": "2026-10-28T05:28:36Z",
+      "message": "merge(ops): inherit offline Ed25519 attestation contract without altering S1 readiness",
+      "parents": [
+        "2da277bbdb0784f2fe73f69ac0db7b96407a7a71",
+        "cb705a82e5a2d0c2bf7193139873b7e7fc210706"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/c22ac964e1cbb71d880e8ef828cf7bd96d485960"
+    },
+    {
+      "sha": "3f9e5bc6fa3046d63797f41667a53df081dacdc1",
+      "date": "2026-10-28T05:36:16Z",
+      "message": "merge(ops): inherit signed path-scope verification with preserved S1 readiness",
+      "parents": [
+        "c22ac964e1cbb71d880e8ef828cf7bd96d485960",
+        "0503c99b5090433750e8f70f9deade4788cb50dd"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/3f9e5bc6fa3046d63797f41667a53df081dacdc1"
+    },
+    {
+      "sha": "d48f88039e1faeea1246847a982e59bda4e63e5a",
+      "date": "2026-10-28T05:38:15Z",
+      "message": "merge(ops): retain S1 files and inherit signed P1 crawl budget contracts",
+      "parents": [
+        "3f9e5bc6fa3046d63797f41667a53df081dacdc1",
+        "53e4378e6f95b28a1c93c2a6061a84fb3fe4ebaf"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/d48f88039e1faeea1246847a982e59bda4e63e5a"
+    },
+    {
+      "sha": "8a5ba2dee04a93a07a99229b254159c76673b439",
+      "date": "2026-10-28T05:41:42Z",
+      "message": "merge(ops): inherit offline Composer review while preserving exact S1 readiness blobs",
+      "parents": [
+        "d48f88039e1faeea1246847a982e59bda4e63e5a",
+        "7f6ae451c1129d0b6a1a0c103f2f91659d26e55b"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/8a5ba2dee04a93a07a99229b254159c76673b439"
+    },
+    {
+      "sha": "f87eb7e1ecc41f21611aadd5c3029ac6e16f313e",
+      "date": "2026-10-28T05:52:48Z",
+      "message": "merge(ops): retain S1 readiness while inheriting nonexecuting signed P1/P2 URL binding",
+      "parents": [
+        "8a5ba2dee04a93a07a99229b254159c76673b439",
+        "a14968d1aa4ff842cfd025b118c5ce90d60c55aa"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/f87eb7e1ecc41f21611aadd5c3029ac6e16f313e"
+    },
+    {
+      "sha": "97808da8783abb9625d7aa2b5efdfe7316cba998",
+      "date": "2026-10-28T06:06:57Z",
+      "message": "merge(ops): preserve S1 readiness with beginner-friendly offline PHP2SHELL interface",
+      "parents": [
+        "f87eb7e1ecc41f21611aadd5c3029ac6e16f313e",
+        "69cbbc6b13a08d2ce845754d2e9156edc018510d"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/97808da8783abb9625d7aa2b5efdfe7316cba998"
+    },
+    {
+      "sha": "95ae149e01e96a6f533cd511e024c962c94ddf12",
+      "date": "2026-10-28T06:19:26Z",
+      "message": "merge(ops): inherit anonymous short public evidence preview without changing S1 readiness",
+      "parents": [
+        "97808da8783abb9625d7aa2b5efdfe7316cba998",
+        "90bf737a686ac99fe08cf7f2834c056e2ff152d2"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/95ae149e01e96a6f533cd511e024c962c94ddf12"
+    },
+    {
+      "sha": "ddc8871c064ef41c4966302ce516527c05d443e0",
+      "date": "2026-10-28T06:22:32Z",
+      "message": "merge(ops): inherit local guest summary API preserving S1 readonly readiness artifacts",
+      "parents": [
+        "95ae149e01e96a6f533cd511e024c962c94ddf12",
+        "dc2a61d900eb8387470b993f0cab02e58123725d"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/ddc8871c064ef41c4966302ce516527c05d443e0"
+    },
+    {
+      "sha": "92053ae770a1f5d56d817d16e87c3498c5903872",
+      "date": "2026-10-28T06:37:27Z",
+      "message": "merge(v0.2→s1): retain exact S1 readiness blobs and add offline HTTP metadata normalization",
+      "parents": [
+        "ddc8871c064ef41c4966302ce516527c05d443e0",
+        "6ca140324820b982beb59408bdd29b0edaeb25c2"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/92053ae770a1f5d56d817d16e87c3498c5903872"
+    },
+    {
+      "sha": "0411d2e2d86fa91291a9e369d931fffe5c5da6ae",
+      "date": "2026-10-28T07:29:25Z",
+      "message": "merge(s1): carry green PHPPATCH in-memory rehearsal V0.3 into existing readiness PR without rewriting S1 files",
+      "parents": [
+        "92053ae770a1f5d56d817d16e87c3498c5903872",
+        "57943460c30ca7a5d52ec681a731447cf252c4b4"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/0411d2e2d86fa91291a9e369d931fffe5c5da6ae"
+    },
+    {
+      "sha": "f11be476228573a1760ec6307351f625cffc7ca0",
+      "date": "2026-10-28T07:33:33Z",
+      "message": "merge(s1): synchronize 226-tested non-executing PHPPATCH review packet without touching S1 files",
+      "parents": [
+        "0411d2e2d86fa91291a9e369d931fffe5c5da6ae",
+        "66aed9bdc742b7cb3ca7dfe705606ff58285fcf8"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/f11be476228573a1760ec6307351f625cffc7ca0"
+    },
+    {
+      "sha": "414863480a076cb22a314a570102135a2a2c128d",
+      "date": "2026-10-28T07:45:57Z",
+      "message": "merge: carry offline PHPPATCH packet verification into S1 readiness branch",
+      "parents": [
+        "f11be476228573a1760ec6307351f625cffc7ca0",
+        "04990f12d6713d601d2421d4c779bf85c42982f7"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/414863480a076cb22a314a570102135a2a2c128d"
+    },
+    {
+      "sha": "d2d501d78b42ccc579a72f0b7befdbfd90a1d894",
+      "date": "2026-10-28T08:46:14Z",
+      "message": "merge: carry verified PHPPATCH packet CLI into S1 readiness without changing S1 files",
+      "parents": [
+        "414863480a076cb22a314a570102135a2a2c128d",
+        "26121997f175f88cb92f1907296ae2364222c95a"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/d2d501d78b42ccc579a72f0b7befdbfd90a1d894"
+    },
+    {
+      "sha": "d2529e6b5c87588fe0192daed8718d9657fda6de",
+      "date": "2026-10-28T09:43:52Z",
+      "message": "chore(s1): sync PHPPATCH packet reader hardening from PR #2",
+      "parents": [
+        "d2d501d78b42ccc579a72f0b7befdbfd90a1d894",
+        "03b45fdc2cf40e3276208935b47a785ef320a27d"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/d2529e6b5c87588fe0192daed8718d9657fda6de"
+    },
+    {
+      "sha": "2790f4e7f0de2511a9f1f3724caa5fec82cc8eca",
+      "date": "2026-10-28T14:43:19Z",
+      "message": "merge(v0.2): carry Composer file-read hardening into S1 readiness",
+      "parents": [
+        "d2529e6b5c87588fe0192daed8718d9657fda6de",
+        "e3237e3276b99652f6b0ab955749409d156af537"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/2790f4e7f0de2511a9f1f3724caa5fec82cc8eca"
+    },
+    {
+      "sha": "5ae7245e9aa4857aca3835546a9a46ebea969d1f",
+      "date": "2026-10-29T18:41:59Z",
+      "message": "chore(s1): converge PHPPATCH nofollow hardening without rewriting S1 history\n\nTwo-parent merge of PR #2 into stacked PR #3. Preserve S1 readiness workflow and runbooks unchanged. No deployment.\n\nContinuity: PHP2SHELL-CONT-20261027-ROOT-01",
+      "parents": [
+        "2790f4e7f0de2511a9f1f3724caa5fec82cc8eca",
+        "973f4dbb0fffbcf256b5813030f625204fc9fa53"
+      ],
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/commit/5ae7245e9aa4857aca3835546a9a46ebea969d1f"
+    }
+  ],
+  "files": [
+    {
+      "filename": ".github/workflows/s1-readiness.yml",
+      "status": "added",
+      "additions": 90,
+      "deletions": 0,
+      "changes": 90,
+      "patch": "@@ -0,0 +1,90 @@\n+name: S1 PHP2SHELL + PHPPATCH readiness (read-only)\n+\n+on:\n+  push:\n+    branches:\n+      - ops/s1-readiness-php-services-20261027\n+  pull_request:\n+    paths:\n+      - \".github/workflows/s1-readiness.yml\"\n+      - \"deploy/**\"\n+  workflow_dispatch:\n+\n+permissions:\n+  contents: read\n+\n+jobs:\n+  s1-readiness:\n+    runs-on: ubuntu-latest\n+    timeout-minutes: 8\n+    steps:\n+      - name: Verify authoritative DNS, public origin, TLS and HTTPS redirect\n+        shell: bash\n+        env:\n+          S1_IPV4: \"212.227.212.33\"\n+          ZONE: wealthtechinnovations.com\n+        run: |\n+          set -euo pipefail\n+          declare -a HOSTS=(\n+            php2shell.wealthtechinnovations.com\n+            phppatch.wealthtechinnovations.com\n+          )\n+          mapfile -t NAMESERVERS < <(dig +time=3 +tries=1 +short NS \"$ZONE\" | sort)\n+          if (( ${#NAMESERVERS[@]} < 2 )); then\n+            echo \"::error::Insufficient authoritative name servers\"; exit 1\n+          fi\n+          {\n+            echo \"## S1 PHP services network readiness\"\n+            echo \"\"\n+            echo \"UTC: $(date -u +%Y-%m-%dT%H:%M:%SZ)\"\n+            echo \"\"\n+            echo \"| Hostname | Authoritative A | AAAA | Public route | HTTPS S1 | Redirect |\"\n+            echo \"|---|---|---|---|---|---|\"\n+          } >> \"$GITHUB_STEP_SUMMARY\"\n+\n+          for HOST in \"${HOSTS[@]}\"; do\n+            echo \"::group::Preflight: $HOST\"\n+            for NS in \"${NAMESERVERS[@]}\"; do\n+              ANSWER=$(dig +time=4 +tries=1 +short \"@$NS\" \"$HOST\" A)\n+              echo \"Authoritative @$NS $HOST A: $ANSWER\"\n+              if [[ \"$ANSWER\" != \"$S1_IPV4\" ]]; then\n+                echo \"::error::$HOST authoritative A differs from S1 at $NS\"\n+                exit 1\n+              fi\n+              AAAA=$(dig +time=4 +tries=1 +short \"@$NS\" \"$HOST\" AAAA)\n+              if [[ -n \"$AAAA\" ]]; then\n+                echo \"::error::$HOST has IPv6 records not covered by this S1 IPv4-only readiness gate: $AAAA\"\n+                exit 1\n+              fi\n+            done\n+\n+            # Authoritative data is the gate; a recursive resolver can cache an older answer.\n+            PUBLIC_IP=$(curl -fsS -I -o /dev/null --connect-timeout 7 --max-time 20 -w '%{remote_ip}' \"https://$HOST/\")\n+            echo \"Public destination: $PUBLIC_IP\"\n+            if [[ \"$PUBLIC_IP\" != \"$S1_IPV4\" ]]; then\n+              echo \"::notice::$HOST public recursive resolver still routes via $PUBLIC_IP; may be stale\"\n+            fi\n+\n+            DIRECT_STATUS=$(curl -fsS -I -o /dev/null --connect-timeout 7 --max-time 20 --resolve \"$HOST:443:$S1_IPV4\" -w '%{http_code}' \"https://$HOST/\")\n+            if [[ \"$DIRECT_STATUS\" != \"200\" ]]; then\n+              echo \"::error::$HOST did not return HTTPS 200 from S1: $DIRECT_STATUS\"\n+              exit 1\n+            fi\n+\n+            REDIRECT_STATUS=$(curl -sS -I -o /dev/null --connect-timeout 7 --max-time 20 --resolve \"$HOST:80:$S1_IPV4\" -w '%{http_code}' \"http://$HOST/\")\n+            if [[ \"$REDIRECT_STATUS\" != \"301\" && \"$REDIRECT_STATUS\" != \"308\" ]]; then\n+              echo \"::error::$HOST did not redirect HTTP to HTTPS: $REDIRECT_STATUS\"\n+              exit 1\n+            fi\n+\n+            if ! timeout 12 openssl s_client -connect \"$S1_IPV4:443\" -servername \"$HOST\" </dev/null 2>/dev/null |\n+                openssl x509 -noout -checkend 604800 >/dev/null; then\n+              echo \"::error::$HOST S1 TLS certificate expires in less than 7 days or could not be parsed\"\n+              exit 1\n+            fi\n+            echo \"S1 direct TLS and redirect validated for $HOST\"\n+            echo \"| $HOST | $S1_IPV4 | no AAAA | $PUBLIC_IP | $DIRECT_STATUS (TLS checked) | $REDIRECT_STATUS |\" >> \"$GITHUB_STEP_SUMMARY\"\n+            echo \"::endgroup::\"\n+          done\n+\n+          echo \"Network and certificates pass. This does NOT prove app/auth/deployment readiness.\"",
+      "blob_url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/5ae7245e9aa4857aca3835546a9a46ebea969d1f/.github%2Fworkflows%2Fs1-readiness.yml"
+    },
+    {
+      "filename": "deploy/S1_DEPLOYMENT_RUNBOOK.md",
+      "status": "added",
+      "additions": 64,
+      "deletions": 0,
+      "changes": 64,
+      "patch": "@@ -0,0 +1,64 @@\n+# PHP2SHELL + PHPPATCH — S1 deployment admission (NOT deployed)\n+\n+## Authority and target\n+\n+- Repository: `chainsolutions-wealthtech/Php2shell` (public; source only)\n+- S1 IPv4: `212.227.212.33` (verified MCP project context)\n+- Plesk subscription: `wealthtechinnovations.com`\n+- Console: `https://php2shell.wealthtechinnovations.com`\n+- Remediation frontend: `https://phppatch.wealthtechinnovations.com`\n+- Read-only observed Plesk folders:\n+  - `/var/www/vhosts/wealthtechinnovations.com/php2shell.wealthtechinnovations.com`\n+  - `/var/www/vhosts/wealthtechinnovations.com/phppatch.wealthtechinnovations.com`\n+  - corresponding `/var/www/vhosts/system/<hostname>` directories\n+- Both current sites show a Plesk placeholder, **not** a deployed application.\n+- Two hostnames, one future shared engine, separate authorization boundaries. Never create an independent second gateway.\n+\n+## Live network evidence (2026-10-27)\n+\n+DNS A on four authoritative IONOS nameservers => `212.227.212.33` for both.\n+The old IONOS parking AAAA records have been removed; MX still return `mx00.ionos.fr` and `mx01.ionos.fr`.\n+HTTPS direct with SNI on S1: `200` for both, trusted Let's Encrypt certificates. HTTP redirects to HTTPS with `301`.\n+PHP2SHELL certificate: 2026-10-27 through 2027-01-25.\n+PHPPATCH certificate: 2026-10-27 through 2027-01-25.\n+A stale recursive cache was observed (old parking IPv4 at Google DNS shortly after change).\n+An *internal S1* curl by hostname still failed after the public DNS fix: `curl (6)` for PHP2SHELL and `curl (35)` for PHPPATCH. Root cause **not yet confirmed**.\n+Evidence workflow: `.github/workflows/s1-readiness.yml`. It checks current DNS/HTTPS/TLS without credentials or writes.\n+\n+## Release gates — block until every relevant prerequisite passes\n+\n+1. Merge PR #1 (V0.1) only after review, verified CI and confirmed target HEAD.\n+2. Finish and independently review PR #2 (V0.2). Lexical indicators are **not** confirmed vulnerabilities and the demo CVE catalogue is unverified.\n+3. Implement actual API and web consoles with identity, RBAC, authentication, sessions, CSRF controls, audit log, rate limiting and secret separation.\n+4. Implement and review a governed, **scoped** GitHub-to-MCP-to-S1 deployment capability. MCP currently has no generic authorized Plesk provisioning, DNS management, or arbitrary SSH command action. Do not repurpose a `legacy_vhost` command for an unrelated target.\n+5. Restore reliable local DNS diagnostics on S1 via a separate governed MCP PR, with read-only `getent/dig/resolv.conf` and specifically authorized cache invalidation if shown necessary. Never flush global caches indiscriminately.\n+6. Obtain a deployment authorization identifying release commit SHA, exact target path(s), runtime user and the two subdomain mappings. Do not store credentials in this public repo.\n+7. Validate network preflight; CI tests, independent security review, artifact attestation, backups/rollback and documented health checks.\n+8. Only then deploy a locked image as non-root with minimal privileges, and run an end-to-end staging and production smoke test, including both auth boundaries, negative authorization tests and rollback.\n+9. Confirm PHP2SHELL can **report**; PHPPATCH may only prepare *proposed* patches until explicit approval. No automatic execution/patch on live systems.\n+\n+## Separate services\n+\n+| Host | Intended role | Deployment state |\n+|---|---|---|\n+| php2shell.wealthtechinnovations.com | Authenticated console, PHP asset inventory, permitted local project scan, evidence | NOT DEPLOYED |\n+| phppatch.wealthtechinnovations.com | Authenticated review/approval service for suggested diffs and CI reports | NOT DEPLOYED |\n+\n+No production API or UI is presently implemented in the V0.1/V0.2 CLI repository.\n+Do **not** publish a remediation API at either address before the release gates are satisfied.\n+\n+## Verification & rollback policy\n+\n+- No writes to `main` outside governed PRs; record exact HEAD and CI run.\n+- `S1 readiness` workflow validates DNS/TLS/redirects but not production readiness.\n+- GitHub repository changes do not automatically deploy to Plesk.\n+- Keep existing vhosts in place. Never purge an existing site or alter other subscriptions.\n+- Prior to a rollout, snapshot the exact target content/config and register a rollback reference.\n+- On failed smoke test, revert to the last approved artifact through the same governed deployment route; do not modify protected host directories manually.\n+\n+## Addendum V0.2 — candidate CVE review and S1 checkpoint (28 October 2026)\n+\n+- The current source tree includes a **local, non-mutating advisory update proposal**: `python -m app.cli propose-catalog-update --candidate ./candidate.json --as-of 2026-10-28`. It compares validated offline JSON snapshots and **blocks unreviewed deletions/date rollbacks**; a changed snapshot cannot be promoted to a trusted production feed or a vulnerability finding automatically. Code, tests, and review evidence are maintained in PR #2, with this downstream PR #3 preserving its S1-specific controls.\n+- The previous internal S1 DNS/HTTPS curl failures in this runbook are **historical observations**, not a current outage assertion. At the later S1 check on **2026-10-27 23:42 UTC**, both hostnames resolved from S1 and returned `HTTP 200` with `PleskLin` and 464-byte placeholder pages. No cause of the former errors or explicit cache purge was established. Repeat the live check before any release.\n+- DNS/HTTPS readiness **does not prove application deployment**. At the cited inspection only the MCP SSH Bridge container was running; neither PHP2SHELL nor PHPPATCH was installed on S1. All application, authentication, isolated Docker, authorized scoped MCP deployment, rollback and production approval gates remain required.\n+- This paragraph is **documentation only** and does not change Plesk, Docker, DNS, SSL, vhost or deployment state. It updates the downstream PR branch after a non-forced integration of the latest reviewed V0.2 changes.",
+      "blob_url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/5ae7245e9aa4857aca3835546a9a46ebea969d1f/deploy%2FS1_DEPLOYMENT_RUNBOOK.md"
+    },
+    {
+      "filename": "deploy/S1_DOCKER_ARCHITECTURE.md",
+      "status": "added",
+      "additions": 67,
+      "deletions": 0,
+      "changes": 67,
+      "patch": "@@ -0,0 +1,67 @@\n+# Architecture cible Docker / Plesk S1 — PHP2SHELL & PHPPATCH\n+\n+> **Statut : PLANIFIÉ, NON DÉPLOYÉ.** Contrat complémentaire au plan directeur `docs/ROADMAP.md` sur la PR #2, et au runbook S1. Aucun changement d'architecture de MCP ni de GRT. Les paramètres techniques définitifs restent soumis au préflight et à l'approbation du propriétaire.\n+\n+## 1. Topologie logique (deux vhosts, une plateforme)\n+\n+```text\n+Internet HTTPS\n+  |-- php2shell.wealthtechinnovations.com\n+  |      |-- Plesk S1 / certificat Let's Encrypt\n+  |      \\-- reverse proxy -> interface Analyse (port local non public)\n+  |\n+  \\-- phppatch.wealthtechinnovations.com\n+         |-- Plesk S1 / certificat Let's Encrypt\n+         \\-- reverse proxy -> interface Remédiation (port local non public)\n+\n+         Interfaces distinctes + autorisations distinctes\n+                       |\n+                  API commune sécurisée\n+                       |\n+       +---------------+---------------------+\n+       |               |                     |\n+   PostgreSQL       événements          journal d'audit\n+   privé            / tâches            append-only\n+                       |\n+           Workers à mandat explicitement borné\n+             |                       |\n+       Analyse PHP locale        Propositions de diff\n+       source autorisée          / tests isolés / rollback\n+             |                       |\n+       CVE sourcées              revue + approbation humaine\n+\n+Github (source/CI/PR) → chaîne MCP gouvernée existante → S1\n+```\n+\n+## 2. Isolation prévue\n+\n+- **Console Analyse** : conteneur Web frontal non-root, sans accès direct aux sources clients ni aux secrets du moteur de correctifs. API accessible uniquement par réseau interne contrôlé.\n+- **Console Remédiation** : conteneur Web distinct avec authentification renforcée, RBAC et approbation avant toute opération sensible. Aucun endpoint de patch anonyme ni exécution directe de commandes.\n+- **API / moteur commun** : service(s) internes non exposés publiquement ; séparation stricte des mandats analyse / proposition / validation / déploiement, quotas et journaux.\n+- **Workers analyse** : tâches bornées en durée, CPU et mémoire ; aucun réseau sortant par défaut, sources locales autorisées montées en lecture seule, chemins validés hors symlinks, aucune exécution du PHP analysé au stade lexical.\n+- **Workers tests de correctifs** : conteneurs éphémères isolés, ressources limitées, artefact préparé dans un environnement temporaire et vérifié ; accès réseau seulement si explicitement justifié et autorisé ; pas de montage de secrets de production.\n+- **Données sensibles** : secrets gérés hors Git ; bases privées chiffrées/contrôlées, sauvegardes testées, journaux sans jetons ni code privé par défaut.\n+- **Sécurité Docker** : utilisateurs non-root, `read_only` quand possible, `no-new-privileges`, `cap_drop: ALL`, limites de ressources, restrictions de volumes et d'egress, images verrouillées par digest avec analyse préalable.\n+- **Plesk** : seuls les vhosts et certificats existants font face à Internet. Ports internes sur loopback S1 uniquement ou réseau Docker privé ; leurs numéros seront alloués après inventaire des collisions.\n+- **Autorité de déploiement** : GitHub PR+CI+revue → pipeline MCP autorisé exact-SHA → préflight S1 → sauvegarde → déploiement réversible → contrôles HTTPS, authentification et logs. Aucun SSH arbitraire ni écriture directe de code sur `main` ou S1.\n+\n+## 3. Ordre de réalisation sans contournement des versions\n+\n+| Version | Livrable de cette architecture | État |\n+|---|---|---|\n+| V0.1 | CLI, tests, fondamentaux de sécurité | Développé, PR #1 ouverte |\n+| V0.2 | Analyse statique locale et catalogue CVE fiable | Lexical partiel, PR #2 ouverte |\n+| V0.3 | Patches proposés et vérifiés en sandbox, diffs, rollback | Non implémenté |\n+| V0.4 | Pipeline MCP + deux domaines S1 + Docker isolé | Préflight réseau fait, PR #3 ; runtime non déployé |\n+| V1.0 | Deux interfaces Web avec moteur partagé, gestion de projets, historique, rapports | Non implémenté |\n+\n+Les vérifications DNS/TLS déjà effectuées sont une **préparation anticipée de V0.4**, pas une déclaration de V0.4 opérationnelle. La séparation des deux interfaces concerne des permissions et des fonctions, jamais la création de deux gouvernances ou moteurs concurrents.\n+\n+## 4. Conditions non négociables avant mise en service\n+\n+- Tranche applicative effective, tests, CI et revue indépendante. Une page Plesk ou `HTTP 200` ne constitue **pas** un déploiement de PHP2SHELL.\n+- Inventaire Plesk, chemins `realpath`, ports, certificats, éventuelles collisions et données déjà présentes attestés au HEAD.\n+- Implémentation gouvernée autorisée des cibles dans le MCP actuel, sans détourner les outils `legacy_vhost` d'un autre périmètre.\n+- Preuves d'identité, RBAC, CSRF, protection des sessions et journaux d'audit, tests négatifs d'autorisation, gestion de secrets.\n+- Exposition réseau limitée et sauvegarde/restauration/rollback testés en staging.\n+- Zéro scan intrusif de tiers ; remédiation sur une production uniquement après accord explicite et contrôles requis.",
+      "blob_url": "https://github.com/chainsolutions-wealthtech/Php2shell/blob/5ae7245e9aa4857aca3835546a9a46ebea969d1f/deploy%2FS1_DOCKER_ARCHITECTURE.md"
+    }
+  ]
+}

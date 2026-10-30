@@ -1,0 +1,18 @@
+{
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "total_work_packages": 61,
+  "total_requirements": 32,
+  "orphan_dependencies": [],
+  "cycles": [],
+  "by_status": {
+    "AWAITING_INDEPENDENT_REVIEW": 1,
+    "PLANNED_NOT_ADMITTED": 60
+  },
+  "by_gate": {
+    "READ_ONLY": 13,
+    "GOVERNED_PR": 38,
+    "HUMAN_PRODUCTION_APPROVAL": 3,
+    "MANDATED_TEST_ONLY": 7
+  },
+  "note": "Graph consistency check against planning snapshot; NOT runtime attestation."
+}

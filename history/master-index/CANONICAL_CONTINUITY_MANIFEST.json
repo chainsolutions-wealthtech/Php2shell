@@ -1,0 +1,99 @@
+{
+  "schema": "php2shell-single-canonical-continuity-route-v1",
+  "manifest_id": "P2S-CANONICAL-CONTINUITY-ROUTER",
+  "continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "canonical_root_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "root_key": "CONTINUITY:PHP2SHELL-CONT-20261027-ROOT-01",
+  "policy": "ONE_ROOT_ONLY_NO_SECOND_CONTINUITY_ID",
+  "name": "PHP2SHELL–PHPPATCH Programme Directeur Intégral",
+  "source_of_authority": {
+    "issue": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5",
+    "repository": "chainsolutions-wealthtech/Php2shell",
+    "program_entry": "00_START_HERE.md",
+    "governance_protocol": "continuity/PROTOCOL.md",
+    "handoff": "continuity/HANDOFF.md",
+    "current_state": "continuity/CURRENT_STATE.md",
+    "current_next_action": "continuity/NEXT_ACTION.md",
+    "founding_scope": "continuity/FOUNDING_SPECIFICATION.md",
+    "requirements": "continuity/REQUIREMENTS_TRACEABILITY.md",
+    "work_packages": "continuity/WORK_PACKAGES.json",
+    "events": "continuity/EVENT_LOG.md",
+    "decisions": "continuity/DECISIONS_LOG.md",
+    "historical_archive_pr": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/7",
+    "historical_archive_branch": "docs/integral-chronological-history-20261029",
+    "memory": "history/memoire-php2/2026-10-30/README.md"
+  },
+  "master_index": {
+    "directory": "history/master-index/MASTER_IDENTIFIERS_REGISTRY.json",
+    "details": "history/master-index/details/{TYPE}.json",
+    "relations": "history/master-index/MASTER_RELATIONSHIPS_REGISTRY.json",
+    "matrices": "history/master-index/matrices/",
+    "source_contract": "history/master-index/SOURCE_CONTRACT.md",
+    "validation": "history/master-index/VALIDATION_REPORT_20261030_ADDENDUM_01.json",
+    "validator": "history/master-index/validate_registry.py",
+    "baseline": {
+      "identifiers": 2738,
+      "relations": 5582,
+      "additional_textual_references": 213,
+      "chronology_entries": 1583,
+      "run_snapshot_date": "2026-10-29",
+      "commit_snapshot_date": "2026-10-29",
+      "unresolved_targets": 8,
+      "comments_without_timestamp": 56
+    },
+    "freeze_policy": "COUNTS_ARE_SNAPSHOT_NOT_LIVE",
+    "post_snapshot_reference_delta": "history/master-index/POST_SNAPSHOT_REFERENCE_DELTA.json"
+  },
+  "rejoin": {
+    "first_read": "history/master-index/JOIN_THIS_PROJECT.md",
+    "operating_protocol": "history/master-index/NO_COLLISION_REJOIN_PROTOCOL.md",
+    "machine_contract": "history/master-index/REJOIN_PROTOCOL.json",
+    "activity_ledger": "history/master-index/CONTINUITY_ACTIVITY_LEDGER.jsonl",
+    "identity_validation": "history/master-index/validate_root_router.py",
+    "reference_tree": "history/master-index/CONTINUITY_ROUTING_GRAPH.json",
+    "current_handoff_pointer": "history/master-index/CURRENT_HANDOFF_POINTER.json"
+  },
+  "aliases": {
+    "MEMOIRE-PHP2": {
+      "kind": "DOCUMENTARY_MEMORY",
+      "root_continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+      "role": "historical_snapshot",
+      "entry": "history/memoire-php2/2026-10-30/README.md"
+    },
+    "P2S-MASTER-IDENTIFIERS": {
+      "kind": "REGISTRY_ID",
+      "root_continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+      "role": "typed_identifier_directory",
+      "entry": "history/master-index/MASTER_IDENTIFIERS_REGISTRY.json"
+    },
+    "P2S-NEXT-001": {
+      "kind": "NEXT_ACTION_ID",
+      "root_continuity_id": "PHP2SHELL-CONT-20261027-ROOT-01",
+      "role": "business_priority_not_a_second_continuity",
+      "entry": "continuity/NEXT_ACTION.md"
+    }
+  },
+  "scope_boundaries": {
+    "project_repo": "chainsolutions-wealthtech/Php2shell",
+    "external_mcp_development": "Patricked-code/MCP (distinct mandate/claims)",
+    "external_infrastructure": "S1/Plesk/GitHub permissions require separate verified authorization",
+    "grt": "Governed-Repository-Template (separate governance)"
+  },
+  "active_business_priority_snapshot": "P2S-NEXT-001",
+  "reconciliation_contract": "Reload live GitHub issue #5, open PR refs, CI, reviews and current governance records before any action; check real claims and locks; require exact-HEAD lease and no competing writer; never infer permission from document.",
+  "mutations_in_this_task": {
+    "main": false,
+    "application_code": false,
+    "s1": false,
+    "automations": false,
+    "other_prs": false
+  },
+  "snapshot_observed_on": "2026-10-30",
+  "pr7_head_before_this_task": "2a8183a2441f88a7dc579a95304e46521b0c0d7c",
+  "never_claim_fully_current": true,
+  "latest_documentary_checkpoint_observed": {
+    "id": "P2S-CP-20261030-045",
+    "url": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5#issuecomment-6512668570",
+    "observed_date": "2026-10-30"
+  }
+}

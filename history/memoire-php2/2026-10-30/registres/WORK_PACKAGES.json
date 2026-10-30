@@ -1,0 +1,1197 @@
+[
+  {
+    "work_package_id": "P2S-WF-G01",
+    "code": "G01",
+    "axe": "Gouvernance",
+    "version_source": "V0.1",
+    "tache_source": "Faire relire et admettre la PR #6 de continuité.",
+    "dependances": [],
+    "statut_registre_source": "AWAITING_INDEPENDENT_REVIEW",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 237,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-G02",
+    "code": "G02",
+    "axe": "Gouvernance",
+    "version_source": "V0.1",
+    "tache_source": "Corriger les observations de PR #1 sur DNS, tests et Docker. Correctifs codés, mais statut WP non promu.",
+    "dependances": [
+      "P2S-WF-G01"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 238,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-G03",
+    "code": "G03",
+    "axe": "Gouvernance",
+    "version_source": "V0.1",
+    "tache_source": "Revue sécurité et finalisation gouvernée de PR #1.",
+    "dependances": [
+      "P2S-WF-G02"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 239,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-G04",
+    "code": "G04",
+    "axe": "Gouvernance",
+    "version_source": "V0.2",
+    "tache_source": "Réconcilier PR #2 avec HEAD et tests V0.1. Synchronisations techniques réalisées, finalisation non admise.",
+    "dependances": [
+      "P2S-WF-G03"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 240,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-G05",
+    "code": "G05",
+    "axe": "Gouvernance",
+    "version_source": "V0.2",
+    "tache_source": "Revue et finalisation de PR #2.",
+    "dependances": [
+      "P2S-WF-G04"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 241,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-G06",
+    "code": "G06",
+    "axe": "Gouvernance",
+    "version_source": "V0.4",
+    "tache_source": "Réconcilier PR #3 S1 avec V0.2. Plusieurs convergences testées, sans finalisation de phase.",
+    "dependances": [
+      "P2S-WF-G05"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 242,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-G07",
+    "code": "G07",
+    "axe": "Gouvernance",
+    "version_source": "V0.4",
+    "tache_source": "Revue et finalisation PR #3 sans déployer.",
+    "dependances": [
+      "P2S-WF-G06"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 243,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-G08",
+    "code": "G08",
+    "axe": "Gouvernance",
+    "version_source": "Toutes",
+    "tache_source": "Réconcilier HEAD, PR, CI, checkpoints et NEXT_ACTION à chaque jalon.",
+    "dependances": [
+      "P2S-WF-G01"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 244,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-G09",
+    "code": "G09",
+    "axe": "Gouvernance",
+    "version_source": "Toutes",
+    "tache_source": "Cartographier identités, mandats, claims, locks et BUS MCP existants.",
+    "dependances": [
+      "P2S-WF-G01"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 245,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-S01",
+    "code": "S01",
+    "axe": "Sécurité et autorisations",
+    "version_source": "V0.2",
+    "tache_source": "Modèle P1/P2 : autorisations, preuves, périmètres et expiration. Contrats offline partiels déjà construits.",
+    "dependances": [
+      "P2S-WF-G09"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 251,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-S02",
+    "code": "S02",
+    "axe": "Sécurité et autorisations",
+    "version_source": "V0.2",
+    "tache_source": "Concevoir les protections URL/SSRF, DNS, redirections, robots et quotas.",
+    "dependances": [
+      "P2S-WF-S01"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 252,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-S03",
+    "code": "S03",
+    "axe": "Sécurité et autorisations",
+    "version_source": "V0.2",
+    "tache_source": "Implémenter et tester les contrôles SSRF, quotas, annulation et refus négatifs pour une véritable collecte.",
+    "dependances": [
+      "P2S-WF-S02",
+      "P2S-WF-G05"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 253,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-S04",
+    "code": "S04",
+    "axe": "Sécurité et autorisations",
+    "version_source": "V0.4",
+    "tache_source": "Authentification réelle, RBAC et sessions sécurisées.",
+    "dependances": [
+      "P2S-WF-I02",
+      "P2S-WF-S01"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 254,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-S05",
+    "code": "S05",
+    "axe": "Sécurité et autorisations",
+    "version_source": "V0.4",
+    "tache_source": "Secrets hors Git, preuves privées, journaux append-only et conservation.",
+    "dependances": [
+      "P2S-WF-G09"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 255,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-S06",
+    "code": "S06",
+    "axe": "Sécurité et autorisations",
+    "version_source": "V0.3",
+    "tache_source": "Politique des tests en sandbox et approbation avant patch.",
+    "dependances": [
+      "P2S-WF-S01",
+      "P2S-WF-S05"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 256,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-S07",
+    "code": "S07",
+    "axe": "Sécurité et autorisations",
+    "version_source": "V1.0",
+    "tache_source": "Modèle de menaces Web/API/workers/Docker/Plesk.",
+    "dependances": [
+      "P2S-WF-S03",
+      "P2S-WF-S04",
+      "P2S-WF-I04"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 257,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-S08",
+    "code": "S08",
+    "axe": "Sécurité et autorisations",
+    "version_source": "V1.0",
+    "tache_source": "Revue sécurité indépendante et acceptation des risques avant production.",
+    "dependances": [
+      "P2S-WF-S07",
+      "P2S-WF-Q05"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 258,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-E01",
+    "code": "E01",
+    "axe": "Analyse, campagnes et CVE",
+    "version_source": "V0.2",
+    "tache_source": "Importer CSV/JSON/TXT, normaliser, valider les domaines et dédupliquer. Des composants locaux existent.",
+    "dependances": [
+      "P2S-WF-G05"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 264,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-E02",
+    "code": "E02",
+    "axe": "Analyse, campagnes et CVE",
+    "version_source": "V0.2",
+    "tache_source": "Campagnes à grande échelle, inventaire, reprise et stockage. Partitionnement hors ligne existant ; workers réels absents.",
+    "dependances": [
+      "P2S-WF-E01",
+      "P2S-WF-I03"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 265,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-E03",
+    "code": "E03",
+    "axe": "Analyse, campagnes et CVE",
+    "version_source": "V0.2",
+    "tache_source": "Détection PHP passive sur des réponses publiques collectées avec autorisation.",
+    "dependances": [
+      "P2S-WF-S03"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 266,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-E04",
+    "code": "E04",
+    "axe": "Analyse, campagnes et CVE",
+    "version_source": "V0.2",
+    "tache_source": "Crawler sitemap/liens, limites de profondeur, budgets et reprise.",
+    "dependances": [
+      "P2S-WF-E03"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 267,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-E05",
+    "code": "E05",
+    "axe": "Analyse, campagnes et CVE",
+    "version_source": "V0.2",
+    "tache_source": "Analyse HTML, JavaScript public, headers, cookies et redirections.",
+    "dependances": [
+      "P2S-WF-E04"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 268,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-E06",
+    "code": "E06",
+    "axe": "Analyse, campagnes et CVE",
+    "version_source": "V0.2",
+    "tache_source": "Parser PHP AST et corpus de faux positifs/négatifs. Scanner lexical partiel déjà présent.",
+    "dependances": [
+      "P2S-WF-G05"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 269,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-E07",
+    "code": "E07",
+    "axe": "Analyse, campagnes et CVE",
+    "version_source": "V0.2",
+    "tache_source": "Analyser Composer, dépendances et configuration PHP/FPM. Plusieurs modules locaux et durcissements existent.",
+    "dependances": [
+      "P2S-WF-E06"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 270,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-E08",
+    "code": "E08",
+    "axe": "Analyse, campagnes et CVE",
+    "version_source": "V0.2",
+    "tache_source": "Catalogue GHSA/PHP/CERT/fournisseurs/backports. Snapshot et clients préparatoires existants.",
+    "dependances": [
+      "P2S-WF-G05"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 271,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-E09",
+    "code": "E09",
+    "axe": "Analyse, campagnes et CVE",
+    "version_source": "V0.2",
+    "tache_source": "Attestation réelle du runtime PHP, SAPI et paquets sous mandat P2.",
+    "dependances": [
+      "P2S-WF-E08",
+      "P2S-WF-S01"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 272,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-E10",
+    "code": "E10",
+    "axe": "Analyse, campagnes et CVE",
+    "version_source": "V0.2",
+    "tache_source": "Déterminer la pertinence des CVE et le niveau de confiance par actif.",
+    "dependances": [
+      "P2S-WF-E08",
+      "P2S-WF-E09"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 273,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-E11",
+    "code": "E11",
+    "axe": "Analyse, campagnes et CVE",
+    "version_source": "V0.2",
+    "tache_source": "Corréler observations Web, code, runtime et preuves.",
+    "dependances": [
+      "P2S-WF-E05",
+      "P2S-WF-E07",
+      "P2S-WF-E10"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 274,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-E12",
+    "code": "E12",
+    "axe": "Analyse, campagnes et CVE",
+    "version_source": "V0.2",
+    "tache_source": "Produire un dossier de remédiation PDF/CSV/JSON sans secrets. Rendus locaux partiels existants.",
+    "dependances": [
+      "P2S-WF-E11"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 275,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-R01",
+    "code": "R01",
+    "axe": "Remédiation PHPPATCH",
+    "version_source": "V0.3",
+    "tache_source": "Définir les stratégies de correction du runtime, extensions et backports PHP.",
+    "dependances": [
+      "P2S-WF-E10"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 281,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-R02",
+    "code": "R02",
+    "axe": "Remédiation PHPPATCH",
+    "version_source": "V0.3",
+    "tache_source": "Générer des diffs candidats sur code, configuration et dépendances. Une proposition ini limitée existe.",
+    "dependances": [
+      "P2S-WF-E07",
+      "P2S-WF-S06"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 282,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-R03",
+    "code": "R03",
+    "axe": "Remédiation PHPPATCH",
+    "version_source": "V0.3",
+    "tache_source": "Exécuter un laboratoire Docker isolé, non-root, sans secrets.",
+    "dependances": [
+      "P2S-WF-S06",
+      "P2S-WF-I04"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 283,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-R04",
+    "code": "R04",
+    "axe": "Remédiation PHPPATCH",
+    "version_source": "V0.3",
+    "tache_source": "Exécuter les tests lint, compatibilité et intégration avant/après patch.",
+    "dependances": [
+      "P2S-WF-R02",
+      "P2S-WF-R03"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 284,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-R05",
+    "code": "R05",
+    "axe": "Remédiation PHPPATCH",
+    "version_source": "V0.3",
+    "tache_source": "Sauvegarde et simulation de rollback attestée. Une répétition en mémoire existe mais ne suffit pas.",
+    "dependances": [
+      "P2S-WF-R03"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 285,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-R06",
+    "code": "R06",
+    "axe": "Remédiation PHPPATCH",
+    "version_source": "V0.3",
+    "tache_source": "Transfert PHPPATCH, approbation et PR candidate. Les paquets de revue locaux existent ; approbation réelle absente.",
+    "dependances": [
+      "P2S-WF-R04",
+      "P2S-WF-S04"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 286,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-R07",
+    "code": "R07",
+    "axe": "Remédiation PHPPATCH",
+    "version_source": "V0.3",
+    "tache_source": "Fixture `portail-demo.example` PHP 8.3.34 validée.",
+    "dependances": [
+      "P2S-WF-R01",
+      "P2S-WF-R03"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 287,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-I01",
+    "code": "I01",
+    "axe": "Infrastructure, backend et MCP",
+    "version_source": "V0.4",
+    "tache_source": "Diagnostiquer DNS local et configuration Plesk S1 en lecture seule.",
+    "dependances": [
+      "P2S-WF-G01"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 293,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-I02",
+    "code": "I02",
+    "axe": "Infrastructure, backend et MCP",
+    "version_source": "V0.4",
+    "tache_source": "Construire l'API FastAPI commune sécurisée. Premier contrat local présent, backend de production absent.",
+    "dependances": [
+      "P2S-WF-G05",
+      "P2S-WF-S01"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 294,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-I03",
+    "code": "I03",
+    "axe": "Infrastructure, backend et MCP",
+    "version_source": "V0.4",
+    "tache_source": "PostgreSQL, modèle de données, migrations, sécurité et sauvegardes.",
+    "dependances": [
+      "P2S-WF-I02",
+      "P2S-WF-S05"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 295,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-I04",
+    "code": "I04",
+    "axe": "Infrastructure, backend et MCP",
+    "version_source": "V0.4",
+    "tache_source": "Images et réseau Docker isolés compatibles Plesk.",
+    "dependances": [
+      "P2S-WF-I02",
+      "P2S-WF-S05"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 296,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-I05",
+    "code": "I05",
+    "axe": "Infrastructure, backend et MCP",
+    "version_source": "V0.4",
+    "tache_source": "Cartographier l'adaptateur de déploiement MCP existant.",
+    "dependances": [
+      "P2S-WF-G07",
+      "P2S-WF-G09"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 297,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-I06",
+    "code": "I06",
+    "axe": "Infrastructure, backend et MCP",
+    "version_source": "V0.4",
+    "tache_source": "Adaptateur MCP ciblé avec exact SHA et rollback.",
+    "dependances": [
+      "P2S-WF-I05",
+      "P2S-WF-I04",
+      "P2S-WF-R05"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 298,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-I07",
+    "code": "I07",
+    "axe": "Infrastructure, backend et MCP",
+    "version_source": "V0.4",
+    "tache_source": "Staging S1 authentifié, préflight et contrôle du rollback.",
+    "dependances": [
+      "P2S-WF-I06",
+      "P2S-WF-S04"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 299,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-I08",
+    "code": "I08",
+    "axe": "Infrastructure, backend et MCP",
+    "version_source": "V0.4",
+    "tache_source": "Workers idempotents, files bornées et anti-doublons.",
+    "dependances": [
+      "P2S-WF-I03",
+      "P2S-WF-G09"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 300,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-U01",
+    "code": "U01",
+    "axe": "Interfaces PHP2SHELL et PHPPATCH",
+    "version_source": "V1.0",
+    "tache_source": "Formulaire URL, projets, mandats et statut d'audit. Maquette statique partielle présente.",
+    "dependances": [
+      "P2S-WF-I02",
+      "P2S-WF-S04"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 306,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-U02",
+    "code": "U02",
+    "axe": "Interfaces PHP2SHELL et PHPPATCH",
+    "version_source": "V1.0",
+    "tache_source": "Cartographie des pages réellement visitées et couverture des audits.",
+    "dependances": [
+      "P2S-WF-U01",
+      "P2S-WF-E04"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 307,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-U03",
+    "code": "U03",
+    "axe": "Interfaces PHP2SHELL et PHPPATCH",
+    "version_source": "V1.0",
+    "tache_source": "Panneau PHP2Shell/CVE, preuves, incertitudes et diagnostics contextualisés.",
+    "dependances": [
+      "P2S-WF-U01",
+      "P2S-WF-E10"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 308,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-U04",
+    "code": "U04",
+    "axe": "Interfaces PHP2SHELL et PHPPATCH",
+    "version_source": "V1.0",
+    "tache_source": "Rapports téléchargeables et historique privé des preuves.",
+    "dependances": [
+      "P2S-WF-U02",
+      "P2S-WF-E12"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 309,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-U05",
+    "code": "U05",
+    "axe": "Interfaces PHP2SHELL et PHPPATCH",
+    "version_source": "V1.0",
+    "tache_source": "Console PHPPATCH : diff, tests, approbations et rollback. Maquette présente, actions réelles absentes.",
+    "dependances": [
+      "P2S-WF-R06",
+      "P2S-WF-S04"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 310,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-U06",
+    "code": "U06",
+    "axe": "Interfaces PHP2SHELL et PHPPATCH",
+    "version_source": "V1.0",
+    "tache_source": "Supervision multi-projets et tâches.",
+    "dependances": [
+      "P2S-WF-U01",
+      "P2S-WF-I03"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 311,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-Q01",
+    "code": "Q01",
+    "axe": "Qualité et recette",
+    "version_source": "Toutes",
+    "tache_source": "Vérifier la non-régression de toutes les 32 exigences par CI. Des suites existent, pas la recette finale complète.",
+    "dependances": [
+      "P2S-WF-G01"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 317,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-Q02",
+    "code": "Q02",
+    "axe": "Qualité et recette",
+    "version_source": "V0.2",
+    "tache_source": "Simuler des campagnes de 1, 100 puis 1 000 domaines fictifs. Simulation de partitionnement déjà réalisée.",
+    "dependances": [
+      "P2S-WF-E02",
+      "P2S-WF-S03"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 318,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-Q03",
+    "code": "Q03",
+    "axe": "Qualité et recette",
+    "version_source": "V0.3",
+    "tache_source": "Corpus PHP de versions corrigées et de backports, avec cas de compatibilité.",
+    "dependances": [
+      "P2S-WF-E10",
+      "P2S-WF-R04"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 319,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-Q04",
+    "code": "Q04",
+    "axe": "Qualité et recette",
+    "version_source": "V1.0",
+    "tache_source": "Tests E2E URL → rapport → PHPPATCH → PR fictive.",
+    "dependances": [
+      "P2S-WF-U04",
+      "P2S-WF-U05",
+      "P2S-WF-I07"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 320,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-Q05",
+    "code": "Q05",
+    "axe": "Qualité et recette",
+    "version_source": "V1.0",
+    "tache_source": "Recette staging négative, authentification, performance et rollback.",
+    "dependances": [
+      "P2S-WF-Q04",
+      "P2S-WF-S07"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 321,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-O01",
+    "code": "O01",
+    "axe": "Exploitation et supervision",
+    "version_source": "Toutes",
+    "tache_source": "Observer PR, CI et checkpoints via les événements du BUS MCP existant.",
+    "dependances": [
+      "P2S-WF-G09"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 327,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-O02",
+    "code": "O02",
+    "axe": "Exploitation et supervision",
+    "version_source": "Toutes",
+    "tache_source": "Définir une supervision périodique sans duplication ni spam.",
+    "dependances": [
+      "P2S-WF-O01"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 328,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-O03",
+    "code": "O03",
+    "axe": "Exploitation et supervision",
+    "version_source": "V1.0",
+    "tache_source": "Observabilité, métriques, journaux, sauvegardes et alertes.",
+    "dependances": [
+      "P2S-WF-I08",
+      "P2S-WF-I07"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 329,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-O04",
+    "code": "O04",
+    "axe": "Exploitation et supervision",
+    "version_source": "V1.0",
+    "tache_source": "Préparer go/no-go et release de production autorisée.",
+    "dependances": [
+      "P2S-WF-S08",
+      "P2S-WF-G07",
+      "P2S-WF-O03"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 330,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-O05",
+    "code": "O05",
+    "axe": "Exploitation et supervision",
+    "version_source": "V1.0",
+    "tache_source": "Déployer les deux applications sur S1 via une chaîne gouvernée.",
+    "dependances": [
+      "P2S-WF-O04"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 331,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "work_package_id": "P2S-WF-O06",
+    "code": "O06",
+    "axe": "Exploitation et supervision",
+    "version_source": "V1.0",
+    "tache_source": "Maintenance récurrente : avis CVE, certificats et sauvegardes.",
+    "dependances": [
+      "P2S-WF-O05"
+    ],
+    "statut_registre_source": "PLANNED_NOT_ADMITTED",
+    "gate_individuel": "non_precise_dans_le_document_fourni",
+    "req_ids": "non_extraits_du_registre_natif",
+    "admission_preuve": null,
+    "execution_preuve": null,
+    "acceptation_preuve": null,
+    "source_line": 332,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  }
+]

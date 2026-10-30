@@ -1,0 +1,42 @@
+{
+  "snapshot_only": true,
+  "recorded_sha_examples": [
+    {
+      "sha": "0adc473c8b03e37ad7ad3c99ce8b84cc382dbeca",
+      "description": "initialisation dépôt main 2026-10-22 16:40:40 UTC"
+    },
+    {
+      "sha": "a8600e6f4d702563a0a0ec6f4d935b0d0ddf0409",
+      "description": "périmètre défensif 2026-10-22 16:41:47 UTC"
+    },
+    {
+      "sha": "a9d799b008fc65ed5745745bc4ef09e8b889aabe",
+      "description": "CLI V0.1, laboratoire Docker et CI 2026-10-22 16:42:16 UTC"
+    },
+    {
+      "sha": "973f4dbb0fffbcf256b5813030f625204fc9fa53",
+      "description": "durcissement paquet PHPPATCH"
+    },
+    {
+      "sha": "b355299f1b338b22c13546a802144d0050e01026",
+      "description": "HEAD archive PR #7 lors du contrôle historique"
+    },
+    {
+      "sha": "33b5c7389339855795ac2fd81c0525927cc74402",
+      "description": "EVT-052, garde de périmètre claims et CI continuité"
+    }
+  ],
+  "ci_examples": [
+    {
+      "run_id": "40941805840",
+      "url": "https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40941805840",
+      "linked_event_id": "EVT-052"
+    }
+  ],
+  "verification_policy": "Les références sont recopiées du document source et ne sont pas revérifiées par appel GitHub dans cette édition.",
+  "unverified_commit_diffs": true,
+  "unverified_all_ci_logs": true,
+  "no_s1_deployment_proof": true,
+  "no_patch_applied_proof": true,
+  "repo_history_archive_pr": 7
+}

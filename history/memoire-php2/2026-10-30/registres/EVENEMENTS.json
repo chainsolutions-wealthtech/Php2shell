@@ -1,0 +1,470 @@
+[
+  {
+    "event_id": "EVT-001",
+    "date": "2026-10-22",
+    "description_source": "Demande de création d’un agent d’audit et de remédiation PHP. Création du dépôt public `Php2shell`, avec laboratoire fictif et périmètre défensif.",
+    "resultat_et_limites_source": "Dépôt créé ; analyse de tiers non autorisée.",
+    "source_line": 57,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-002",
+    "date": "2026-10-22",
+    "description_source": "Construction initiale V0.1 : CLI Python, fonctions de diagnostic, tests, Dockerfile, laboratoire PHP, CI et documentation. Ouverture de la PR #1.",
+    "resultat_et_limites_source": "Prototype local, non déployé.",
+    "source_line": 58,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-003",
+    "date": "2026-10-27",
+    "description_source": "Confirmation des cinq versions du programme. Construction initiale du scanner lexical PHP local, inventaire Composer, exclusions de parcours, tests et documentation V0.2.",
+    "resultat_et_limites_source": "Développé hors ligne, sans AST complet ni audit réseau.",
+    "source_line": 74,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-004",
+    "date": "2026-10-27",
+    "description_source": "Création des deux sous-domaines `php2shell.wealthtechinnovations.com` et `phppatch.wealthtechinnovations.com` sur S1 ; vérifications DNS, TLS et HTTPS.",
+    "resultat_et_limites_source": "Préparation d'hébergement, pas déploiement des applications.",
+    "source_line": 75,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-005",
+    "date": "2026-10-27",
+    "description_source": "Audit DNS : comparaison des serveurs autoritaires, récursifs et de la connexion directe S1 avec SNI ; identification d'anciens enregistrements et de caches.",
+    "resultat_et_limites_source": "Anomalie de résolution locale S1 encore signalée.",
+    "source_line": 76,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-006",
+    "date": "2026-10-27",
+    "description_source": "Création du workflow S1 de précontrôle DNS/TLS/redirections, du plan Docker isolé et ouverture de la PR #3.",
+    "resultat_et_limites_source": "Readiness uniquement, sans publication applicative.",
+    "source_line": 77,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-007",
+    "date": "2026-10-27",
+    "description_source": "Ouverture de l'issue #4 pour les prérequis et preuves du déploiement gouverné S1.",
+    "resultat_et_limites_source": "Suivi créé, déploiement non exécuté.",
+    "source_line": 78,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-008",
+    "date": "2026-10-27",
+    "description_source": "Consolidation de `docs/ROADMAP.md` : V0.1 à V1.0, sans suppression des capacités historiques.",
+    "resultat_et_limites_source": "Décision matérialisée dans la documentation.",
+    "source_line": 79,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-009",
+    "date": "2026-10-27",
+    "description_source": "Décision de traçabilité inter-conversations ; création de l'issue canonique #5.",
+    "resultat_et_limites_source": "Ancrage durable créé.",
+    "source_line": 80,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-010",
+    "date": "2026-10-27",
+    "description_source": "Création des fichiers de continuité, de leurs tests et de la PR #6 indépendante.",
+    "resultat_et_limites_source": "Infrastructure documentaire, `main` inchangée.",
+    "source_line": 81,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-011",
+    "date": "2026-10-27",
+    "description_source": "Réconciliation de la mission fondatrice : six lots, campagnes à grande échelle, P1/P2, analyse passive, CVE, source/runtime, API, base, workers et supervision. Création de la première matrice REQ-001 à REQ-022 et du registre CVE.",
+    "resultat_et_limites_source": "Périmètre rétabli, fonctionnalités non toutes réalisées.",
+    "source_line": 82,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-012",
+    "date": "2026-10-27",
+    "description_source": "Décision d'ajouter le parcours URL → analyse des pages autorisées → diagnostic PHP/CVE → dossier de remédiation → PHPPATCH. Création des exigences REQ-023 à REQ-032.",
+    "resultat_et_limites_source": "Contrat cible rédigé, pas de scan actif.",
+    "source_line": 83,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-013",
+    "date": "2026-10-28",
+    "description_source": "Création du DAG de 61 work packages, répartis sur huit axes de suivi. Écriture du contrat de workflow intelligent et multidirectionnel, avec tests documentaires.",
+    "resultat_et_limites_source": "Planification ; aucun moteur d'exécution autonome créé.",
+    "source_line": 89,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-014",
+    "date": "2026-10-28",
+    "description_source": "Corrections V0.1 DNS/tests/Docker, premier import CSV/JSON/TXT V0.2, synchronisation des PR empilées, demandes de revue et création de l'automatisation horaire.",
+    "resultat_et_limites_source": "Branches modifiées ; fusion et déploiement non réalisés.",
+    "source_line": 90,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-015",
+    "date": "2026-10-28",
+    "description_source": "Lecture locale bornée de `composer.lock`, contrôle des entrées malformées, des liens symboliques et des divulgations ; nouvelle convergence PR #3.",
+    "resultat_et_limites_source": "Fonction locale testée.",
+    "source_line": 91,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-016",
+    "date": "2026-10-28",
+    "description_source": "Analyse hors ligne de `php.ini`, `.user.ini` et PHP-FPM ; intégration au scanner et export CSV protégeant contre l'injection de formules.",
+    "resultat_et_limites_source": "49 tests au jalon enregistré.",
+    "source_line": 92,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-017",
+    "date": "2026-10-28",
+    "description_source": "Ajout d'un catalogue PHP/CERT-FR sourcé et daté, consultation CLI et comparaison prudente de versions.",
+    "resultat_et_limites_source": "58 tests ; aucune vulnérabilité d'actif confirmée.",
+    "source_line": 93,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-018",
+    "date": "2026-10-28",
+    "description_source": "Audit hors ligne du catalogue : SHA-256 canonique, âge du snapshot, validation des dates et commande `audit-catalog`.",
+    "resultat_et_limites_source": "63 tests au checkpoint associé ; pas de flux CVE périodique.",
+    "source_line": 94,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-019",
+    "date": "2026-10-28",
+    "description_source": "Proposition contrôlée de mise à jour des données CVE : refus des suppressions non examinées, dates régressives et changements silencieux de sources ou seuils.",
+    "resultat_et_limites_source": "73 tests ; aucune mise à jour automatique en production.",
+    "source_line": 95,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-020",
+    "date": "2026-10-28",
+    "description_source": "Client GHSA GitHub borné, explicitement activable, avec contrôles de transport, limites de réponse et refus des redirections non autorisées.",
+    "resultat_et_limites_source": "81 tests ; collecte testée notamment avec mocks, non preuve de flux live opérationnel.",
+    "source_line": 96,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-021",
+    "date": "2026-10-28",
+    "description_source": "Lecture d'une déclaration de runtime PHP/SAPI, comparaison aux références de versions et prise en compte explicite de l'absence de preuve de backport.",
+    "resultat_et_limites_source": "89 tests ; environnement réel non attesté.",
+    "source_line": 97,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-022",
+    "date": "2026-10-28",
+    "description_source": "Export CSV des observations de runtime déclaré, avec liste de champs autorisés et prévention des injections CSV.",
+    "resultat_et_limites_source": "96 tests ; CSV non assimilable à une attestation.",
+    "source_line": 98,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-023",
+    "date": "2026-10-28",
+    "description_source": "Création d'un dossier d'audit local JSON/Markdown, combinant indicateurs PHP, configuration et éventuellement déclaration runtime, avec recommandations à examiner.",
+    "resultat_et_limites_source": "Analyse hors ligne ; aucun patch exécuté.",
+    "source_line": 99,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-024",
+    "date": "2026-10-28",
+    "description_source": "Prévisualisation d'URL HTTPS : rejet de nombreuses formes d'URL dangereuses, d'adresses privées et de déclarations insuffisantes.",
+    "resultat_et_limites_source": "113 tests ; aucune visite réseau ni admission P1/P2.",
+    "source_line": 100,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-025",
+    "date": "2026-10-28",
+    "description_source": "Construction du transfert PHP2SHELL → PHPPATCH, avec contrôle de cohérence des preuves, identifiants et règles, sans exposer de secrets ou sources brutes.",
+    "resultat_et_limites_source": "122 tests ; transfert préparatoire, pas de correction appliquée.",
+    "source_line": 101,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-026",
+    "date": "2026-10-28",
+    "description_source": "Ajouts successifs : précontrôles P1/P2, DNS et redirections hors ligne, campagnes partitionnées, rapport HTML et maquette PHP2SHELL.",
+    "resultat_et_limites_source": "148 tests ; synchronisation de PR #3 alors encore incomplète.",
+    "source_line": 102,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-027",
+    "date": "2026-10-28",
+    "description_source": "Deuxième console statique PHPPATCH, séparée de PHP2SHELL et conservant une posture sans action active.",
+    "resultat_et_limites_source": "153 tests ; console non authentifiée et non déployée.",
+    "source_line": 103,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-028",
+    "date": "2026-10-28",
+    "description_source": "Renforcement des contrôles de noms DNS, URL, IPv6 de transition et redirections limitées à un sous-chemin.",
+    "resultat_et_limites_source": "157 tests ; vérification syntaxique, pas connexion réseau.",
+    "source_line": 104,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-029",
+    "date": "2026-10-28",
+    "description_source": "Première API FastAPI locale : santé, capacités, prévisualisation URL, accès loopback, opérations de scan/patch désactivées et tests ASGI.",
+    "resultat_et_limites_source": "Contrat de développement uniquement.",
+    "source_line": 105,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-030",
+    "date": "2026-10-28",
+    "description_source": "Première proposition PHPPATCH de diff local minimal pour `display_errors=Off`, liée à un constat et à un identifiant de preuve.",
+    "resultat_et_limites_source": "164 tests applicatifs et 9 API ; aucun fichier modifié par le patch.",
+    "source_line": 106,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-031",
+    "date": "2026-10-28",
+    "description_source": "Séquence RED→GREEN pour une véritable limite de corps ASGI de 4 Kio, indépendante de `Content-Length`, y compris trafic découpé.",
+    "resultat_et_limites_source": "164 tests applicatifs + 12 API ; limite de prototype, non du reverse proxy de production.",
+    "source_line": 107,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-032",
+    "date": "2026-10-28",
+    "description_source": "Séquence RED→GREEN : rejet des propositions de diff lorsque plusieurs directives `display_errors` actives rendent la modification ambiguë.",
+    "resultat_et_limites_source": "166 tests applicatifs + 12 API ; absence d'écriture conservée.",
+    "source_line": 108,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-033",
+    "date": "2026-10-28",
+    "description_source": "Modèle de cinq contrôles séparés : lecture publique, lecture source, proposition de patch, application de patch et déploiement.",
+    "resultat_et_limites_source": "Refus par défaut ; identité et mandat réels absents.",
+    "source_line": 109,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-034",
+    "date": "2026-10-28",
+    "description_source": "Vérificateur cryptographique hors ligne Ed25519 : signature, émetteur, audience, projet, actif, opération, expiration et révocation fournie.",
+    "resultat_et_limites_source": "Tests cryptographiques ; aucune autorité réelle accordée.",
+    "source_line": 110,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-035",
+    "date": "2026-10-28",
+    "description_source": "Liaison exacte d'un sous-chemin `base_path` signé pour éviter les confusions de périmètre entre tenants.",
+    "resultat_et_limites_source": "RED→GREEN ; contrat historique conservé.",
+    "source_line": 111,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-036",
+    "date": "2026-10-28",
+    "description_source": "Plafonds de pages et de débit signés pour les futurs crawls P1, avec contrôle des budgets demandés.",
+    "resultat_et_limites_source": "RED→GREEN ; aucune opération réseau activée.",
+    "source_line": 112,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-037",
+    "date": "2026-10-28",
+    "description_source": "Vérification de cohérence locale `composer.json` / `composer.lock` : versions, doublons, divergences et cas particuliers.",
+    "resultat_et_limites_source": "17 nouveaux tests ; analyse toujours locale.",
+    "source_line": 113,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-038",
+    "date": "2026-10-28",
+    "description_source": "Liaison de la preuve Ed25519 à l'URL canonique, aux identités externes et au mandat exact P2.",
+    "resultat_et_limites_source": "188 tests applicatifs, 12 API et 28 sécurité au jalon ; accès réel toujours refusé.",
+    "source_line": 114,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-039",
+    "date": "2026-10-28",
+    "description_source": "Simplification de l'interface : trois étapes compréhensibles, langage courant, réglages techniques repliés.",
+    "resultat_et_limites_source": "190 tests applicatifs au jalon ; interface sans véritable analyse live.",
+    "source_line": 115,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-040",
+    "date": "2026-10-28",
+    "description_source": "Moteur de synthèse courte anonyme et API locale, à partir d'une URL et éventuellement de métadonnées HTTP fournies.",
+    "resultat_et_limites_source": "199 tests applicatifs, 17 API et 28 sécurité ; `NOT_ANALYZED` si aucune collecte, pas de faux audit.",
+    "source_line": 116,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-041",
+    "date": "2026-10-28",
+    "description_source": "Normaliseur local de métadonnées HTTP : noms d'en-têtes autorisés, valeurs sensibles exclues, contrôles des tailles et caractères.",
+    "resultat_et_limites_source": "211 tests applicatifs, 17 API et 28 sécurité ; aucune collecte distante.",
+    "source_line": 117,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-042",
+    "date": "2026-10-28",
+    "description_source": "Correction de la CI rouge de la répétition PHPPATCH : ajout de la commande `rehearse-config-patch` manquante.",
+    "resultat_et_limites_source": "218 tests ; échec précédent conservé dans l'historique.",
+    "source_line": 118,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-043",
+    "date": "2026-10-28",
+    "description_source": "Paquet de revue PHPPATCH : dossier, transfert, diff et simulation de rollback liés par des empreintes et métadonnées contrôlées.",
+    "resultat_et_limites_source": "226 tests ; paquet non exécutable.",
+    "source_line": 119,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-044",
+    "date": "2026-10-28",
+    "description_source": "Vérification d'un paquet PHPPATCH à partir d'un dossier recalculé, avec refus des données altérées, périmées ou non canoniques.",
+    "resultat_et_limites_source": "234 tests ; aucune promotion de droits.",
+    "source_line": 120,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-045",
+    "date": "2026-10-28",
+    "description_source": "Commande CLI de revalidation du paquet de revue et tests de refus des paquets falsifiés.",
+    "resultat_et_limites_source": "239 tests ; toujours sans exécution de patch.",
+    "source_line": 121,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-046",
+    "date": "2026-10-28",
+    "description_source": "Lecture sécurisée du paquet PHPPATCH par descripteur : `O_NOFOLLOW`, `O_NONBLOCK`, `fstat`, fichier régulier et limite de 16 Kio.",
+    "resultat_et_limites_source": "242 tests ; protège plusieurs substitutions, sans garantir un snapshot atomique total.",
+    "source_line": 122,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-047",
+    "date": "2026-10-28",
+    "description_source": "Durcissement de la lecture Composer contre les liens symboliques et changements observables pendant la lecture.",
+    "resultat_et_limites_source": "244 tests ; contrat source/local préservé.",
+    "source_line": 123,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-048",
+    "date": "2026-10-29",
+    "description_source": "PHPPATCH refuse les valeurs invalides ou inefficaces de `O_NOFOLLOW` avant d'ouvrir un paquet. Convergence de la PR #3 et réconciliation MCP en lecture seule.",
+    "resultat_et_limites_source": "245 tests applicatifs ; aucun patch ou déploiement.",
+    "source_line": 129,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-049",
+    "date": "2026-10-29",
+    "description_source": "Formalisation de la validation technique automatisée sur preuves, sans confondre auto-revue, CI verte et approbation indépendante.",
+    "resultat_et_limites_source": "Règle documentaire, pas admission automatique.",
+    "source_line": 130,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-050",
+    "date": "2026-10-29",
+    "description_source": "Création de `continuity/select_candidates.py` et de tests : lecture des dépendances du DAG de 61 unités, contrôle des identifiants et sélection conservatrice des candidats.",
+    "resultat_et_limites_source": "Sélecteur sans exécuteur ni attribution de claim.",
+    "source_line": 131,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-051",
+    "date": "2026-10-29",
+    "description_source": "Séparation explicite des claims de développement MCP, des claims des work packages PHP2SHELL et des permissions de ressources partagées.",
+    "resultat_et_limites_source": "Gouvernance clarifiée, aucun droit transféré.",
+    "source_line": 132,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "event_id": "EVT-052",
+    "date": "2026-10-29",
+    "description_source": "Création du garde de périmètre des claims, tests négatifs et intégration des tests de continuité dans la CI. Exclusion des tâches bloquées par une revue.",
+    "resultat_et_limites_source": "CI de continuité réussie ; toujours aucun claim d'exécution créé.",
+    "source_line": 133,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  }
+]

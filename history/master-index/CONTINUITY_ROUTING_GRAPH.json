@@ -1,0 +1,172 @@
+{
+  "schema": "php2shell-canonical-routing-graph-v1",
+  "root": "PHP2SHELL-CONT-20261027-ROOT-01",
+  "root_key": "CONTINUITY:PHP2SHELL-CONT-20261027-ROOT-01",
+  "nodes": [
+    {
+      "id": "ROOT",
+      "type": "CONTINUITY",
+      "key": "CONTINUITY:PHP2SHELL-CONT-20261027-ROOT-01",
+      "source": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5"
+    },
+    {
+      "id": "GOVERNANCE",
+      "type": "DOCUMENT",
+      "path": "continuity/PROTOCOL.md"
+    },
+    {
+      "id": "HANDOFF",
+      "type": "DOCUMENT",
+      "path": "continuity/HANDOFF.md"
+    },
+    {
+      "id": "BUSINESS_NEXT",
+      "type": "ACTION",
+      "key": "P2S-NEXT-001",
+      "path": "continuity/NEXT_ACTION.md"
+    },
+    {
+      "id": "MEMORY",
+      "type": "DOCUMENTARY_MEMORY",
+      "key": "MEMOIRE-PHP2",
+      "path": "history/memoire-php2/2026-10-30/README.md"
+    },
+    {
+      "id": "MASTER_KEYS",
+      "type": "REGISTRY",
+      "key": "P2S-MASTER-IDENTIFIERS",
+      "path": "history/master-index/MASTER_IDENTIFIERS_REGISTRY.json"
+    },
+    {
+      "id": "MASTER_LINKS",
+      "type": "REGISTRY",
+      "path": "history/master-index/MASTER_RELATIONSHIPS_REGISTRY.json"
+    },
+    {
+      "id": "TRACE_MATRIX",
+      "type": "MATRIX",
+      "path": "history/master-index/matrices/MATRIX_CONTINUITY.json"
+    },
+    {
+      "id": "TASK_MATRIX",
+      "type": "MATRIX",
+      "path": "history/master-index/matrices/MATRIX_ACTIVITIES_TASKS_ACTIONS.json"
+    },
+    {
+      "id": "CORRELATIONS",
+      "type": "MATRIX",
+      "path": "history/master-index/matrices/MATRIX_CORRELATIONS.json"
+    },
+    {
+      "id": "CHRONOLOGY",
+      "type": "MATRIX",
+      "path": "history/master-index/matrices/MATRIX_WORK_CHRONOLOGY.json"
+    },
+    {
+      "id": "EXCEPTIONS",
+      "type": "MATRIX",
+      "path": "history/master-index/matrices/MATRIX_UNVERIFIED_RELATIONS.json"
+    },
+    {
+      "id": "REJOIN",
+      "type": "PROTOCOL",
+      "path": "history/master-index/NO_COLLISION_REJOIN_PROTOCOL.md"
+    },
+    {
+      "id": "AUDIT_TRAIL",
+      "type": "LEDGER",
+      "path": "history/master-index/CONTINUITY_ACTIVITY_LEDGER.jsonl"
+    },
+    {
+      "id": "PR_ARCHIVE",
+      "type": "PR",
+      "key": "PR:7",
+      "source": "https://github.com/chainsolutions-wealthtech/Php2shell/pull/7"
+    },
+    {
+      "id": "CANONICAL_ISSUE",
+      "type": "ISSUE",
+      "key": "ISSUE:5",
+      "source": "https://github.com/chainsolutions-wealthtech/Php2shell/issues/5"
+    }
+  ],
+  "links": [
+    {
+      "from": "ROOT",
+      "to": "GOVERNANCE",
+      "relation": "GOVERNED_BY"
+    },
+    {
+      "from": "ROOT",
+      "to": "CANONICAL_ISSUE",
+      "relation": "AUTHORITATIVE_ANCHOR"
+    },
+    {
+      "from": "ROOT",
+      "to": "MASTER_KEYS",
+      "relation": "INDEXED_BY"
+    },
+    {
+      "from": "MASTER_KEYS",
+      "to": "MASTER_LINKS",
+      "relation": "JOINED_BY"
+    },
+    {
+      "from": "MASTER_KEYS",
+      "to": "MEMORY",
+      "relation": "ALIAS_HISTORICAL_SOURCE"
+    },
+    {
+      "from": "ROOT",
+      "to": "HANDOFF",
+      "relation": "RESUMED_WITH"
+    },
+    {
+      "from": "HANDOFF",
+      "to": "REJOIN",
+      "relation": "USES"
+    },
+    {
+      "from": "ROOT",
+      "to": "BUSINESS_NEXT",
+      "relation": "BUSINESS_PRIORITY"
+    },
+    {
+      "from": "MASTER_LINKS",
+      "to": "TRACE_MATRIX",
+      "relation": "MATRIX"
+    },
+    {
+      "from": "MASTER_LINKS",
+      "to": "TASK_MATRIX",
+      "relation": "MATRIX"
+    },
+    {
+      "from": "MASTER_LINKS",
+      "to": "CORRELATIONS",
+      "relation": "MATRIX"
+    },
+    {
+      "from": "MASTER_LINKS",
+      "to": "CHRONOLOGY",
+      "relation": "MATRIX"
+    },
+    {
+      "from": "MASTER_LINKS",
+      "to": "EXCEPTIONS",
+      "relation": "UNRESOLVED"
+    },
+    {
+      "from": "ROOT",
+      "to": "AUDIT_TRAIL",
+      "relation": "DOCUMENTARY_TRACE"
+    },
+    {
+      "from": "ROOT",
+      "to": "PR_ARCHIVE",
+      "relation": "ARCHIVE_BRANCH"
+    }
+  ],
+  "provenance": "Router topology is documentary; links are conceptual verified path references, not all 5582 semantic relations.",
+  "original_identifiers_registry_untouched_keys": true
+}

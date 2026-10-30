@@ -1,0 +1,41 @@
+﻿checkpoint_id;numero;objet_source;date;exact_head;ci_run;preuve_primaire;source_line;source_type;verification_externe
+PHP2SHELL-CHECKPOINT-001;#001;Création de l'ancrage canonique, PR #6, documents et premiers tests de continuité.;;;;a_reconcilier;178;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-002;#002;Vérification de l'amont V0.1 avant poursuite.;;;;a_reconcilier;179;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-003;#003;Réconciliation du cahier des charges initial et des six lots.;;;;a_reconcilier;180;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-004;#004;Formalisation du parcours URL → Web autorisé → PHP profond → PHPPATCH.;;;;a_reconcilier;181;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-005;#005;Création du backlog multidirectionnel de 61 unités.;;;;a_reconcilier;182;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-006;#006;Correction documentaire append-only et revue PR #6 toujours attendue.;;;;a_reconcilier;183;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-007;#007;Corrections PR #1, imports V0.2, synchronisation S1 et automatisation horaire.;;;;a_reconcilier;184;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-008;#008;Contrôle S1 des deux vhosts et diagnostic DNS local.;;;;a_reconcilier;185;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-009;#009;Inspection Composer.lock et nouvelle synchronisation PR #3.;;;;a_reconcilier;186;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-010;#010;Audit ini/FPM, export CSV, synchronisation et renforcement de l'automatisation.;;;;a_reconcilier;187;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-011;#011;Catalogue officiel PHP/CERT-FR et CLI de consultation.;;;;a_reconcilier;188;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-012;#012;Audit hors ligne du catalogue et provenance.;;;;a_reconcilier;189;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-013;#013;Propositions contrôlées de mise à jour CVE.;;;;a_reconcilier;190;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-014;#014;Client GHSA officiel borné et tests de transport.;;;;a_reconcilier;191;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-015;#015;Enveloppe de déclaration PHP/SAPI, mandat non attesté.;;;;a_reconcilier;192;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-016;#016;Export CSV runtime déclaré et convergence des branches.;;;;a_reconcilier;193;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-017;#017;Dossier d'audit JSON/Markdown et prévisualisation URL sécurisée.;;;;a_reconcilier;194;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-018;#018;Transfert préparatoire PHP2SHELL → PHPPATCH, 122 tests.;;;;a_reconcilier;195;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-019;#019;Précontrôles P1/P2, campagnes, rapport HTML et aperçu URL, 148 tests.;;;;a_reconcilier;196;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-020;#020;Deuxième console PHPPATCH statique, 153 tests.;;;;a_reconcilier;197;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-021;#021;Contrôles DNS/redirections hors ligne, 157 tests.;;;;a_reconcilier;198;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-022;#022;Contrat FastAPI local et proposition PHPPATCH, 164 tests applicatifs + 9 API.;;;;a_reconcilier;199;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-023;#023;Limite ASGI réelle de 4 Kio, 164 + 12 tests.;;;;a_reconcilier;200;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-024;#024;Refus des directives ini actives dupliquées, 166 + 12 tests.;;;;a_reconcilier;201;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-025;#025;Matrice P1/P2 fail-closed et vérifications MCP en lecture seule.;;;;a_reconcilier;202;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-026;#026;Attestation Ed25519 externe hors ligne, 171 + 12 + 10 tests.;;;;a_reconcilier;203;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-027;#027;Sous-chemin et budgets signés, collision concurrente détectée.;;;;a_reconcilier;204;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-028;#028;Cohérence Composer, 188 + 12 + 20 tests.;;;;a_reconcilier;205;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-029;#029;Liaison P1/P2 signée au parcours URL, 188 + 12 + 28 tests.;;;;a_reconcilier;206;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-030;#030;UX grand public à trois étapes, aucun scan réel.;;;;a_reconcilier;207;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-031;#031;Synthèse courte anonyme et API locale, 199 + 17 + 28 tests.;;;;a_reconcilier;208;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-032;#032;Normalisation des métadonnées HTTP, 211 + 17 + 28 tests.;;;;a_reconcilier;209;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-033;#033;Répétition PHPPATCH V0.3, avec une CI rouge constatée.;;;;a_reconcilier;210;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-034;#034;Correction de la répétition, paquet de revue PHPPATCH, 226 tests.;;;;a_reconcilier;211;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-035;#035;Vérification du paquet de revue, 234 tests.;;;;a_reconcilier;212;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-036;#036;Commande CLI de revalidation, 239 tests.;;;;a_reconcilier;213;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-037;#037;Ouverture sécurisée du paquet par descripteur, 242 tests.;;;;a_reconcilier;214;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-038;#038;Durcissement Composer, 244 tests.;;;;a_reconcilier;215;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-039;#039;Refus des drapeaux `O_NOFOLLOW` inefficaces, 245 tests.;;;;a_reconcilier;216;document_fourni;non_effectuee_dans_cette_operation
+PHP2SHELL-CHECKPOINT-040;#040;Séparation technique des claims et tests de continuité dans la CI.;;;;a_reconcilier;217;document_fourni;non_effectuee_dans_cette_operation

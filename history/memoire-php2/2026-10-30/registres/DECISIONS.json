@@ -1,0 +1,194 @@
+[
+  {
+    "decision_id": "P2S-DEC-001",
+    "date": "2026-10-22",
+    "contenu_source": "Créer `chainsolutions-wealthtech/Php2shell` comme dépôt public d'un outil défensif, avec laboratoire fictif et analyses limitées aux actifs autorisés.",
+    "source_line": 145,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-002",
+    "date": "2026-10-22",
+    "contenu_source": "Construire la chaîne analyse → vulnérabilités prouvées → proposition de patch → tests → validation. Interdire l'assimilation d'un simple indicateur à une vulnérabilité confirmée.",
+    "source_line": 146,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-003",
+    "date": "2026-10-27",
+    "contenu_source": "Maintenir V0.1 → V0.2 → V0.3 → V0.4 → V1.0 ; évolutions additives et critères de sortie documentés.",
+    "source_line": 147,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-004",
+    "date": "2026-10-27",
+    "contenu_source": "Utiliser deux sous-domaines S1 distincts, PHP2SHELL et PHPPATCH, avec un moteur partagé et des permissions séparées.",
+    "source_line": 148,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-005",
+    "date": "2026-10-27",
+    "contenu_source": "Viser Docker isolé et GitHub/MCP gouverné, sans nouveau gateway concurrent ni écriture directe sur `main` ou S1.",
+    "source_line": 149,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-006",
+    "date": "2026-10-27",
+    "contenu_source": "Conserver cinq capacités essentielles : analyse PHP, avis CVE officiels, génération de patch, tests de patch, interface Web. Les manques doivent rester visibles.",
+    "source_line": 150,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-007",
+    "date": "2026-10-27",
+    "contenu_source": "Instituer la mémoire canonique inter-conversations : issue #5, documents de référence, checkpoints par jalon et traçabilité des blocages.",
+    "source_line": 151,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-008",
+    "date": "2026-10-27",
+    "contenu_source": "Ne pas utiliser Codex/Copilot, éviter les régressions et préserver les gouvernances séparées de PHP2SHELL, MCP et GRT.",
+    "source_line": 152,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-009",
+    "date": "2026-10-27",
+    "contenu_source": "Restaurer le périmètre intégral de départ : centaines/milliers de domaines, CSV/JSON/TXT, analyse passive, sources privées autorisées, CVE, remédiation et supervision.",
+    "source_line": 153,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-010",
+    "date": "2026-10-27",
+    "contenu_source": "Faire coexister les six lots historiques et les cinq versions ; conserver FastAPI, PostgreSQL, Redis/workers, Docker, rapports PDF/CSV/JSON et campagnes dans l'architecture cible.",
+    "source_line": 154,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-011",
+    "date": "2026-10-27",
+    "contenu_source": "Distinguer les références officielles des CVE PHP et leur applicabilité réelle aux actifs ; prendre en compte le runtime et les backports fournisseurs.",
+    "source_line": 155,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-012",
+    "date": "2026-10-27",
+    "contenu_source": "Ajouter le parcours d'audit déclenché par URL, l'exploration bornée et autorisée, l'analyse PHP profonde P2, le dossier de diagnostic et la remise à PHPPATCH.",
+    "source_line": 156,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-013",
+    "date": "2026-10-28",
+    "contenu_source": "Organiser 61 work packages dans un workflow intelligent multidirectionnel, fondé sur dépendances, gates, coordination des agents et prévention des collisions.",
+    "source_line": 157,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-014",
+    "date": "2026-10-28",
+    "contenu_source": "Autoriser la progression technique récurrente des actions admissibles par une automatisation horaire, sans lever les validations et permissions sensibles.",
+    "source_line": 158,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-015",
+    "date": "2026-10-28",
+    "contenu_source": "Introduire une limite ASGI réelle de 4 096 octets, même lorsque `Content-Length` est absent ou mensonger, par tests RED→GREEN.",
+    "source_line": 159,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-016",
+    "date": "2026-10-28",
+    "contenu_source": "Interdire une proposition de correction `display_errors` lorsqu'il existe plusieurs directives actives ambiguës ; conserver la compatibilité des fichiers et commandes historiques.",
+    "source_line": 160,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-017",
+    "date": "2026-10-28",
+    "contenu_source": "Séparer la vérification d'identité, les droits/mandats P1/P2 et l'approbation d'une opération ; refus par défaut tant que les autorités réelles ne sont pas vérifiées.",
+    "source_line": 161,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-018",
+    "date": "2026-10-28",
+    "contenu_source": "Préparer la vérification de signatures Ed25519 externes, sans créer d'émetteur d'identité parallèle ni accorder de permissions sur la seule signature.",
+    "source_line": 162,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-019",
+    "date": "2026-10-28",
+    "contenu_source": "Exiger un sous-chemin exact signé lorsque l'attestation porte sur une partie du site ; éviter qu'une autorisation de domaine soit élargie à tort.",
+    "source_line": 163,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-020",
+    "date": "2026-10-28",
+    "contenu_source": "Lier les futurs crawls publics à des budgets et périmètres signés, bornés et non dépassables.",
+    "source_line": 164,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-021",
+    "date": "2026-10-28",
+    "contenu_source": "Raccorder l'attestation signée à l'URL canonique et à un mandat P2 exact ; maintenir `deny-only` sans IdP, ACL, révocation et claims MCP effectifs.",
+    "source_line": 165,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-022",
+    "date": "2026-10-28",
+    "contenu_source": "Simplifier PHP2SHELL/PHPPATCH pour les non-techniciens : trois étapes, aperçu sans compte, jargon masqué, connexion unique à terme.",
+    "source_line": 166,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-023",
+    "date": "2026-10-28",
+    "contenu_source": "Préparer la réponse courte anonyme, en séparant URL seule, métadonnées fournies non vérifiées et véritable analyse du site. Ne pas stocker de rapport complet sans compte réel.",
+    "source_line": 167,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  },
+  {
+    "decision_id": "P2S-DEC-024",
+    "date": "2026-10-29",
+    "contenu_source": "Adopter la validation technique automatisée fondée sur des preuves exact-HEAD, tests, CI et contre-revue documentée. Une auto-revue ou deux comptes d'un même propriétaire ne deviennent pas une approbation indépendante ; les protections effectives doivent être respectées ou modifiées explicitement selon les procédures applicables.",
+    "source_line": 168,
+    "source_type": "document_fourni",
+    "verification_externe": "non_effectuee_dans_cette_operation"
+  }
+]

@@ -1,0 +1,76 @@
+# CVE_SOURCE_REGISTER — preuves officielles, sans extrapolation sur un actif
+
+**Continuity ID :** `PHP2SHELL-CONT-20261027-ROOT-01`  
+**Ancre :** https://github.com/chainsolutions-wealthtech/Php2shell/issues/5  
+**Date d'observation des références publiques :** 2026-10-27  
+**Nature :** revue DOCUMENTAIRE de sources publiques, **pas** moteur de corrélation CVE implanté dans le code, ni inspection de serveurs tiers.
+
+## Constat important — distinguer CVE officielle et pertinence sur un actif
+
+Les deux CVE initialement ciblées existent et leurs correctifs upstream sont documentés depuis le 21 octobre 2026. La mention « CVE d'exemple non vérifiées » dans les premières versions du prototype `app/core.py` et de la documentation décrit correctement le **statut du catalogue codé historiquement** (aucun pipeline de provenance et de validation n'y était implémenté), **mais ne doit plus être interprétée comme une négation de l'existence ou de la publication officielle de ces deux CVE**.
+
+**Nouvelle décision :** officialiser ici les références vérifiées ; il restera à implémenter la consommation de sources, la fraîcheur, la vérification des signatures/provenances, l'attestation des runtimes réels et les cas de rétroportage, sur une PR V0.2 distincte, avant d'activer un diagnostic de vulnérabilité par actif. Ne pas changer les statuts du code en prétendant que le pipeline existe déjà.
+
+## Addendum de réalisation — instantané officiel PHP V0.2 (28/10/2026)
+
+**Première étape fonctionnelle implémentée dans la PR #2** : le code `app/security_advisories.py` valide un **instantané local** `app/data/php_security_advisories.json` fondé sur les références PHP et CERT-FR, avec deux commandes nouvelles `advisories` et `review-version --php X.Y.Z`. La sortie distingue systématiquement `advisory_source_verified_in_snapshot` et `asset_applicability: insufficient_evidence`. Le comportement de `check-version` V0.1 est conservé.
+
+**Preuves :** PR #2 HEAD `4848bff596977595e58b28db01eaebcd1a128e14`, CI [40609678329](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40609678329) et [40609685203](https://github.com/chainsolutions-wealthtech/Php2shell/actions/runs/40609685203) **SUCCESS (58 tests)**. PR #3 S1 intégrée sans rebase HEAD `e12cb5054d2a7ac9db1829a5da4eb37e6de919f1`, CI tests/préflight **SUCCESS**, sans installation.
+
+**État restant :** ni récupération périodique fiable des nouveaux avis, ni vérification de rétroportages fournisseur, ni preuve du runtime réellement exécuté, ni analyse automatique d'applicabilité sur actif. Le catalogue traite actuellement les deux CVE fondatrices : **pas un registre exhaustif de toutes les CVE PHP 2026**. L'alerte CERT-FR révisée mentionne d'autres risques qu'un futur collecteur devra gérer séparément.
+
+## Addendum opérationnel — client GitHub public GHSA borné V0.2 (28/10/2026)
+
+**Tranche implémentée, mais récupération live non testée :** PR #2 introduit `app/advisory_fetch.py` et `fetch-official-advisory --ghsa ... --as-of ... --permit-official-network`. Elle ne permet que `https://api.github.com/advisories/{GHSA}` pour un GHSA déjà enregistré dans le catalogue. Tests **81 succès au HEAD `e02ac06fe715ac643313e4d1a0110d56129fb8d6`**, réponse API strictement simulée par les tests, pas d'accès tiers ni d'écriture dans le catalogue, aucune conclusion de vulnérabilité sur un serveur.
+
+**L'endpoint GitHub global est une source officielle de métadonnées mais ne se substitue pas à l'avis primaire publié par le projet PHP ni au CERT-FR**. Une future intégration doit recouper ces sources, les branches PHP et les correctifs fournisseur/distribution. Une URL contrôlée n'est pas une preuve cryptographique de provenance, et une réponse HTTP authentifiée par TLS n'atteste pas l'environnement de l'actif. PR #3 S1 resynchronisée au HEAD `708d912ad19b54a4a9410084058d9114396d591c`, uniquement readiness/CI, **aucun service déployé**.
+
+## Avis prioritaires
+
+| CVE | Identifiant avis primaire PHP | Résumé défensif | CVSS 4.0 upstream | Publication |
+|---|---|---|---|---|
+| **CVE-2026-109618** | `GHSA-w8hw-w9fx-j79w` | Risque de corruption mémoire lors de la gestion d'une situation de mémoire insuffisante | 9,2 / critique | 2026-10-21 |
+| **CVE-2026-109619** | `GHSA-6wmf-4rv5-p3rp` | Risque d'utilisation d'un état global périmé entre requêtes | 9,2 / critique | 2026-10-21 |
+
+**Sources primaires de PHP :**
+- https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w
+- https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp
+- https://www.php.net/archive/2026.php
+
+**Autorités de recoupement :**
+- **CERT-FR / ANSSI** alerte `CERTFR-2026-ALE-014`, mise à jour le 27/10/2026 : https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-014/
+- CERT-EU avis `2026-018` : https://cert.europa.eu/publications/security-advisories/2026-018/
+- CVE officielle : https://www.cve.org/CVERecord?id=CVE-2026-109618 et https://www.cve.org/CVERecord?id=CVE-2026-109619
+- Règles propres aux distributions à vérifier séparément : avis éditeur Debian/Ubuntu/RHEL/SUSE/Plesk, paquet installé et éventuel correctif rétroporté.
+
+## Versions corrigées upstream confirmées dans les deux avis PHP
+
+| Ligne | Version upstream de référence corrigée | Interprétation stricte |
+|---|---|---|
+| PHP 8.5 | **8.5.12** | Versions amont inférieures à examiner ; pas de présomption de vulnérabilité d'un système sans preuve |
+| PHP 8.4 | **8.4.27** | Même règle, vérification du runtime et du packaging requise |
+| PHP 8.3 | **8.3.36** | Même règle ; `8.3.34` dans le lab est un scénario de version déclarée |
+| PHP 8.2 | **8.2.35** | Même règle |
+| 8.1 et antérieures | Pas de correctif upstream pour branches arrivées en fin de vie | Migration ou avis de distribution/fournisseur vérifié |
+
+**Attestation minimale par actif autorisé :**
+`source + timestamp + version observée réelle + SAPI et configuration + origine paquet/image + backport éventuel + correctif appliqué + niveau de confiance`.
+
+Un résultat `below_reference_fix` dans la CLI V0.1 représente **une comparaison de chaîne/semver à un seuil**, pas une analyse complète du statut sécurité. Deux projets partageant le même numéro de version apparent peuvent avoir un état réel différent selon la distribution et les correctifs du fournisseur.
+
+## CVE supplémentaires — surveillance sans dérive du mandat
+
+Le CERT-FR signale également dans la mise à jour du 26 octobre 2026 une troisième référence `CVE-2026-115560`, distincte des deux CVE prioritaires initiales. À inscrire dans un futur registre extensible **seulement après examen dédié et décision de portée**, sans remplacer le suivi des deux vulnérabilités fondatrices ni annoncer de support implémenté.
+
+## Cycle futur du catalogue d'avis (V0.2 à livrer)
+
+1. Sources primaires par URL/id, date de publication/modification, authenticité et format brut original.
+2. Actualisation sous politique de cadence contrôlée, cache daté et journal de diff ; réseau autorisé seulement pour le collecteur d'avis.
+3. Schéma stable : identifiants CVE/GHSA, branches, packages, distributions, fournisseur, score, facteurs de confiance, révisions.
+4. Évaluation : `advisory_verified` (existence attestée), `applicability_confirmed` (actif/version/config/backports attestés), `potential_exposure`, `insufficient_evidence`, `vendor_patched`, `not_applicable`.
+5. Règles de validation : pas de promotion automatique d'un candidat en « vulnérabilité confirmée » sans preuves d'applicabilité, et pas de conseils de remédiation dangereux déduits d'une version seule.
+6. Tests sur cas fictif `portail-demo.example`, distributions à backports, versions non standard, contradictions entre sources et chemins non autorisés.
+
+## Exigence de remédiation runtime
+
+Pour ces CVE du **moteur PHP**, proposer prioritairement la mise à jour du runtime PHP réellement utilisé ; prévoir les contraintes extensions/SAPI/PHP-FPM, redémarrages contrôlés, compatibilité applicative et tests isolés. **La modification d'un simple fichier `.php` applicatif ne corrige pas à elle seule une faille interne du runtime.** Les mesures transitoires éventuellement publiées par les autorités ne constituent pas une protection complète et ne remplacent pas une mise à jour.

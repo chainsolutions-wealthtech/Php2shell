@@ -1,0 +1,107 @@
+"""Machine-check the PHP2SHELL multidirectional roadmap, not a runtime executor.
+
+This fixture validates the integrity of a planning DAG. It never schedules,
+claims, scans, contacts external sites, edits another branch or deploys S1.
+"""
+import json
+import re
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+CONTEXT = "PHP2SHELL-CONT-20261027-ROOT-01"
+BACKLOG = ROOT / "continuity" / "WORK_PACKAGES.json"
+DESIGN = ROOT / "continuity" / "INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md"
+MATRIX = ROOT / "continuity" / "REQUIREMENTS_TRACEABILITY.md"
+CANONICAL_ISSUE = "github.com/chainsolutions-wealthtech/Php2shell/issues/5"
+
+
+class WorkflowBacklogTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.raw = BACKLOG.read_text(encoding="utf-8")
+        cls.plan = json.loads(cls.raw)
+        cls.work = cls.plan["work_packages"]
+        cls.by_id = {t["id"]: t for t in cls.work}
+        cls.design = DESIGN.read_text(encoding="utf-8")
+        cls.matrix = MATRIX.read_text(encoding="utf-8")
+
+    def test_unique_stable_ids_and_original_objectives(self):
+        self.assertEqual(self.plan["continuity_id"], CONTEXT)
+        self.assertIn(CANONICAL_ISSUE, self.plan["canonical_issue"])
+        self.assertEqual(self.plan["single_active_next_action"], "P2S-NEXT-001")
+        self.assertGreaterEqual(len(self.work), 61)
+        self.assertEqual(len(self.work), len(self.by_id))
+        for task in self.work:
+            self.assertRegex(task["id"], r"^P2S-WF-[A-Z][0-9]{2}$")
+        self.assertIn("61", self.design)
+        self.assertIn("pas", self.design.lower())
+
+    def test_all_eight_workstreams_and_versions(self):
+        self.assertEqual(
+            {w["lane"] for w in self.work},
+            {"GOVERNANCE", "SECURITY", "ANALYSIS", "REMEDIATION",
+             "INFRASTRUCTURE", "FRONTEND", "QUALITY", "OPERATIONS"},
+        )
+        self.assertTrue(
+            {"V0.1", "V0.2", "V0.3", "V0.4", "V1.0"} <=
+            {w["phase"] for w in self.work}
+        )
+
+    def test_all_requirements_have_at_least_one_future_work_package(self):
+        expected = {f"REQ-{i:03d}" for i in range(1, 33)}
+        declared = set(re.findall(r"(?m)^\| \*\*(REQ-\d{3})\*\* ", self.matrix))
+        self.assertEqual(declared, expected)
+        covered = {r for w in self.work for r in w["requirements"]}
+        self.assertEqual(covered, expected)
+        for task in self.work:
+            self.assertTrue(task["title"] and task["acceptance"])
+            self.assertTrue(task["requirements"])
+
+    def test_dependencies_exist_and_are_acyclic(self):
+        colors = {}  # 0 unseen, 1 visiting, 2 finished
+        def visit(uid):
+            if colors.get(uid) == 1:
+                self.fail(f"Cycle in workflow at {uid}")
+            if colors.get(uid) == 2:
+                return
+            colors[uid] = 1
+            for child in self.by_id[uid]["depends_on"]:
+                self.assertIn(child, self.by_id)
+                self.assertNotEqual(child, uid)
+                visit(child)
+            colors[uid] = 2
+
+        for uid in self.by_id:
+            visit(uid)
+
+    def test_no_work_is_claimed_or_deployed_by_documentation(self):
+        gates = {"READ_ONLY", "GOVERNED_PR",
+                 "MANDATED_TEST_ONLY", "HUMAN_PRODUCTION_APPROVAL"}
+        self.assertEqual(set(self.plan["gate_types"]), gates)
+        for task in self.work:
+            self.assertIn(task["gate"], gates)
+            self.assertIn(task["status"],
+                          {"PLANNED_NOT_ADMITTED", "AWAITING_INDEPENDENT_REVIEW"})
+            if task["id"] in {"P2S-WF-O04", "P2S-WF-O05"}:
+                self.assertEqual(task["gate"], "HUMAN_PRODUCTION_APPROVAL")
+        self.assertEqual(self.by_id["P2S-WF-G01"]["status"],
+                         "AWAITING_INDEPENDENT_REVIEW")
+        self.assertIn("NOT_A_RUNTIME_SCHEDULER", self.plan["authority"])
+
+    def test_anti_parallel_gateway_and_handoff_paths_preserved(self):
+        for term in ("PR #6", "PR #1", "MCP", "claim", "lock",
+                     "READ_ONLY", "HUMAN_PRODUCTION_APPROVAL",
+                     "NEXT_ACTION", "checkpoint", "SSRF", "V0.1",
+                     "V1.0", "no", "61"):
+            with self.subTest(term=term):
+                self.assertIn(term.lower(), self.design.lower())
+        entry = (ROOT / "00_START_HERE.md").read_text(encoding="utf-8")
+        handoff = (ROOT / "continuity" / "HANDOFF.md").read_text(encoding="utf-8")
+        self.assertIn("INTELLIGENT_MULTIDIRECTIONAL_WORKFLOW.md", entry)
+        self.assertIn("WORK_PACKAGES.json", handoff)
+        self.assertIn(CONTEXT, entry)
+
+
+if __name__ == "__main__":
+    unittest.main()
